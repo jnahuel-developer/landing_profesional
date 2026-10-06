@@ -14,4 +14,6 @@ pnpm --filter @portfolio/web lint
 pnpm --filter @portfolio/web typecheck
 ```
 
+El typecheck ejecuta `next typegen` antes de TypeScript. `next-env.d.ts` es generado por Next.js y no se versiona.
+
 En desarrollo se publica en `http://localhost:3000`.
