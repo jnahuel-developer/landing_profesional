@@ -2,4 +2,4 @@ docs previos de ChatGPT/
 docs/**/*.md
 domains/*/ESPECIFICACION.md
 docs/design/mockups/
-
+apps/web/next-env.d.ts

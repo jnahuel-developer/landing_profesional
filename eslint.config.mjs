@@ -1,4 +1,7 @@
+import baseConfig from '@portfolio/config/eslint/base';
+
 export default [
+  ...baseConfig,
   {
     ignores: [
       '**/node_modules/**',

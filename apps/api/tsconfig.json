@@ -1,8 +1,10 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "@portfolio/config/typescript/node.json",
   "compilerOptions": {
-    "lib": ["ES2022"],
-    "rootDir": "src"
+    "outDir": "dist",
+    "rootDir": "src",
+    "types": ["node"]
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist", "node_modules"]
 }

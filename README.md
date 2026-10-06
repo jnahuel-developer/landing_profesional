@@ -6,16 +6,15 @@ El producto comunica el posicionamiento **«Ingeniería de software para negocio
 
 ## Estado actual
 
-Este repositorio contiene el bootstrap documental y estructural aprobado:
+El monorepositorio cuenta con una base ejecutable:
 
-- workspace pnpm preparado para `apps/` y `packages/`;
-- estructura prevista para la aplicación Next.js y la API Fastify;
-- servicios locales PostgreSQL 18 y Mailpit;
-- configuración base de Node.js, TypeScript, ESLint y Prettier;
-- especificaciones, ADR, documentos de arquitectura y mockups aprobados;
-- espacios reservados para pruebas, infraestructura y dominios.
+- aplicación Next.js mínima en `apps/web`;
+- API Fastify mínima en `apps/api`;
+- configuraciones públicas de TypeScript y ESLint en `packages/config`;
+- servicios locales PostgreSQL 18 y Mailpit reservados para etapas posteriores;
+- especificaciones, ADR y documentos de arquitectura aprobados.
 
-No se implementaron todavía las aplicaciones, las migraciones, las demos ACME, Caddy, imágenes Docker productivas, publicación en GHCR ni scripts de despliegue.
+Todavía no se implementaron migraciones, conexión con servicios, demos ACME, sistema visual, Caddy, imágenes Docker productivas ni despliegue.
 
 ## Arquitectura prevista
 
@@ -30,13 +29,35 @@ No se implementaron todavía las aplicaciones, las migraciones, las demos ACME, 
 
 Las reglas de dependencia y el alcance completo se encuentran en [docs/README.md](docs/README.md).
 
-## Requisitos previstos
+## Requisitos
 
 - Node.js 24 LTS
 - pnpm 11
 - Docker Engine con Docker Compose, solo para servicios con estado en desarrollo local
 
-La máquina actual deberá actualizarse de Node.js 22 a Node.js 24 antes de comenzar la implementación.
+## Instalación
+
+```powershell
+Copy-Item .env.example .env
+pnpm install --frozen-lockfile
+```
+
+La web y la API no requieren PostgreSQL ni Mailpit para este incremento.
+
+## Aplicaciones
+
+```powershell
+pnpm dev
+```
+
+El comando inicia ambos procesos en paralelo:
+
+| Aplicación | Dirección                      |
+| ---------- | ------------------------------ |
+| Web        | `http://localhost:3000`        |
+| API        | `http://localhost:4000/api/v1` |
+
+También pueden iniciarse por separado con `pnpm dev:web` y `pnpm dev:api`. Los controles locales principales son `pnpm format:check`, `pnpm lint`, `pnpm typecheck` y `pnpm build`.
 
 ## Servicios locales
 
@@ -47,15 +68,15 @@ pnpm services:down
 
 `compose.yaml` reserva los siguientes puertos:
 
-| Servicio                  | Dirección                      |
-| ------------------------- | ------------------------------ |
-| Web, cuando se implemente | `http://localhost:3000`        |
-| API, cuando se implemente | `http://localhost:4000/api/v1` |
-| PostgreSQL                | `localhost:5432`               |
-| Mailpit SMTP              | `localhost:1025`               |
-| Mailpit UI                | `http://localhost:8025`        |
+| Servicio     | Dirección                      |
+| ------------ | ------------------------------ |
+| Web          | `http://localhost:3000`        |
+| API          | `http://localhost:4000/api/v1` |
+| PostgreSQL   | `localhost:5432`               |
+| Mailpit SMTP | `localhost:1025`               |
+| Mailpit UI   | `http://localhost:8025`        |
 
-Copiar `.env.example` a `.env` antes de levantar los servicios locales. No versionar `.env` ni secretos.
+No versionar `.env` ni secretos.
 
 ## Documentación
 

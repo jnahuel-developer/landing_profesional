@@ -2,5 +2,23 @@
   "name": "@portfolio/config",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "exports": {
+    "./eslint/base": "./eslint/base.mjs",
+    "./eslint/next": "./eslint/next.mjs",
+    "./typescript/base.json": "./typescript/base.json",
+    "./typescript/next.json": "./typescript/next.json",
+    "./typescript/node.json": "./typescript/node.json"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --project jsconfig.json"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.0",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.71.1"
+  }
 }
