@@ -4,10 +4,11 @@ Esta carpeta es la fuente formal de documentación del repositorio.
 
 ## Mapa
 
-- [`product/`](product/README.md): especificación general de la plataforma y brief de inicialización.
+- [`product/`](product/README.md): especificación general, brief de inicialización y roadmap de la web base.
 - [`architecture/`](architecture/): datos permanentes, privacidad y catálogo de simulaciones.
 - [`adr/`](adr/README.md): decisiones arquitectónicas aceptadas.
 - [`operations/`](operations/OPERACION_Y_DESPLIEGUE.md): operación y despliegue futuro.
+- [`agents/`](agents/README.md): reglas para encargar, controlar, validar y corregir trabajos realizados con Codex.
 - [`design/`](design/README.md): referencias visuales aprobadas.
 - [`api/`](api/README.md): espacio reservado para OpenAPI y convenciones de API.
 - [`../domains/acme-cafe/`](../domains/acme-cafe/README.md): especificación de ACME Café.
@@ -30,4 +31,3 @@ El brief actual difiere deliberadamente la infraestructura productiva. Aunque lo
 - Los cambios que modifiquen arquitectura, alcance o contratos deben registrarse en un ADR o en el control de cambios del documento correspondiente.
 - Los mockups son referencias visuales aprobadas, no capturas de una implementación existente.
 - `docs previos de ChatGPT/` es un espejo de las fuentes originales y debe permanecer sin modificaciones.
-
