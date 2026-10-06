@@ -9,6 +9,7 @@ node_modules/
 
 # Builds and caches
 .next/
+next-env.d.ts
 dist/
 build/
 coverage/

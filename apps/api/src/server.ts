@@ -1,8 +1,13 @@
 import { buildApp } from './app.js';
 import { loadRuntimeConfig } from './config/env.js';
+import { createPostgresDependency } from './plugins/database.js';
 
 const config = loadRuntimeConfig();
-const app = buildApp();
+const app = await buildApp({
+  nodeEnv: config.nodeEnv,
+  database: createPostgresDependency(config.databaseUrl),
+  logger: true,
+});
 let isClosing = false;
 
 async function closeServer(signal: NodeJS.Signals): Promise<void> {
@@ -26,5 +31,6 @@ try {
   app.log.info({ environment: config.nodeEnv }, 'API is operational');
 } catch (error) {
   app.log.error({ err: error }, 'API failed to start');
+  await app.close();
   process.exitCode = 1;
 }

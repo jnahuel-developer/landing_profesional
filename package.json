@@ -21,7 +21,7 @@
     "lint": "pnpm -r --if-present run lint",
     "typecheck": "pnpm -r --if-present run typecheck",
     "test": "pnpm -r --if-present run test",
-    "test:integration": "pnpm --filter @portfolio/api test:integration",
+    "test:integration": "pnpm -r --if-present run test:integration",
     "test:e2e": "playwright test",
     "build": "pnpm -r --if-present run build",
     "format": "prettier --write .",

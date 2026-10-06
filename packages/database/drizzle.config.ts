@@ -1,2 +1,14 @@
-// La configuración Drizzle se completará junto con el primer esquema y la validación de entorno.
-export default {};
+import { defineConfig } from 'drizzle-kit';
+
+import { loadDatabaseConfig } from './src/config.js';
+
+const config = loadDatabaseConfig();
+
+export default defineConfig({
+  dialect: 'postgresql',
+  schema: './src/schema.ts',
+  out: './drizzle',
+  dbCredentials: {
+    url: config.databaseUrl,
+  },
+});

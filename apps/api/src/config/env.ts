@@ -1,10 +1,13 @@
+import { parseDatabaseUrl } from '@portfolio/database';
+
 const environments = ['development', 'test', 'production'] as const;
 
-type NodeEnvironment = (typeof environments)[number];
+export type NodeEnvironment = (typeof environments)[number];
 
 export interface RuntimeConfig {
   nodeEnv: NodeEnvironment;
   port: number;
+  databaseUrl: string;
 }
 
 function isNodeEnvironment(value: string): value is NodeEnvironment {
@@ -41,5 +44,6 @@ export function loadRuntimeConfig(environment: NodeJS.ProcessEnv = process.env):
   return {
     nodeEnv: parseNodeEnvironment(environment.NODE_ENV),
     port: parsePort(environment.API_PORT),
+    databaseUrl: parseDatabaseUrl(environment.DATABASE_URL),
   };
 }
