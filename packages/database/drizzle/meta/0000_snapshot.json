@@ -1,0 +1,23 @@
+{
+  "id": "44e0804f-474c-42ae-9d9b-78d186d242a6",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {},
+  "enums": {},
+  "schemas": {
+    "acme_cafe": "acme_cafe",
+    "acme_logistica": "acme_logistica",
+    "demo_core": "demo_core",
+    "platform": "platform"
+  },
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
