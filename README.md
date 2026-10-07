@@ -42,6 +42,8 @@ Copy-Item .env.example .env
 pnpm install --frozen-lockfile
 ```
 
+Los scripts de desarrollo y base de datos cargan automáticamente el `.env` de la raíz con la API nativa de Node.js 24. No es necesario exportar variables manualmente y las variables ya presentes en el proceso tienen precedencia. La ausencia de `.env` también es válida en CI cuando el entorno inyecta la configuración necesaria.
+
 Las pruebas unitarias no requieren servicios. Las pruebas de integración y E2E requieren PostgreSQL.
 
 ## Aplicaciones
