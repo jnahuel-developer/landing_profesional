@@ -1,3 +1,3 @@
 import baseConfig from '@portfolio/config/eslint/base';
 
-export default baseConfig;
+export default [...baseConfig, { ignores: ['dist/**'] }];

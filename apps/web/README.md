@@ -17,3 +17,7 @@ pnpm --filter @portfolio/web typecheck
 El typecheck ejecuta `next typegen` antes de TypeScript. `next-env.d.ts` es generado por Next.js y no se versiona.
 
 En desarrollo se publica en `http://localhost:3000`.
+
+## Catálogo de UI
+
+`/dev/ui` expone en desarrollo el catálogo técnico de tokens, temas, densidades y componentes públicos de `@portfolio/ui`. La ruta declara `noindex` y devuelve 404 cuando `NODE_ENV=production`; no debe utilizarse como página de producto.
