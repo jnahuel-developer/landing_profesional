@@ -1,0 +1,158 @@
+@layer ui.tokens, ui.base, ui.components;
+
+@layer ui.tokens {
+  :root,
+  [data-theme='light'] {
+    color-scheme: light;
+    --ui-color-background: #f7f9fc;
+    --ui-color-surface: #ffffff;
+    --ui-color-surface-raised: #ffffff;
+    --ui-color-text: #0b1633;
+    --ui-color-text-muted: #52617a;
+    --ui-color-border: #cbd5e4;
+    --ui-color-focus: #006adc;
+    --ui-color-action: #006adc;
+    --ui-color-action-hover: #0056b3;
+    --ui-color-on-action: #ffffff;
+    --ui-color-info: #006adc;
+    --ui-color-success: #08783e;
+    --ui-color-warning: #8a4b00;
+    --ui-color-danger: #b42318;
+    --ui-color-neutral: #52617a;
+    --ui-color-info-surface: #e8f3ff;
+    --ui-color-success-surface: #e8f8ef;
+    --ui-color-warning-surface: #fff4df;
+    --ui-color-danger-surface: #ffedeb;
+    --ui-color-neutral-surface: #edf1f7;
+    --ui-overlay: rgb(11 22 51 / 55%);
+  }
+
+  [data-theme='dark'] {
+    color-scheme: dark;
+    --ui-color-background: #0b1120;
+    --ui-color-surface: #121b2e;
+    --ui-color-surface-raised: #19243a;
+    --ui-color-text: #f6f8fc;
+    --ui-color-text-muted: #aebbd0;
+    --ui-color-border: #3d4b63;
+    --ui-color-focus: #6db7ff;
+    --ui-color-action: #6db7ff;
+    --ui-color-action-hover: #9acbff;
+    --ui-color-on-action: #07111f;
+    --ui-color-info: #6db7ff;
+    --ui-color-success: #61d995;
+    --ui-color-warning: #ffc45c;
+    --ui-color-danger: #ff8b82;
+    --ui-color-neutral: #aebbd0;
+    --ui-color-info-surface: #122f50;
+    --ui-color-success-surface: #113c2a;
+    --ui-color-warning-surface: #432e0b;
+    --ui-color-danger-surface: #481e22;
+    --ui-color-neutral-surface: #253148;
+    --ui-overlay: rgb(0 0 0 / 72%);
+  }
+
+  [data-theme='high-contrast'] {
+    color-scheme: dark;
+    --ui-color-background: #000000;
+    --ui-color-surface: #000000;
+    --ui-color-surface-raised: #0a0a0a;
+    --ui-color-text: #ffffff;
+    --ui-color-text-muted: #f2f2f2;
+    --ui-color-border: #ffffff;
+    --ui-color-focus: #ffe600;
+    --ui-color-action: #00d9ff;
+    --ui-color-action-hover: #7cecff;
+    --ui-color-on-action: #000000;
+    --ui-color-info: #00d9ff;
+    --ui-color-success: #59ff7a;
+    --ui-color-warning: #ffe600;
+    --ui-color-danger: #ff7085;
+    --ui-color-neutral: #ffffff;
+    --ui-color-info-surface: #001b20;
+    --ui-color-success-surface: #002b0c;
+    --ui-color-warning-surface: #2e2900;
+    --ui-color-danger-surface: #31000a;
+    --ui-color-neutral-surface: #171717;
+    --ui-overlay: rgb(0 0 0 / 88%);
+  }
+
+  :root {
+    --ui-font-sans: var(--font-geist), 'Segoe UI', system-ui, sans-serif;
+    --ui-font-mono: 'Cascadia Code', 'SFMono-Regular', Consolas, monospace;
+    --ui-font-size-xs: 0.75rem;
+    --ui-font-size-sm: 0.875rem;
+    --ui-font-size-md: 1rem;
+    --ui-font-size-lg: 1.125rem;
+    --ui-font-size-xl: 1.5rem;
+    --ui-font-size-2xl: clamp(2rem, 4vw, 3.5rem);
+    --ui-line-height-tight: 1.15;
+    --ui-line-height-normal: 1.5;
+    --ui-space-1: 0.25rem;
+    --ui-space-2: 0.5rem;
+    --ui-space-3: 0.75rem;
+    --ui-space-4: 1rem;
+    --ui-space-5: 1.5rem;
+    --ui-space-6: 2rem;
+    --ui-space-7: 3rem;
+    --ui-space-8: 4rem;
+    --ui-radius-sm: 0.375rem;
+    --ui-radius-md: 0.625rem;
+    --ui-radius-lg: 1rem;
+    --ui-radius-full: 9999px;
+    --ui-border-width: 1px;
+    --ui-shadow-sm: 0 1px 2px rgb(11 22 51 / 8%);
+    --ui-shadow-md: 0 10px 30px rgb(11 22 51 / 12%);
+    --ui-shadow-lg: 0 22px 60px rgb(11 22 51 / 18%);
+    --ui-layer-base: 0;
+    --ui-layer-sticky: 20;
+    --ui-layer-dropdown: 40;
+    --ui-layer-dialog: 60;
+    --ui-layer-toast: 80;
+    --ui-duration-fast: 120ms;
+    --ui-duration-normal: 200ms;
+    --ui-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --ui-breakpoint-desktop-min: 80rem;
+    --ui-breakpoint-wide: 90rem;
+    --ui-control-height: 2.75rem;
+    --ui-control-padding-x: 1rem;
+    --ui-hit-target: 2.75rem;
+  }
+
+  [data-density='compact'] {
+    --ui-control-height: 2.25rem;
+    --ui-control-padding-x: 0.75rem;
+    --ui-hit-target: 2.75rem;
+  }
+}
+
+@layer ui.base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: var(--ui-color-background);
+    color: var(--ui-color-text);
+    font-family: var(--ui-font-sans);
+    line-height: var(--ui-line-height-normal);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--ui-color-focus);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

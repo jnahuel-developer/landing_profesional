@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "node ./scripts/run-with-env.mjs dev:workspace",
-    "dev:workspace": "pnpm --parallel --filter @portfolio/web --filter @portfolio/api dev",
+    "dev:workspace": "pnpm --filter @portfolio/contracts build && pnpm --filter @portfolio/database build && pnpm --parallel --filter @portfolio/web --filter @portfolio/api dev",
     "dev:web": "node ./scripts/run-with-env.mjs dev:web:workspace",
     "dev:web:workspace": "pnpm --filter @portfolio/web dev",
     "dev:api": "node ./scripts/run-with-env.mjs dev:api:workspace",
