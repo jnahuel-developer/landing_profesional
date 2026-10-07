@@ -3,3 +3,4 @@ docs/**/*.md
 domains/*/ESPECIFICACION.md
 docs/design/mockups/
 apps/web/next-env.d.ts
+evidencias_locales/

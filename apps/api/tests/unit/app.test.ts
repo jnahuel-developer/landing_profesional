@@ -1,9 +1,9 @@
 import { ERROR_CODES } from '@portfolio/contracts';
 import { Type } from 'typebox';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { buildApp } from '../../src/app.js';
 import type { DatabaseDependency } from '../../src/plugins/database.js';
+import { closeTestApps, createTestApp } from '../helpers/app.js';
 
 function databaseDependency(overrides: Partial<DatabaseDependency> = {}): DatabaseDependency {
   return {
@@ -13,9 +13,11 @@ function databaseDependency(overrides: Partial<DatabaseDependency> = {}): Databa
 }
 
 describe('aplicación Fastify', () => {
+  afterEach(closeTestApps);
+
   it('se construye, inyecta la ruta técnica y cierra sin listener', async () => {
     const close = vi.fn(async () => undefined);
-    const app = await buildApp({ database: databaseDependency({ close }) });
+    const app = await createTestApp({ database: databaseDependency({ close }) });
 
     const response = await app.inject({ method: 'GET', url: '/api/v1' });
 
@@ -34,7 +36,7 @@ describe('aplicación Fastify', () => {
     const check = vi.fn(async () => {
       throw new Error('connection details must not be exposed');
     });
-    const app = await buildApp({ database: databaseDependency({ check }) });
+    const app = await createTestApp({ database: databaseDependency({ check }) });
 
     const response = await app.inject({ method: 'GET', url: '/api/v1/health/live' });
 
@@ -42,11 +44,10 @@ describe('aplicación Fastify', () => {
     expect(response.headers['content-type']).toContain('application/json');
     expect(response.json()).toEqual({ status: 'ok', service: 'portfolio-api' });
     expect(check).not.toHaveBeenCalled();
-    await app.close();
   });
 
   it('devuelve ready 503 con un contrato seguro cuando PostgreSQL falla', async () => {
-    const app = await buildApp({
+    const app = await createTestApp({
       database: databaseDependency({
         check: async () => {
           throw new Error('postgresql://usuario:secreto@localhost/base select 1');
@@ -66,11 +67,10 @@ describe('aplicación Fastify', () => {
     expect(payload.requestId).toEqual(expect.any(String));
     expect(response.body).not.toContain('secreto');
     expect(response.body).not.toContain('select 1');
-    await app.close();
   });
 
   it('serializa los errores de validación con request ID', async () => {
-    const app = await buildApp();
+    const app = await createTestApp();
     app.get(
       '/validation-test',
       {
@@ -91,13 +91,12 @@ describe('aplicación Fastify', () => {
     expect(payload.code).toBe(ERROR_CODES.validation);
     expect(payload.requestId).toEqual(expect.any(String));
     expect(payload.details).toEqual(expect.any(Array));
-    await app.close();
   });
 
   it('expone OpenAPI solo en development', async () => {
-    const development = await buildApp({ nodeEnv: 'development' });
-    const test = await buildApp({ nodeEnv: 'test' });
-    const production = await buildApp({ nodeEnv: 'production' });
+    const development = await createTestApp({ nodeEnv: 'development' });
+    const test = await createTestApp({ nodeEnv: 'test' });
+    const production = await createTestApp({ nodeEnv: 'production' });
 
     const specification = await development.inject({
       method: 'GET',
@@ -116,7 +115,5 @@ describe('aplicación Fastify', () => {
     expect(
       (await production.inject({ method: 'GET', url: '/documentation/json' })).statusCode,
     ).toBe(404);
-
-    await Promise.all([development.close(), test.close(), production.close()]);
   });
 });

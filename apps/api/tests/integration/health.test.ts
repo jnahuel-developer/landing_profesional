@@ -1,15 +1,17 @@
 import { checkDatabase, closePool, createPool } from '@portfolio/database';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 
-import { buildApp } from '../../src/app.js';
+import { closeTestApps, createTestApp } from '../helpers/app.js';
 
 const fallbackDatabaseUrl = 'postgresql://portfolio:portfolio_local_only@127.0.0.1:5432/portfolio';
 const databaseUrl = process.env.DATABASE_URL ?? fallbackDatabaseUrl;
 
 describe('health ready con PostgreSQL real', () => {
+  afterEach(closeTestApps);
+
   it('responde 200 y cierra el pool con Fastify', async () => {
     const pool = createPool(databaseUrl, { max: 1 });
-    const app = await buildApp({
+    const app = await createTestApp({
       database: {
         check: async () => checkDatabase(pool),
         close: async () => closePool(pool),

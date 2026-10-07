@@ -1,6 +1,3 @@
-import { randomUUID } from 'node:crypto';
-
-import { Client } from 'pg';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import {
@@ -12,52 +9,31 @@ import {
   seedDatabase,
 } from '../../src/index.js';
 import { applicationSchemaNames } from '../../src/schema.js';
+import {
+  createTemporaryDatabase,
+  dropTemporaryDatabase,
+  type TemporaryDatabase,
+} from '../helpers/temporary-database.js';
 
-const TEST_DATABASE_PREFIX = 'portfolio_test_';
 const fallbackDatabaseUrl = 'postgresql://portfolio:portfolio_local_only@127.0.0.1:5432/portfolio';
 const sourceDatabaseUrl = process.env.DATABASE_URL ?? fallbackDatabaseUrl;
-const databaseName = `${TEST_DATABASE_PREFIX}${randomUUID().replaceAll('-', '')}`;
-
-function quoteIdentifier(identifier: string): string {
-  if (!identifier.startsWith(TEST_DATABASE_PREFIX) || !/^[a-z0-9_]+$/.test(identifier)) {
-    throw new Error('Nombre de base temporal inseguro.');
-  }
-
-  return `"${identifier}"`;
-}
-
-function databaseUrlFor(name: string): string {
-  const url = new URL(sourceDatabaseUrl);
-  url.pathname = `/${name}`;
-  return url.toString();
-}
-
-const adminUrl = databaseUrlFor('postgres');
-const testDatabaseUrl = databaseUrlFor(databaseName);
-let adminClient: Client;
+let temporaryDatabase: TemporaryDatabase | undefined;
 
 describe('PostgreSQL real', () => {
   beforeAll(async () => {
-    adminClient = new Client({ connectionString: adminUrl });
-    await adminClient.connect();
-    await adminClient.query(`create database ${quoteIdentifier(databaseName)}`);
+    temporaryDatabase = await createTemporaryDatabase(sourceDatabaseUrl);
   });
 
   afterAll(async () => {
-    if (!adminClient) {
+    if (!temporaryDatabase) {
       return;
     }
 
-    await adminClient.query(
-      'select pg_terminate_backend(pid) from pg_stat_activity where datname = $1 and pid <> pg_backend_pid()',
-      [databaseName],
-    );
-    await adminClient.query(`drop database if exists ${quoteIdentifier(databaseName)}`);
-    await adminClient.end();
+    await dropTemporaryDatabase(sourceDatabaseUrl, temporaryDatabase.name);
   });
 
   it('abre, comprueba y cierra un pool controlado', async () => {
-    const pool = createPool(testDatabaseUrl, { max: 1 });
+    const pool = createPool(temporaryDatabase!.url, { max: 1 });
     createDatabaseClient(pool);
     await expect(checkDatabase(pool)).resolves.toBeUndefined();
     await closePool(pool);
@@ -65,7 +41,7 @@ describe('PostgreSQL real', () => {
   });
 
   it('aplica migraciones dos veces y crea solo los esquemas aprobados', async () => {
-    const pool = createPool(testDatabaseUrl, { max: 1 });
+    const pool = createPool(temporaryDatabase!.url, { max: 1 });
 
     try {
       await runMigrations(pool);

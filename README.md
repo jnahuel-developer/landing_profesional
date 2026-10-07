@@ -42,7 +42,7 @@ Copy-Item .env.example .env
 pnpm install --frozen-lockfile
 ```
 
-La web y la API no requieren PostgreSQL ni Mailpit para este incremento.
+Las pruebas unitarias no requieren servicios. Las pruebas de integración y E2E requieren PostgreSQL.
 
 ## Aplicaciones
 
@@ -58,6 +58,20 @@ El comando inicia ambos procesos en paralelo:
 | API        | `http://localhost:4000/api/v1` |
 
 También pueden iniciarse por separado con `pnpm dev:web` y `pnpm dev:api`. Los controles locales principales son `pnpm format:check`, `pnpm lint`, `pnpm typecheck` y `pnpm build`.
+
+## Pruebas
+
+Las unitarias se ejecutan sin PostgreSQL; las de integración y E2E utilizan una instancia real:
+
+```powershell
+pnpm test
+docker compose up -d postgres
+pnpm test:integration
+pnpm test:e2e:install
+pnpm test:e2e
+```
+
+`test:e2e:install` instala únicamente Chromium. Playwright ejecuta las migraciones, inicia la web y la API, y detiene ambos procesos al terminar. `DATABASE_URL` puede definir una base descartable alternativa; sin esa variable se usa la configuración local de desarrollo documentada en `.env.example`. Los reportes HTML se guardan en `playwright-report/` y no se versionan.
 
 ## Servicios locales
 
