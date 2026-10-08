@@ -41,3 +41,7 @@ La fuente local es Geist Variable, distribuida bajo SIL Open Font License 1.1. S
 - Iconos: `CheckIcon`, `ChevronDownIcon`, `CloseIcon`, `EmptyIcon`, `InfoIcon`, `WarningIcon`.
 
 Los controles nativos preservan atributos HTML y `ref`. Los campos reciben `label`, `description` y `error`, y generan las relaciones accesibles. `IconButton` requiere `aria-label` o `aria-labelledby` en TypeScript. Dialog, menús, selección, tabs, radio, tooltip y toast usan Radix UI para conservar teclado, portales y foco.
+
+## Desarrollo del paquete
+
+`pnpm build:ui` genera la entrada ESM y las declaraciones en `dist`. Los comandos raíz `pnpm dev` y `pnpm dev:web` garantizan ese build inicial y ejecutan después el watcher de TypeScript del paquete, por lo que Next nunca arranca sin `dist/index.js` y los cambios se recompilan durante la sesión. `pnpm test:e2e` también realiza el build inicial de UI dentro de su propio flujo y no depende de artefactos de otro job.

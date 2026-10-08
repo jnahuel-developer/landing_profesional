@@ -52,14 +52,14 @@ Las pruebas unitarias no requieren servicios. Las pruebas de integración y E2E 
 pnpm dev
 ```
 
-El comando inicia ambos procesos en paralelo:
+El comando compila primero los paquetes compartidos requeridos y después inicia web, API y el watcher de `@portfolio/ui` en paralelo. De este modo funciona desde una instalación limpia y los cambios TypeScript del sistema visual se recompilan durante el desarrollo.
 
 | Aplicación | Dirección                      |
 | ---------- | ------------------------------ |
 | Web        | `http://localhost:3000`        |
 | API        | `http://localhost:4000/api/v1` |
 
-También pueden iniciarse por separado con `pnpm dev:web` y `pnpm dev:api`. Los controles locales principales son `pnpm format:check`, `pnpm lint`, `pnpm typecheck` y `pnpm build`.
+También pueden iniciarse por separado con `pnpm dev:web` y `pnpm dev:api`; `dev:web` realiza el build inicial y mantiene el watcher de `@portfolio/ui`. Los controles locales principales son `pnpm format:check`, `pnpm lint`, `pnpm typecheck` y `pnpm build`.
 
 ## Pruebas
 
@@ -73,7 +73,7 @@ pnpm test:e2e:install
 pnpm test:e2e
 ```
 
-`test:e2e:install` instala únicamente Chromium. Playwright ejecuta las migraciones, inicia la web y la API, y detiene ambos procesos al terminar. `DATABASE_URL` puede definir una base descartable alternativa; sin esa variable se usa la configuración local de desarrollo documentada en `.env.example`. Los reportes HTML se guardan en `playwright-report/` y no se versionan.
+`test:e2e:install` instala únicamente Chromium. Playwright compila `@portfolio/ui` de forma determinista, ejecuta las migraciones, inicia la web y la API, y detiene los procesos al terminar. `DATABASE_URL` puede definir una base descartable alternativa; sin esa variable se usa la configuración local de desarrollo documentada en `.env.example`. Los reportes HTML se guardan en `playwright-report/` y no se versionan.
 
 ## Servicios locales
 
