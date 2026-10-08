@@ -243,6 +243,39 @@ nav.desktop-navigation {
   text-transform: uppercase;
 }
 
+.inline-action {
+  align-items: center;
+  align-self: start;
+  background: var(--ui-color-action);
+  border: var(--ui-border-width) solid transparent;
+  border-radius: var(--ui-radius-md);
+  color: var(--ui-color-on-action);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: 700;
+  justify-content: center;
+  min-height: var(--ui-hit-target);
+  padding-inline: var(--ui-space-4);
+  text-decoration: none;
+}
+
+.inline-action:hover {
+  background: var(--ui-color-action-hover);
+}
+
+.inline-action--secondary {
+  background: var(--ui-color-surface);
+  border-color: var(--ui-color-border);
+  color: var(--ui-color-text);
+}
+
+.error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ui-space-3);
+}
+
 .public-footer {
   background: var(--ui-color-surface);
   border-top: var(--ui-border-width) solid var(--ui-color-border);
