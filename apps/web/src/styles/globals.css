@@ -28,8 +28,65 @@
 
 :root {
   color-scheme: light;
+  --shell-content-width: 90rem;
 }
 
 body {
   margin: 0;
+}
+
+.public-shell,
+.laboratory-shell,
+.admin-shell {
+  min-height: 100vh;
+}
+
+.laboratory-shell {
+  background: var(--ui-color-info-surface);
+}
+
+.admin-shell {
+  background: var(--ui-color-neutral-surface);
+}
+
+.section-shell-header {
+  background: var(--ui-color-surface);
+  border-bottom: var(--ui-border-width) solid var(--ui-color-border);
+  padding-block: var(--ui-space-4);
+}
+
+.section-shell-label {
+  font-size: var(--ui-font-size-sm);
+  font-weight: 700;
+  margin: 0;
+}
+
+.shell-main {
+  min-height: 70vh;
+  padding-block: var(--ui-space-8);
+  scroll-margin-top: var(--ui-space-7);
+}
+
+.placeholder-page {
+  display: grid;
+  gap: var(--ui-space-4);
+  max-width: 48rem;
+}
+
+.placeholder-page h1,
+.placeholder-page p {
+  margin: 0;
+}
+
+.placeholder-page h1 {
+  font-size: var(--ui-font-size-2xl);
+  line-height: var(--ui-line-height-tight);
+}
+
+.placeholder-page__eyebrow {
+  color: var(--ui-color-action);
+  font-size: var(--ui-font-size-xs);
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
