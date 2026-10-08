@@ -1,8 +1,33 @@
 @import 'tailwindcss';
+@import '@portfolio/ui/styles.css';
+
+@source '../../../../packages/ui/src';
+
+@theme inline {
+  --font-sans: var(--ui-font-sans);
+  --font-mono: var(--ui-font-mono);
+  --color-background: var(--ui-color-background);
+  --color-surface: var(--ui-color-surface);
+  --color-surface-raised: var(--ui-color-surface-raised);
+  --color-foreground: var(--ui-color-text);
+  --color-muted: var(--ui-color-text-muted);
+  --color-border: var(--ui-color-border);
+  --color-focus: var(--ui-color-focus);
+  --color-action: var(--ui-color-action);
+  --color-info: var(--ui-color-info);
+  --color-success: var(--ui-color-success);
+  --color-warning: var(--ui-color-warning);
+  --color-danger: var(--ui-color-danger);
+  --radius-sm: var(--ui-radius-sm);
+  --radius-md: var(--ui-radius-md);
+  --radius-lg: var(--ui-radius-lg);
+  --shadow-sm: var(--ui-shadow-sm);
+  --shadow-md: var(--ui-shadow-md);
+  --shadow-lg: var(--ui-shadow-lg);
+}
 
 :root {
   color-scheme: light;
-  font-family: system-ui, sans-serif;
 }
 
 body {
