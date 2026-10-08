@@ -1,12 +1,18 @@
 import { Container } from '@portfolio/ui';
+import Link from 'next/link';
 import type { ReactNode } from 'react';
+
+import { routes } from '../../config/routes';
+import { SkipLink } from '../navigation/skip-link';
 
 export function AdminLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <div className="admin-shell" data-layout="admin">
+      <SkipLink />
       <header className="section-shell-header">
-        <Container>
+        <Container className="section-shell-header__inner">
           <p className="section-shell-label">Área técnica preliminar</p>
+          <Link href={routes.home.path}>Volver al portfolio</Link>
         </Container>
       </header>
       <main className="shell-main" id="main-content" tabIndex={-1}>

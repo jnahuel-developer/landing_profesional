@@ -78,8 +78,10 @@ export const routes = {
 export const appRoutes = Object.values(routes);
 export const primaryRoutes = appRoutes.filter((route) => route.kind === 'primary');
 export const secondaryRoutes = appRoutes.filter((route) => route.kind === 'secondary');
+export const footerRoutes = [routes.contact, ...secondaryRoutes];
 
-export function isRouteActive(pathname: string, path: AppPath) {
+export function isRouteActive(pathname: string | null, path: AppPath) {
+  if (!pathname) return false;
   if (path === '/') return pathname === path;
   return pathname === path || pathname.startsWith(`${path}/`);
 }
