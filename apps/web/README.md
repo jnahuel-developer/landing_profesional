@@ -28,6 +28,8 @@ pnpm --filter @portfolio/web typecheck
 
 El typecheck ejecuta `next typegen` antes de TypeScript. `next-env.d.ts` es generado por Next.js y no se versiona.
 
+El comando de pruebas de web compila primero `@portfolio/ui`, de modo que valida su contrato público basado en `dist` y funciona directamente después de una instalación limpia.
+
 En desarrollo se publica en `http://localhost:3000`.
 
 ## Catálogo de UI
