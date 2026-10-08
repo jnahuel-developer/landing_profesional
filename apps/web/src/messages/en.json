@@ -79,11 +79,20 @@
     "placeholder": "Temporary content"
   },
   "Preferences": {
+    "appearance": "Appearance preferences",
     "spanish": "Spanish",
     "english": "English",
     "theme": "Theme",
     "density": "Density",
-    "motion": "Motion"
+    "motion": "Motion",
+    "themes": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark",
+      "high-contrast": "High contrast"
+    },
+    "densities": { "comfortable": "Comfortable", "compact": "Compact" },
+    "motions": { "system": "System", "reduced": "Reduced" }
   },
   "Common": {
     "unavailable": "Content temporarily unavailable",

@@ -7,6 +7,7 @@ import { useRef, useState, type MouseEvent } from 'react';
 import { primaryRoutes, routes } from '../../config/routes';
 import { Link } from '../../i18n/navigation';
 import { LanguageSelector } from '../preferences/language-selector';
+import { PreferencesControls } from '../preferences/preferences-controls';
 import { RouteLink } from './route-link';
 
 export function PublicHeader() {
@@ -35,6 +36,7 @@ export function PublicHeader() {
 
         <div className="desktop-navigation header-actions">
           <LanguageSelector />
+          <PreferencesControls />
           <RouteLink className="laboratory-cta" route={routes.laboratory} />
         </div>
 
@@ -48,6 +50,7 @@ export function PublicHeader() {
           </summary>
           <nav aria-label={t('compact')} className="compact-navigation__panel">
             <LanguageSelector />
+            <PreferencesControls />
             {primaryRoutes.map((route) => (
               <RouteLink
                 className="navigation-link"

@@ -117,19 +117,40 @@ nav.desktop-navigation {
   gap: var(--ui-space-3);
 }
 
-.language-selector {
+.language-selector,
+.preferences-controls label {
   align-items: center;
   display: inline-flex;
   font-size: var(--ui-font-size-sm);
   gap: var(--ui-space-2);
 }
 
-.language-selector select {
+.language-selector select,
+.preferences-controls select {
   background: var(--ui-color-surface);
   border: var(--ui-border-width) solid var(--ui-color-border);
   border-radius: var(--ui-radius-sm);
   color: var(--ui-color-text);
   min-height: var(--ui-hit-target);
+}
+
+.preferences-controls {
+  align-items: center;
+  display: flex;
+  gap: var(--ui-space-2);
+}
+
+[data-motion='reduced'] {
+  scroll-behavior: auto !important;
+}
+
+[data-motion='reduced'] *,
+[data-motion='reduced'] *::before,
+[data-motion='reduced'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 0.01ms !important;
 }
 
 .navigation-link {
@@ -330,6 +351,11 @@ nav.desktop-navigation {
 
   .public-header__inner {
     grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .preferences-controls {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .compact-navigation {

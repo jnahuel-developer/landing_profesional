@@ -6,6 +6,8 @@ import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 import { routing } from '../../i18n/routing';
+import { AppearanceBootstrap } from '../../preferences/bootstrap';
+import { PreferencesProvider } from '../../preferences/preferences-provider';
 
 import '../../styles/globals.css';
 
@@ -38,9 +40,23 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html className={geist.variable} data-density="comfortable" data-theme="light" lang={locale}>
+    <html
+      className={geist.variable}
+      data-density="comfortable"
+      data-motion="full"
+      data-motion-preference="system"
+      data-theme="light"
+      data-theme-preference="system"
+      lang={locale}
+      suppressHydrationWarning
+    >
+      <head>
+        <AppearanceBootstrap />
+      </head>
       <body>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <PreferencesProvider>{children}</PreferencesProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

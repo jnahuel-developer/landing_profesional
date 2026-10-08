@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { routes } from '../../config/routes';
 import { Link } from '../../i18n/navigation';
 import { LanguageSelector } from '../preferences/language-selector';
+import { PreferencesControls } from '../preferences/preferences-controls';
 import { SkipLink } from '../navigation/skip-link';
 
 export function AdminLayout({ children }: Readonly<{ children: ReactNode }>) {
@@ -17,6 +18,7 @@ export function AdminLayout({ children }: Readonly<{ children: ReactNode }>) {
           <p className="section-shell-label">{t('adminLabel')}</p>
           <div className="section-shell-actions">
             <LanguageSelector />
+            <PreferencesControls />
             <Link href={routes.home.path}>{t('backPortfolio')}</Link>
           </div>
         </Container>

@@ -79,11 +79,20 @@
     "placeholder": "Contenido provisional"
   },
   "Preferences": {
+    "appearance": "Preferencias de apariencia",
     "spanish": "Español",
     "english": "Inglés",
     "theme": "Tema",
     "density": "Densidad",
-    "motion": "Movimiento"
+    "motion": "Movimiento",
+    "themes": {
+      "system": "Sistema",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "high-contrast": "Alto contraste"
+    },
+    "densities": { "comfortable": "Cómoda", "compact": "Compacta" },
+    "motions": { "system": "Sistema", "reduced": "Reducido" }
   },
   "Common": {
     "unavailable": "Contenido temporalmente no disponible",
