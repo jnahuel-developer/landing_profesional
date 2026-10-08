@@ -1,0 +1,93 @@
+{
+  "Navigation": {
+    "primary": "Main navigation",
+    "compact": "Compact navigation",
+    "secondary": "Secondary navigation",
+    "open": "Open navigation",
+    "close": "Close navigation",
+    "language": "Language",
+    "languageOption": "Change language to {language}"
+  },
+  "Routes": {
+    "home": {
+      "label": "Home",
+      "title": "Nahuel Martínez",
+      "description": "Temporary introduction to the professional portfolio."
+    },
+    "solutions": {
+      "label": "Solutions",
+      "title": "Solutions",
+      "description": "Temporary content about solution areas."
+    },
+    "experience": {
+      "label": "Experience",
+      "title": "Experience",
+      "description": "Temporary content about experience and case studies."
+    },
+    "process": {
+      "label": "How I work",
+      "title": "How I work",
+      "description": "Temporary content about the working method."
+    },
+    "about": {
+      "label": "About me",
+      "title": "About me",
+      "description": "Temporary content about the professional profile."
+    },
+    "contact": {
+      "label": "Contact",
+      "title": "Contact",
+      "description": "Temporary content for starting a professional conversation."
+    },
+    "privacy": {
+      "label": "Privacy",
+      "title": "Privacy",
+      "description": "Temporary information about privacy and data handling."
+    },
+    "laboratory": {
+      "label": "Laboratory",
+      "title": "Laboratory",
+      "description": "Preliminary laboratory structure, without demos or active sessions."
+    },
+    "admin": {
+      "label": "Administration",
+      "title": "Administration",
+      "description": "Preliminary technical structure, without authentication, metrics, or real data."
+    }
+  },
+  "Metadata": {
+    "siteTitle": "Nahuel Martínez's portfolio",
+    "siteDescription": "Temporary technical page for the professional portfolio."
+  },
+  "States": {
+    "notFoundEyebrow": "Error 404",
+    "notFoundTitle": "Page not found",
+    "notFoundDescription": "The requested address is not available.",
+    "errorEyebrow": "Technical error",
+    "errorTitle": "We couldn't complete the operation",
+    "errorDescription": "Try again. If the problem continues, you can return home.",
+    "retry": "Try again",
+    "backHome": "Return home"
+  },
+  "Layouts": {
+    "skip": "Skip to main content",
+    "portfolio": "Professional portfolio.",
+    "copyright": "© 2026 Nahuel Martínez.",
+    "labLabel": "Nahuel Martínez · Preliminary environment",
+    "adminLabel": "Preliminary technical area",
+    "backPortfolio": "Return to portfolio",
+    "placeholder": "Temporary content"
+  },
+  "Preferences": {
+    "spanish": "Spanish",
+    "english": "English",
+    "theme": "Theme",
+    "density": "Density",
+    "motion": "Motion"
+  },
+  "Common": {
+    "unavailable": "Content temporarily unavailable",
+    "welcome": "Hello, {name}",
+    "itemCount": "{count, plural, =0 {No items} one {# item} other {# items}}"
+  }
+}

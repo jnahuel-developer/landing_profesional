@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { usePathname } from 'next/navigation';
 import { describe, expect, it, vi } from 'vitest';
@@ -6,9 +6,16 @@ import { describe, expect, it, vi } from 'vitest';
 import { PublicLayout } from '../src/components/layouts/public-layout';
 import { PublicHeader } from '../src/components/navigation/public-header';
 import { isRouteActive, primaryRoutes, routes } from '../src/config/routes';
+import messages from '../src/messages/es.json';
+import { renderWithIntl as render } from './test-utils';
 
 vi.mock('next/navigation', () => ({
+  permanentRedirect: vi.fn(),
+  redirect: vi.fn(),
+  useParams: vi.fn(() => ({ locale: 'es' })),
   usePathname: vi.fn(() => '/'),
+  useRouter: vi.fn(() => ({ replace: vi.fn() })),
+  useSearchParams: vi.fn(() => new URLSearchParams()),
 }));
 
 describe('navegación pública', () => {
@@ -17,13 +24,12 @@ describe('navegación pública', () => {
     const primary = screen.getByRole('navigation', { name: 'Navegación principal' });
 
     for (const route of primaryRoutes) {
-      expect(within(primary).getByRole('link', { name: route.label })).toHaveAttribute(
-        'href',
-        route.path,
-      );
+      expect(
+        within(primary).getByRole('link', { name: messages.Routes[route.id].label }),
+      ).toHaveAttribute('href', route.path);
     }
-    expect(within(primary).queryByRole('link', { name: routes.admin.label })).toBeNull();
-    expect(screen.queryByRole('link', { name: routes.admin.label })).toBeNull();
+    expect(within(primary).queryByRole('link', { name: messages.Routes.admin.label })).toBeNull();
+    expect(screen.queryByRole('link', { name: messages.Routes.admin.label })).toBeNull();
   });
 
   it('marca la coincidencia exacta y descendiente sin activar Inicio globalmente', () => {
@@ -31,13 +37,12 @@ describe('navegación pública', () => {
     render(<PublicHeader />);
     const primary = screen.getByRole('navigation', { name: 'Navegación principal' });
 
-    expect(within(primary).getByRole('link', { name: routes.solutions.label })).toHaveAttribute(
-      'aria-current',
-      'page',
-    );
-    expect(within(primary).getByRole('link', { name: routes.home.label })).not.toHaveAttribute(
-      'aria-current',
-    );
+    expect(
+      within(primary).getByRole('link', { name: messages.Routes.solutions.label }),
+    ).toHaveAttribute('aria-current', 'page');
+    expect(
+      within(primary).getByRole('link', { name: messages.Routes.home.label }),
+    ).not.toHaveAttribute('aria-current');
     expect(isRouteActive('/soluciones', routes.solutions.path)).toBe(true);
     expect(isRouteActive('/soluciones/caso', routes.solutions.path)).toBe(true);
     expect(isRouteActive('/contacto', routes.home.path)).toBe(false);
@@ -60,7 +65,7 @@ describe('navegación pública', () => {
     expect(await screen.findByText('Cerrar navegación')).toBeVisible();
 
     const compact = screen.getByRole('navigation', { name: 'Navegación reducida' });
-    await user.click(within(compact).getByRole('link', { name: routes.contact.label }));
+    await user.click(within(compact).getByRole('link', { name: messages.Routes.contact.label }));
     expect(details).not.toHaveAttribute('open');
   });
 });
@@ -78,7 +83,7 @@ describe('shell público', () => {
     expect(screen.getAllByRole('main')).toHaveLength(1);
     expect(screen.getByRole('contentinfo')).toBeInTheDocument();
     expect(screen.getAllByRole('navigation')).toHaveLength(3);
-    expect(screen.queryByRole('link', { name: routes.admin.label })).toBeNull();
+    expect(screen.queryByRole('link', { name: messages.Routes.admin.label })).toBeNull();
 
     skipLink.focus();
     expect(skipLink).toHaveFocus();

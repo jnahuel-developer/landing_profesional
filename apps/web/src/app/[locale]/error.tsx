@@ -1,23 +1,25 @@
 'use client';
 
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
-import { PublicLayout } from '../components/layouts/public-layout';
-import { routes } from '../config/routes';
+import { PublicLayout } from '../../components/layouts/public-layout';
+import { routes } from '../../config/routes';
+import { Link } from '../../i18n/navigation';
 
 export default function ErrorPage({ reset }: Readonly<{ reset: () => void }>) {
+  const t = useTranslations('States');
   return (
     <PublicLayout>
       <section aria-labelledby="error-title" className="placeholder-page">
-        <p className="placeholder-page__eyebrow">Error técnico</p>
-        <h1 id="error-title">No pudimos completar la operación</h1>
-        <p>Intentá nuevamente. Si el problema continúa, podés volver al inicio.</p>
+        <p className="placeholder-page__eyebrow">{t('errorEyebrow')}</p>
+        <h1 id="error-title">{t('errorTitle')}</h1>
+        <p>{t('errorDescription')}</p>
         <div className="error-actions">
           <button className="inline-action" onClick={reset} type="button">
-            Intentar nuevamente
+            {t('retry')}
           </button>
           <Link className="inline-action inline-action--secondary" href={routes.home.path}>
-            Volver al inicio
+            {t('backHome')}
           </Link>
         </div>
       </section>

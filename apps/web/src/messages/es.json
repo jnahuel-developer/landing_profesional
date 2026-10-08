@@ -1,0 +1,93 @@
+{
+  "Navigation": {
+    "primary": "Navegación principal",
+    "compact": "Navegación reducida",
+    "secondary": "Navegación secundaria",
+    "open": "Abrir navegación",
+    "close": "Cerrar navegación",
+    "language": "Idioma",
+    "languageOption": "Cambiar idioma a {language}"
+  },
+  "Routes": {
+    "home": {
+      "label": "Inicio",
+      "title": "Nahuel Martínez",
+      "description": "Presentación provisional del portfolio profesional."
+    },
+    "solutions": {
+      "label": "Soluciones",
+      "title": "Soluciones",
+      "description": "Contenido provisional sobre las áreas de solución."
+    },
+    "experience": {
+      "label": "Experiencia",
+      "title": "Experiencia",
+      "description": "Contenido provisional sobre experiencia y casos."
+    },
+    "process": {
+      "label": "Cómo trabajo",
+      "title": "Cómo trabajo",
+      "description": "Contenido provisional sobre la metodología de trabajo."
+    },
+    "about": {
+      "label": "Sobre mí",
+      "title": "Sobre mí",
+      "description": "Contenido provisional sobre el perfil profesional."
+    },
+    "contact": {
+      "label": "Contacto",
+      "title": "Contacto",
+      "description": "Contenido provisional para iniciar una conversación profesional."
+    },
+    "privacy": {
+      "label": "Privacidad",
+      "title": "Privacidad",
+      "description": "Información provisional sobre privacidad y tratamiento de datos."
+    },
+    "laboratory": {
+      "label": "Laboratorio",
+      "title": "Laboratorio",
+      "description": "Estructura preliminar del laboratorio, sin demos ni sesiones activas."
+    },
+    "admin": {
+      "label": "Administración",
+      "title": "Administración",
+      "description": "Estructura técnica preliminar, sin autenticación, métricas ni datos reales."
+    }
+  },
+  "Metadata": {
+    "siteTitle": "Portfolio de Nahuel Martínez",
+    "siteDescription": "Página técnica temporal del portfolio profesional."
+  },
+  "States": {
+    "notFoundEyebrow": "Error 404",
+    "notFoundTitle": "Página no encontrada",
+    "notFoundDescription": "La dirección solicitada no está disponible.",
+    "errorEyebrow": "Error técnico",
+    "errorTitle": "No pudimos completar la operación",
+    "errorDescription": "Intentá nuevamente. Si el problema continúa, podés volver al inicio.",
+    "retry": "Intentar nuevamente",
+    "backHome": "Volver al inicio"
+  },
+  "Layouts": {
+    "skip": "Saltar al contenido principal",
+    "portfolio": "Portfolio profesional.",
+    "copyright": "© 2026 Nahuel Martínez.",
+    "labLabel": "Nahuel Martínez · Entorno preliminar",
+    "adminLabel": "Área técnica preliminar",
+    "backPortfolio": "Volver al portfolio",
+    "placeholder": "Contenido provisional"
+  },
+  "Preferences": {
+    "spanish": "Español",
+    "english": "Inglés",
+    "theme": "Tema",
+    "density": "Densidad",
+    "motion": "Movimiento"
+  },
+  "Common": {
+    "unavailable": "Contenido temporalmente no disponible",
+    "welcome": "Hola, {name}",
+    "itemCount": "{count, plural, =0 {Ningún elemento} one {# elemento} other {# elementos}}"
+  }
+}

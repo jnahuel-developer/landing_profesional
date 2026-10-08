@@ -1,16 +1,17 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import type { ComponentProps } from 'react';
 
 import { isRouteActive, type AppRoute } from '../../config/routes';
+import { Link, usePathname } from '../../i18n/navigation';
 
 interface RouteLinkProps extends Omit<ComponentProps<typeof Link>, 'href'> {
   route: AppRoute;
 }
 
 export function RouteLink({ className, route, ...props }: RouteLinkProps) {
+  const t = useTranslations('Routes');
   const pathname = usePathname();
   const active = isRouteActive(pathname, route.path);
 
@@ -22,7 +23,7 @@ export function RouteLink({ className, route, ...props }: RouteLinkProps) {
       href={route.path}
       {...props}
     >
-      {route.label}
+      {t(`${route.id}.label`)}
     </Link>
   );
 }

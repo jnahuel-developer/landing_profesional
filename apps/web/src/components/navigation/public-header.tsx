@@ -1,13 +1,16 @@
 'use client';
 
 import { Container } from '@portfolio/ui';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useRef, useState, type MouseEvent } from 'react';
 
 import { primaryRoutes, routes } from '../../config/routes';
+import { Link } from '../../i18n/navigation';
+import { LanguageSelector } from '../preferences/language-selector';
 import { RouteLink } from './route-link';
 
 export function PublicHeader() {
+  const t = useTranslations('Navigation');
   const menuRef = useRef<HTMLDetailsElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -24,13 +27,16 @@ export function PublicHeader() {
           Nahuel Martínez
         </Link>
 
-        <nav aria-label="Navegación principal" className="desktop-navigation">
+        <nav aria-label={t('primary')} className="desktop-navigation">
           {primaryRoutes.map((route) => (
             <RouteLink className="navigation-link" key={route.path} route={route} />
           ))}
         </nav>
 
-        <RouteLink className="laboratory-cta desktop-navigation" route={routes.laboratory} />
+        <div className="desktop-navigation header-actions">
+          <LanguageSelector />
+          <RouteLink className="laboratory-cta" route={routes.laboratory} />
+        </div>
 
         <details
           className="compact-navigation"
@@ -38,9 +44,10 @@ export function PublicHeader() {
           ref={menuRef}
         >
           <summary>
-            <span>{menuOpen ? 'Cerrar navegación' : 'Abrir navegación'}</span>
+            <span>{menuOpen ? t('close') : t('open')}</span>
           </summary>
-          <nav aria-label="Navegación reducida" className="compact-navigation__panel">
+          <nav aria-label={t('compact')} className="compact-navigation__panel">
+            <LanguageSelector />
             {primaryRoutes.map((route) => (
               <RouteLink
                 className="navigation-link"

@@ -110,6 +110,28 @@ nav.desktop-navigation {
   justify-content: center;
 }
 
+.header-actions,
+.section-shell-actions {
+  align-items: center;
+  display: flex;
+  gap: var(--ui-space-3);
+}
+
+.language-selector {
+  align-items: center;
+  display: inline-flex;
+  font-size: var(--ui-font-size-sm);
+  gap: var(--ui-space-2);
+}
+
+.language-selector select {
+  background: var(--ui-color-surface);
+  border: var(--ui-border-width) solid var(--ui-color-border);
+  border-radius: var(--ui-radius-sm);
+  color: var(--ui-color-text);
+  min-height: var(--ui-hit-target);
+}
+
 .navigation-link {
   border-block: 3px solid transparent;
   color: var(--ui-color-text-muted);
