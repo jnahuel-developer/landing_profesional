@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { createTranslator } from 'next-intl';
 import { describe, expect, it, vi } from 'vitest';
 
 import { LanguageSelector } from '../src/components/preferences/language-selector';
@@ -13,6 +14,7 @@ import {
   routing,
 } from '../src/i18n/routing';
 import { renderWithIntl as render } from './test-utils';
+import spanishMessages from '../src/messages/es.json';
 
 const mocks = vi.hoisted(() => ({ replace: vi.fn() }));
 
@@ -50,8 +52,16 @@ describe('configuración internacional', () => {
   });
 
   it('ofrece un fallback localizado sin revelar identificadores', () => {
-    expect(getSafeMessageFallback('Common')).toBe('Contenido no disponible');
-    expect(getSafeMessageFallback('Routes')).not.toContain('Routes');
+    expect(getSafeMessageFallback('es', 'Common')).toBe('Contenido no disponible');
+    expect(getSafeMessageFallback('en', 'Routes')).toBe('Content temporarily unavailable');
+  });
+
+  it('soporta interpolación y pluralización ICU', () => {
+    const t = createTranslator({ locale: 'es', messages: spanishMessages, namespace: 'Common' });
+    expect(t('welcome', { name: 'Nahuel' })).toBe('Hola, Nahuel');
+    expect(t('itemCount', { count: 0 })).toBe('Ningún elemento');
+    expect(t('itemCount', { count: 1 })).toBe('1 elemento');
+    expect(t('itemCount', { count: 2 })).toBe('2 elementos');
   });
 
   it('cambia locale mediante navegación localizada conservando ruta, query y hash', async () => {

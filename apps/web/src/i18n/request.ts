@@ -16,7 +16,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       console.error('[i18n]', error.code);
     },
     getMessageFallback({ namespace }) {
-      return getSafeMessageFallback(namespace);
+      return getSafeMessageFallback(locale, namespace);
     },
   };
 });
