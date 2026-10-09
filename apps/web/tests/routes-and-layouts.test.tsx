@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 import AdminPage from '../src/app/[locale]/admin/page';
-import HomePage from '../src/app/[locale]/(public)/page';
+import { ContinuousHome } from '../src/components/home/continuous-home';
 import LaboratoryPage from '../src/app/[locale]/lab/page';
 import { AdminLayout } from '../src/components/layouts/admin-layout';
 import { LaboratoryLayout } from '../src/components/layouts/laboratory-layout';
@@ -70,7 +70,7 @@ describe('placeholders', () => {
   });
 
   it('renderiza las seis secciones de la home en orden con un único h1', () => {
-    const { container } = render(<HomePage />);
+    const { container } = render(<ContinuousHome />);
     expect([...container.querySelectorAll('section')].map(({ id }) => id)).toEqual(
       sections.map(({ id }) => id),
     );

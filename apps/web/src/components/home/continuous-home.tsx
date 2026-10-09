@@ -1,12 +1,17 @@
 import { useTranslations } from 'next-intl';
 
 import { sections } from '../../config/routes';
+import { ProgressiveReveal } from '../motion/progressive-reveal';
+import { ScrollProgress } from '../motion/scroll-progress';
+import { HeroSection } from './hero-section';
 
 export function ContinuousHome() {
   const t = useTranslations('Home');
   return (
     <div className="continuous-home">
-      {sections.map(({ id }, index) => (
+      <ScrollProgress />
+      <HeroSection />
+      {sections.slice(1).map(({ id }) => (
         <section
           aria-labelledby={`${id}-title`}
           className="narrative-section"
@@ -15,13 +20,11 @@ export function ContinuousHome() {
           key={id}
         >
           <div className="narrative-section__content">
-            <p className="narrative-section__eyebrow">{t(`sections.${id}.eyebrow`)}</p>
-            {index === 0 ? (
-              <h1 id={`${id}-title`}>{t(`sections.${id}.title`)}</h1>
-            ) : (
+            <ProgressiveReveal>
+              <p className="narrative-section__eyebrow">{t(`sections.${id}.eyebrow`)}</p>
               <h2 id={`${id}-title`}>{t(`sections.${id}.title`)}</h2>
-            )}
-            <p>{t(`sections.${id}.description`)}</p>
+              <p>{t(`sections.${id}.description`)}</p>
+            </ProgressiveReveal>
           </div>
         </section>
       ))}

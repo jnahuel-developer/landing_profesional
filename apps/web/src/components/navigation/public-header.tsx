@@ -37,7 +37,12 @@ export function PublicHeader() {
         <div className="desktop-navigation header-actions">
           <LanguageSelector />
           <ThemeToggle />
-          <RouteLink className="laboratory-cta" route={routes.laboratory} />
+          <RouteLink
+            className="laboratory-cta"
+            data-track-event="navigation_select"
+            data-track-target="laboratory"
+            route={routes.laboratory}
+          />
         </div>
 
         <details
@@ -59,7 +64,13 @@ export function PublicHeader() {
                 route={route}
               />
             ))}
-            <RouteLink className="laboratory-cta" onClick={closeMenu} route={routes.laboratory} />
+            <RouteLink
+              className="laboratory-cta"
+              data-track-event="navigation_select"
+              data-track-target="laboratory"
+              onClick={closeMenu}
+              route={routes.laboratory}
+            />
           </nav>
         </details>
       </Container>

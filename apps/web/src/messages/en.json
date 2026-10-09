@@ -11,8 +11,8 @@
   "Routes": {
     "home": {
       "label": "Home",
-      "title": "Nahuel Martínez",
-      "description": "Temporary introduction to the professional portfolio."
+      "title": "Software engineering for business | Nahuel Martínez",
+      "description": "Digital product design and development for sales, management, automation, data, and artificial intelligence."
     },
     "solutions": {
       "label": "Solutions",
@@ -60,11 +60,46 @@
     "siteDescription": "Temporary technical page for the professional portfolio."
   },
   "Home": {
+    "hero": {
+      "eyebrow": "Software engineering for business",
+      "title": "Systems that turn real-world operations into concrete advantages.",
+      "description": "I design and build digital products for sales, management, automation, data, and artificial intelligence.",
+      "primaryCta": "Explore the Laboratory",
+      "secondaryCta": "Let's discuss your project",
+      "capabilitiesLabel": "Core capabilities",
+      "capabilities": {
+        "product": "Product",
+        "architecture": "Architecture",
+        "development": "Development",
+        "operations": "Operations"
+      }
+    },
+    "visual": {
+      "label": "A central system connected to sales, operations, mobile application, data and artificial intelligence, inventory, and routing modules",
+      "coreEyebrow": "Core",
+      "core": "Connected system",
+      "modules": {
+        "sales": "Sales",
+        "operations": "Operations",
+        "mobile": "Mobile application",
+        "data": "Data and AI",
+        "inventory": "Inventory",
+        "routes": "Routing"
+      },
+      "details": {
+        "sales": "Orders and conversion",
+        "operations": "Coordinated workflows",
+        "mobile": "Field work",
+        "data": "Informed decisions",
+        "inventory": "Real availability",
+        "routes": "Logistics execution"
+      }
+    },
     "sections": {
       "home": {
         "eyebrow": "Software engineering for business",
-        "title": "Systems designed for real-world operations.",
-        "description": "A professional practice connecting product, architecture, development, and operations."
+        "title": "Systems that turn real-world operations into concrete advantages.",
+        "description": "I design and build digital products for sales, management, automation, data, and artificial intelligence."
       },
       "solutions": {
         "eyebrow": "Solutions",

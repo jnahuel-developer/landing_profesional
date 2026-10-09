@@ -15,9 +15,7 @@ test('renderiza las seis secciones semánticas en orden para ambos idiomas', asy
     expect(
       await page.locator('main section').evaluateAll((nodes) => nodes.map(({ id }) => id)),
     ).toEqual(sections.map(({ id }) => id));
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-      messages.Home.sections.home.title,
-    );
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(messages.Home.hero.title);
   }
 });
 

@@ -11,8 +11,8 @@
   "Routes": {
     "home": {
       "label": "Inicio",
-      "title": "Nahuel Martínez",
-      "description": "Presentación provisional del portfolio profesional."
+      "title": "Ingeniería de software para negocios | Nahuel Martínez",
+      "description": "Diseño y desarrollo de productos digitales para ventas, gestión, automatización, datos e inteligencia artificial."
     },
     "solutions": {
       "label": "Soluciones",
@@ -60,11 +60,46 @@
     "siteDescription": "Página técnica temporal del portfolio profesional."
   },
   "Home": {
+    "hero": {
+      "eyebrow": "Ingeniería de software para negocios",
+      "title": "Sistemas que convierten operaciones reales en ventajas concretas.",
+      "description": "Diseño y desarrollo productos digitales para ventas, gestión, automatización, datos e inteligencia artificial.",
+      "primaryCta": "Explorar el Laboratorio",
+      "secondaryCta": "Hablemos de tu proyecto",
+      "capabilitiesLabel": "Capacidades principales",
+      "capabilities": {
+        "product": "Producto",
+        "architecture": "Arquitectura",
+        "development": "Desarrollo",
+        "operations": "Operación"
+      }
+    },
+    "visual": {
+      "label": "Sistema central conectado con módulos de ventas, operaciones, aplicación móvil, datos e inteligencia artificial, inventario y rutas",
+      "coreEyebrow": "Núcleo",
+      "core": "Sistema conectado",
+      "modules": {
+        "sales": "Ventas",
+        "operations": "Operaciones",
+        "mobile": "Aplicación móvil",
+        "data": "Datos e IA",
+        "inventory": "Inventario",
+        "routes": "Rutas"
+      },
+      "details": {
+        "sales": "Pedidos y conversión",
+        "operations": "Flujos coordinados",
+        "mobile": "Trabajo en campo",
+        "data": "Decisiones informadas",
+        "inventory": "Disponibilidad real",
+        "routes": "Ejecución logística"
+      }
+    },
     "sections": {
       "home": {
         "eyebrow": "Ingeniería de software para negocios",
-        "title": "Sistemas pensados para operaciones reales.",
-        "description": "Una práctica profesional que conecta producto, arquitectura, desarrollo y operación."
+        "title": "Sistemas que convierten operaciones reales en ventajas concretas.",
+        "description": "Diseño y desarrollo productos digitales para ventas, gestión, automatización, datos e inteligencia artificial."
       },
       "solutions": {
         "eyebrow": "Soluciones",
