@@ -1,6 +1,6 @@
 # Contrato visual — Imágenes de carruseles ACME
 
-**Estado:** Aprobado para generación  
+**Estado:** Imágenes aprobadas y registradas como mockups; pendiente integración en MOD009
 **Fecha:** 2026-10-09  
 **Aplicación:** corrección visual de MOD009  
 
@@ -106,3 +106,5 @@ No se generará el prompt correctivo de MOD009 hasta que:
 2. el propietario haya aprobado la dirección visual y el contenido de cada escena;
 3. los archivos finales hayan sido normalizados y ubicados en las rutas previstas;
 4. se haya confirmado que ninguna imagen contiene errores de texto, marcas externas o información impropia.
+
+Los diez mockups aprobados quedaron normalizados a `1600×900 px` y registrados en [`docs/design/mockups/`](mockups/). Sus nombres y correspondencia por escena se encuentran en el [índice de diseño](README.md#carruseles-acme-aprobados). La conversión a WebP y su copia a las rutas públicas previstas forman parte de la implementación correctiva de MOD009.
