@@ -15,7 +15,6 @@ export function PublicFooter() {
           <Link className="professional-identity" href={routes.home.path}>
             Nahuel Martínez
           </Link>
-          <p>{layouts('portfolio')}</p>
           <p>{layouts('copyright')}</p>
         </div>
         <nav aria-label={navigation('secondary')} className="footer-navigation">

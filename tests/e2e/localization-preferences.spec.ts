@@ -4,7 +4,8 @@ import { expect, test } from '@playwright/test';
 import { appRoutes, primaryRoutes } from '../../apps/web/src/config/routes';
 import english from '../../apps/web/src/messages/en.json';
 import spanish from '../../apps/web/src/messages/es.json';
-const preferenceStorageKey = 'nahuelmartinez.preferences.v1';
+const preferenceStorageKey = 'nahuelmartinez.preferences.v2';
+const legacyPreferenceStorageKey = 'nahuelmartinez.preferences.v1';
 
 test('expone las nueve rutas equivalentes con lang, metadata y sección activa', async ({
   page,
@@ -71,32 +72,42 @@ test('cambia idioma conservando pathname, query, hash y preferencias visuales', 
   page,
 }) => {
   await page.goto('/soluciones?origen=e2e#detalle');
-  await page.getByRole('combobox', { name: spanish.Preferences.theme }).selectOption('dark');
-  await page.getByRole('combobox', { name: spanish.Preferences.density }).selectOption('compact');
-  await page.getByRole('combobox', { name: spanish.Preferences.motion }).selectOption('reduced');
+  await page.getByRole('button', { name: spanish.Preferences.toggleTheme }).click();
   await page.getByRole('combobox', { name: spanish.Navigation.language }).selectOption('en');
   await expect(page).toHaveURL(/\/en\/soluciones\?origen=e2e#detalle$/);
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-  await expect(page.locator('html')).toHaveAttribute('data-density', 'compact');
-  await expect(page.locator('html')).toHaveAttribute('data-motion', 'reduced');
+  await expect(page.locator('html')).toHaveAttribute('data-density', 'comfortable');
 });
 
-test('persiste tema y densidad después de recargar y recupera storage corrupto', async ({
-  page,
-}) => {
+test('persiste tema y migra de forma segura las preferencias v1', async ({ page }) => {
   await page.goto('/');
-  await page
-    .getByRole('combobox', { name: spanish.Preferences.theme })
-    .selectOption('high-contrast');
-  await page.getByRole('combobox', { name: spanish.Preferences.density }).selectOption('compact');
+  await page.getByRole('button', { name: spanish.Preferences.toggleTheme }).click();
   await page.reload();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'high-contrast');
-  await expect(page.locator('html')).toHaveAttribute('data-density', 'compact');
-
-  await page.evaluate((key) => localStorage.setItem(key, '{valor-corrupto'), preferenceStorageKey);
-  await page.reload();
-  await expect(page.locator('html')).toHaveAttribute('data-theme-preference', 'system');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await expect(page.locator('html')).toHaveAttribute('data-density', 'comfortable');
+
+  await page.evaluate(
+    ({ current, legacy }) => {
+      localStorage.removeItem(current);
+      localStorage.setItem(
+        legacy,
+        JSON.stringify({
+          version: 1,
+          theme: 'high-contrast',
+          density: 'compact',
+          motion: 'reduced',
+        }),
+      );
+    },
+    { current: preferenceStorageKey, legacy: legacyPreferenceStorageKey },
+  );
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.locator('html')).toHaveAttribute('data-density', 'comfortable');
+  await expect(page.locator('html')).toHaveAttribute('data-motion-preference', 'system');
+  await expect(
+    page.evaluate((key) => localStorage.getItem(key), legacyPreferenceStorageKey),
+  ).resolves.toBeNull();
 });
 
 test('sigue color de sistema sólo con tema system', async ({ page }) => {
@@ -105,19 +116,18 @@ test('sigue color de sistema sólo con tema system', async ({ page }) => {
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await page.emulateMedia({ colorScheme: 'dark' });
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-  await page.getByRole('combobox', { name: spanish.Preferences.theme }).selectOption('light');
+  await page.getByRole('button', { name: spanish.Preferences.toggleTheme }).click();
   await page.emulateMedia({ colorScheme: 'dark' });
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
 });
 
-test('reduce movimiento por sistema y por elección explícita', async ({ page }) => {
+test('reduce movimiento exclusivamente por el sistema', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'reduced');
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'full');
-  await page.getByRole('combobox', { name: spanish.Preferences.motion }).selectOption('reduced');
-  await expect(page.locator('html')).toHaveAttribute('data-motion', 'reduced');
+  await expect(page.getByText(/Movimiento|Motion/)).toHaveCount(0);
 });
 
 test('aplica apariencia antes de hidratación y no emite errores de hidratación', async ({
@@ -132,48 +142,46 @@ test('aplica apariencia antes de hidratación y no emite errores de hidratación
       localStorage.setItem(
         key,
         JSON.stringify({
-          version: 1,
-          theme: 'high-contrast',
-          density: 'compact',
-          motion: 'reduced',
+          version: 2,
+          theme: 'dark',
         }),
       ),
     { key: preferenceStorageKey },
   );
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('head script#appearance-bootstrap')).toHaveCount(1);
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'high-contrast');
-  await expect(page.locator('html')).toHaveAttribute('data-density', 'compact');
-  await expect(page.locator('html')).toHaveAttribute('data-motion', 'reduced');
+  await expect(page.locator('head script#appearance-bootstrap')).toHaveCount(0);
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.locator('html')).toHaveAttribute('data-density', 'comfortable');
   await page.waitForLoadState('networkidle');
-  expect(consoleErrors.filter((message) => /hydration|did not match/i.test(message))).toEqual([]);
+  await page.getByRole('link', { name: spanish.Routes.solutions.label }).first().click();
+  await page.getByRole('button', { name: spanish.Preferences.toggleTheme }).click();
+  await page.getByRole('combobox', { name: spanish.Navigation.language }).selectOption('en');
+  await page.reload();
+  expect(consoleErrors).toEqual([]);
 });
 
-test('opera idioma, tema, densidad y movimiento con teclado', async ({ page }) => {
+test('opera idioma y tema con teclado sin exponer densidad ni movimiento', async ({ page }) => {
   await page.goto('/');
-  for (const name of [
-    spanish.Navigation.language,
-    spanish.Preferences.theme,
-    spanish.Preferences.density,
-    spanish.Preferences.motion,
-  ]) {
-    const control = page.getByRole('combobox', { name });
-    await control.focus();
-    await page.keyboard.press('ArrowDown');
-    await expect(control).toBeFocused();
-  }
+  const language = page.getByRole('combobox', { name: spanish.Navigation.language });
+  await language.focus();
+  await page.keyboard.press('ArrowDown');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  const theme = page.getByRole('button', { name: english.Preferences.toggleTheme });
+  await theme.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.getByText(/Densidad|Density|Movimiento|Motion/)).toHaveCount(0);
 });
 
 for (const locale of ['es', 'en'] as const) {
-  for (const theme of ['light', 'dark', 'high-contrast'] as const) {
+  for (const theme of ['light', 'dark'] as const) {
     test(`axe sin violaciones críticas en ${locale}/${theme}`, async ({ page }) => {
+      await page.emulateMedia({ colorScheme: 'light' });
       await page.goto(locale === 'en' ? '/en' : '/');
-      await page
-        .getByRole('combobox', {
-          name: locale === 'en' ? english.Preferences.theme : spanish.Preferences.theme,
-        })
-        .selectOption(theme);
+      if (theme === 'dark') {
+        const messages = locale === 'en' ? english : spanish;
+        await page.getByRole('button', { name: messages.Preferences.toggleTheme }).click();
+      }
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations.filter(({ impact }) => impact === 'critical')).toEqual([]);
     });
@@ -203,7 +211,7 @@ test('mantiene admin fuera de navegación pública y conserva slug e historial',
   await expect(page.getByRole('link', { name: spanish.Routes.admin.label })).toHaveCount(0);
   await page.getByRole('combobox', { name: spanish.Navigation.language }).selectOption('en');
   await expect(page).toHaveURL(/\/en\/contacto$/);
-  await page.getByRole('combobox', { name: english.Preferences.theme }).selectOption('dark');
+  await page.getByRole('button', { name: english.Preferences.toggleTheme }).click();
   await page.getByRole('link', { name: english.Routes.home.label }).click();
   await expect(page).toHaveURL(/\/en$/);
   await page.goBack();

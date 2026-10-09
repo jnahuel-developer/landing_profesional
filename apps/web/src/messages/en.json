@@ -82,17 +82,11 @@
     "appearance": "Appearance preferences",
     "spanish": "Spanish",
     "english": "English",
-    "theme": "Theme",
-    "density": "Density",
-    "motion": "Motion",
-    "themes": {
-      "system": "System",
-      "light": "Light",
-      "dark": "Dark",
-      "high-contrast": "High contrast"
-    },
-    "densities": { "comfortable": "Comfortable", "compact": "Compact" },
-    "motions": { "system": "System", "reduced": "Reduced" }
+    "toggleTheme": "Toggle light or dark theme",
+    "useTheme": {
+      "light": "Use light theme",
+      "dark": "Use dark theme"
+    }
   },
   "Common": {
     "unavailable": "Content temporarily unavailable",

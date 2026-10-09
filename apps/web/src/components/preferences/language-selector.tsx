@@ -9,7 +9,6 @@ import { locales, type Locale } from '../../i18n/routing';
 
 export function LanguageSelector() {
   const locale = useLocale() as Locale;
-  const t = useTranslations('Preferences');
   const navigation = useTranslations('Navigation');
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -24,13 +23,12 @@ export function LanguageSelector() {
 
   return (
     <label className="language-selector">
-      <span>{navigation('language')}</span>
+      <span className="visually-hidden">{navigation('language')}</span>
       <select onChange={changeLocale} value={locale}>
         {locales.map((option) => {
-          const label = option === 'es' ? t('spanish') : t('english');
           return (
             <option key={option} value={option}>
-              {label}
+              {option.toUpperCase()}
             </option>
           );
         })}
