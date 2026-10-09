@@ -24,11 +24,11 @@ La ejecución de estas mods se rige por [`AGENTS.md`](../../../AGENTS.md) y el [
 - [MOD005 — Layout, navegación y pie global](MOD005.md)
 - [MOD006 — Internacionalización, preferencias y accesibilidad](MOD006.md)
 
-## Bloque 3 — Web comercial completa
+## Bloque 3 — Web comercial continua
 
-- [MOD007 — Inicio y posicionamiento profesional](MOD007.md)
-- [MOD008 — Soluciones, experiencia y metodología](MOD008.md)
-- [MOD009 — Sobre mí, contacto, privacidad y laboratorio](MOD009.md)
+- [MOD007 — Shell continuo, inicio y posicionamiento profesional](MOD007.md)
+- [MOD008 — Secciones de soluciones, experiencia y metodología](MOD008.md)
+- [MOD009 — Secciones finales, privacidad y laboratorio](MOD009.md)
 
 ## Bloque 4 — Datos permanentes y panel interno
 

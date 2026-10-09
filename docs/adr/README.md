@@ -21,5 +21,6 @@
 | [ADR-017](ADR-017-respaldo-local.md) | Respaldo local del esquema `platform` | Aceptada |
 | [ADR-018](ADR-018-catalogo-de-simulaciones.md) | Catálogo versionado y adaptadores simulados | Aceptada |
 | [ADR-019](ADR-019-documentos-imprimibles.md) | Documentos HTML imprimibles sin generador PDF | Aceptada |
+| [ADR-020](ADR-020-experiencia-publica-continua.md) | Página comercial continua, navegación por secciones y movimiento progresivo | Aceptada |
 
 Las decisiones aceptadas son obligatorias hasta que otro ADR las sustituya explícitamente.

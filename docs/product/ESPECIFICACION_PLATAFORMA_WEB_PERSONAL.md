@@ -3,7 +3,7 @@
 **Proyecto:** Web personal y portfolio profesional  
 **Posicionamiento:** Ingeniería de software para negocios  
 **Tipo de documento:** Especificación general de producto, experiencia, arquitectura y operación  
-**Versión:** 1.5  
+**Versión:** 1.6  
 **Estado:** Aprobado para inicio de proyecto  
 **Idioma base:** Español  
 **Enfoque de interfaz:** Desktop-first, orientación landscape  
@@ -187,24 +187,25 @@ Los indicadores deberán definirse con valores objetivo durante la instrumentaci
 
 ```text
 Plataforma
-├── Inicio
-├── Soluciones
-│   ├── Sistemas de gestión
-│   ├── Automatización e integraciones
-│   ├── Aplicaciones web y móviles
-│   ├── Datos, analítica e IA
-│   └── Infraestructura y operación
-├── Experiencia / Casos
-│   ├── Presentación de ACME Café
-│   └── Presentación de ACME Logística
-├── Cómo trabajo
+├── Experiencia comercial continua
+│   ├── Inicio
+│   ├── Soluciones
+│   │   ├── Sistemas de gestión
+│   │   ├── Automatización e integraciones
+│   │   ├── Aplicaciones web y móviles
+│   │   ├── Datos, analítica e IA
+│   │   └── Infraestructura y operación
+│   ├── Experiencia / Casos
+│   │   ├── Presentación de ACME Café
+│   │   └── Presentación de ACME Logística
+│   ├── Cómo trabajo
+│   ├── Sobre mí
+│   └── Contacto
 ├── Laboratorio
 │   ├── Catálogo de demos
 │   ├── Lanzador de experiencia
 │   ├── Contenedor común de demo
 │   └── Ayuda y recorridos
-├── Sobre mí
-├── Contacto
 ├── Información legal y privacidad
 └── Estado de servicios, opcional
 ```
@@ -215,17 +216,20 @@ La sección **Experiencia / Casos** cumplirá una función narrativa y comercial
 
 ```text
 https://dominio.tld/
-https://dominio.tld/soluciones
-https://dominio.tld/experiencia
-https://dominio.tld/como-trabajo
-https://dominio.tld/sobre-mi
-https://dominio.tld/contacto
-https://lab.dominio.tld/
-https://lab.dominio.tld/demo/{demo}
-https://lab.dominio.tld/demo/{demo}/{modulo-opcional}
+https://dominio.tld/#solutions
+https://dominio.tld/#experience
+https://dominio.tld/#process
+https://dominio.tld/#about
+https://dominio.tld/#contact
+https://dominio.tld/privacidad
+https://dominio.tld/lab
+https://dominio.tld/lab/demo/{demo}
+https://dominio.tld/lab/demo/{demo}/{modulo-opcional}
 ```
 
-La separación por subdominio es recomendada para aislar políticas operativas, caché y seguridad del laboratorio. El sitio y el laboratorio compartirán diseño, identidad y navegación contextual. También podrá implementarse inicialmente bajo `/lab` si simplifica el despliegue; la decisión deberá quedar encapsulada en configuración y no en enlaces rígidos.
+Las anclas de la experiencia comercial serán estables e independientes del idioma. El contenido y las etiquetas se localizarán, pero los identificadores `home`, `solutions`, `experience`, `process`, `about` y `contact` no cambiarán. Las antiguas rutas comerciales independientes se retirarán o redirigirán a la sección equivalente y no constituirán copias canónicas.
+
+El laboratorio se implementará bajo `/lab`, de acuerdo con ADR-001. El sitio y el laboratorio compartirán diseño, identidad y navegación contextual.
 
 ### 7.3. Contenido del sitio público
 
@@ -253,6 +257,10 @@ La cabecera principal será persistente en el sitio público y contendrá:
 - selector de idioma;
 - selector de tema;
 - indicador de sección activa.
+
+La navegación comercial operará sobre una única página mediante anclas. La cabecera tendrá altura acotada y no mostrará etiquetas redundantes alrededor de los controles. El selector de idioma presentará únicamente el código `ES` o `EN`; el control de tema alternará claro y oscuro mediante iconos de sol y luna con nombres accesibles. Densidad y movimiento no se expondrán como preferencias públicas.
+
+La sección activa se calculará mediante `IntersectionObserver`. La navegación iniciada por el visitante deberá producir un enlace profundo utilizable y respetar el historial. Las actualizaciones automáticas motivadas por el scroll podrán reemplazar el fragmento actual, pero no crearán una entrada nueva por cada sección observada.
 
 En el laboratorio, la navegación se adaptará para priorizar la experiencia sin perder una salida clara al sitio principal. Deberá incluir:
 
@@ -310,7 +318,7 @@ El diseño deberá aprovechar el ancho disponible mediante:
 - tableros con grillas;
 - áreas de datos y contexto simultáneas;
 - simuladores de dispositivos móviles integrados dentro de la vista desktop;
-- densidad informativa regulable.
+- densidad informativa adecuada a cada superficie.
 
 Aunque la primera entrega no será mobile-first, la arquitectura de componentes no deberá impedir una adaptación posterior. En viewports menores al mínimo soportado se ofrecerá una versión de contingencia usable: contenido comercial refluido y, para las demos complejas, un aviso que recomiende escritorio junto con acceso limitado cuando sea viable.
 
@@ -325,7 +333,7 @@ Se implementará un sistema de diseño compartido con:
 - patrones comunes para tablas, filtros, paneles, mapas, gráficos, timelines y modales;
 - estados normalizados: vacío, carga, error, éxito, advertencia, sin conexión y datos desactualizados;
 - documentación de componentes y variantes;
-- pruebas visuales de los componentes críticos.
+- revisión visual manual de los componentes críticos por parte del propietario.
 
 Las demos podrán extender tokens de marca, pero no redefinir comportamientos base ni degradar accesibilidad.
 
@@ -333,6 +341,9 @@ Las demos podrán extender tokens de marca, pero no redefinir comportamientos ba
 
 Las animaciones deberán explicar cambios de estado, continuidad espacial y actividad del sistema. Se contemplarán:
 
+- revelado progresivo de secciones durante el scroll;
+- escenas parcialmente fijas que evolucionen sin bloquear el desplazamiento natural;
+- respuesta de profundidad e iluminación en tarjetas mediante puntero y foco;
 - transiciones entre módulos;
 - actualización de indicadores;
 - actividad simulada en tiempo real;
@@ -341,6 +352,10 @@ Las animaciones deberán explicar cambios de estado, continuidad espacial y acti
 - microinteracciones de confirmación.
 
 Se respetará `prefers-reduced-motion`. Ninguna información esencial dependerá exclusivamente del movimiento.
+
+El sitio no utilizará scroll-jacking, smooth-scroll global, WebGL, video de fondo ni multimedia pesada. El desplazamiento seguirá siendo nativo. Las animaciones se implementarán como mejora progresiva mediante CSS, SVG, `IntersectionObserver` y componentes cliente acotados. Los efectos ligados continuamente al puntero o al scroll deberán minimizar trabajo de layout, priorizar `transform` y `opacity`, y desactivarse o simplificarse cuando el dispositivo o la preferencia del usuario lo requieran.
+
+Los efectos hover tendrán una representación equivalente mediante foco y no contendrán información exclusiva. En dispositivos táctiles se utilizará una variante estable sin inclinación dependiente del puntero.
 
 ### 9.5. Estados y feedback
 
@@ -451,10 +466,9 @@ La plataforma soportará como mínimo:
 
 - tema claro;
 - tema oscuro;
-- opción de seguir la preferencia del sistema;
 - extensión de identidad por demo mediante tokens acotados.
 
-La preferencia se almacenará en el navegador y, cuando exista una sesión de demo, podrá asociarse también a ella. La aplicación evitará destellos de tema incorrecto durante la carga inicial.
+En ausencia de una elección persistida, la primera visita podrá resolver el tema inicial desde la preferencia del sistema. La interfaz ofrecerá después un conmutador binario entre claro y oscuro, sin exponer una tercera opción de sistema. La preferencia explícita se almacenará en el navegador y, cuando exista una sesión de demo, podrá asociarse también a ella. La aplicación evitará destellos de tema incorrecto durante la carga inicial y no insertará scripts ejecutables durante renderizados cliente.
 
 Los contrastes deberán cumplir WCAG 2.2 nivel AA. El color no será el único medio para comunicar estado.
 
@@ -1040,6 +1054,8 @@ La plataforma pública incluirá:
 - imágenes optimizadas con dimensiones explícitas;
 - contenido estable y sin duplicaciones innecesarias.
 
+Los fragmentos de la página comercial no se tratarán como documentos independientes: no aparecerán en el sitemap ni tendrán canonical o metadata propios. La home localizada concentrará la metadata y los datos estructurados de la narrativa comercial.
+
 El laboratorio podrá permitir indexación solo de sus páginas narrativas o catálogo, y bloquear rutas de sesión y módulos interactivos mediante metadatos y cabeceras apropiadas.
 
 ---
@@ -1053,7 +1069,7 @@ El laboratorio podrá permitir indexación solo de sus páginas narrativas o cat
 - **Integración:** módulos con PostgreSQL y casos de integración simulada.
 - **Contratos:** compatibilidad frontend/backend y contratos de simulación.
 - **End-to-end:** recorridos comerciales, inicio de demo, cambio de rol, reinicio, sincronización de interfaces e impresión cuando corresponda.
-- **Visuales:** páginas clave, temas, idiomas y resoluciones soportadas.
+- **Revisión visual manual:** páginas clave, temas, idiomas, movimiento y resoluciones soportadas; será realizada por el propietario fuera de la automatización de los agentes.
 - **Seguridad:** análisis estático, dependencias, imágenes y pruebas focalizadas.
 - **Rendimiento:** presupuestos de frontend, carga de API y concurrencia demo.
 - **Mantenimiento:** expiración de sesiones, limpieza diaria y respaldo local de datos permanentes.
@@ -1066,6 +1082,8 @@ Los datos semilla deberán ser deterministas, versionados y libres de datos pers
 
 - navegación desde Inicio hacia Contacto;
 - navegación desde Inicio hacia Laboratorio;
+- enlace profundo a cada sección comercial y seguimiento de sección activa;
+- historial Atrás/Adelante después de navegar entre secciones;
 - creación y continuidad de una sesión demo vigente;
 - aislamiento entre dos sesiones simultáneas;
 - selección y cambio de perspectiva;
@@ -1216,7 +1234,8 @@ Una funcionalidad se considerará terminada cuando:
 
 ### Fase 2 — Sitio profesional público
 
-- Inicio, Soluciones, Experiencia, Cómo trabajo, Sobre mí y Contacto;
+- experiencia comercial continua con Inicio, Soluciones, Experiencia, Cómo trabajo, Sobre mí y Contacto;
+- navegación persistente por anclas, escenas progresivas y tarjetas interactivas;
 - narrativa y llamados a la acción;
 - SEO y metadatos sociales;
 - analítica del embudo;
@@ -1291,6 +1310,8 @@ La plataforma base se considerará aceptada cuando se cumplan todos los criterio
 
 - [ ] El sitio comunica de forma visible el posicionamiento “Ingeniería de software para negocios”.
 - [ ] Existen las secciones públicas definidas y su navegación funciona mediante teclado y mouse.
+- [ ] Las secciones comerciales forman un recorrido continuo y admiten enlace profundo.
+- [ ] La sección activa se refleja en la navegación sin saturar el historial.
 - [ ] El acceso al laboratorio es visible desde el sitio público.
 - [ ] El laboratorio dispone de catálogo, lanzador y contenedor común de demos.
 - [ ] El usuario puede regresar del laboratorio al sitio principal sin perder orientación.
@@ -1300,10 +1321,14 @@ La plataforma base se considerará aceptada cuando se cumplan todos los criterio
 ### 30.2. Experiencia y diseño
 
 - [ ] La experiencia está optimizada para 1440 × 900 px y es completamente usable desde 1280 × 720 px.
-- [ ] Los temas claro, oscuro y sistema funcionan sin pérdida de contraste ni destello inicial significativo.
+- [ ] Los temas claro y oscuro funcionan sin pérdida de contraste ni destello inicial significativo; la primera visita puede tomar la preferencia del sistema.
+- [ ] Idioma y tema utilizan controles compactos; densidad y movimiento no se exponen como preferencias públicas.
+- [ ] La cabecera permanece fija sin ocultar el destino de las anclas y el pie utiliza únicamente el espacio necesario.
 - [ ] Español e inglés están completos para el núcleo de plataforma.
 - [ ] Los componentes críticos incluyen estados de carga, vacío, error y éxito.
 - [ ] La reducción de movimiento es respetada.
+- [ ] El contenido permanece completo y operable sin animaciones, hover o entrada de precisión.
+- [ ] No existen errores de consola o hidratación durante carga, scroll, cambio de idioma o cambio de tema.
 - [ ] Existe una experiencia de contingencia comprensible para viewports menores.
 - [ ] Las demos pueden extender su identidad sin romper el sistema de diseño común.
 
@@ -1485,7 +1510,7 @@ Este documento deberá complementarse con:
 
 ## 34. Aprobación y control de cambios
 
-La versión 1.5 establece la línea base revisada de la plataforma general e incorpora el cierre de las Rondas 1, 2, 3 y 4. Todo cambio que altere el posicionamiento, alcance, modelo de sesiones, arquitectura de despliegue, stack aprobado, tratamiento de datos, operación, simulaciones, objetivos no funcionales o criterios de aceptación deberá registrarse con:
+La versión 1.6 establece la línea base revisada de la plataforma general, incorpora el cierre de las Rondas 1, 2, 3 y 4 y adopta mediante ADR-020 la experiencia comercial continua, la navegación por secciones y el movimiento progresivo. Todo cambio que altere el posicionamiento, alcance, modelo de sesiones, arquitectura de despliegue, stack aprobado, tratamiento de datos, operación, simulaciones, objetivos no funcionales o criterios de aceptación deberá registrarse con:
 
 - descripción del cambio;
 - motivación;
