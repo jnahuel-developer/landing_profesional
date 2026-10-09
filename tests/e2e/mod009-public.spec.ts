@@ -51,6 +51,7 @@ for (const [prefix, messages] of [
   for (const documentPath of ['/', '/privacidad', '/lab'] as const) {
     const path = `${prefix}${documentPath === '/' ? (prefix ? '' : '/') : documentPath}`;
     test(`smoke, SEO, consola y axe ${path}`, async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: 'reduce' });
       const errors: string[] = [];
       const external: string[] = [];
       page.on('console', (message) => {

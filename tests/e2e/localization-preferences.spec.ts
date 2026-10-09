@@ -167,7 +167,7 @@ test('opera idioma y tema con teclado sin exponer densidad ni movimiento', async
 for (const locale of ['es', 'en'] as const) {
   for (const theme of ['light', 'dark'] as const) {
     test(`axe sin violaciones críticas en ${locale}/${theme}`, async ({ page }) => {
-      await page.emulateMedia({ colorScheme: 'light' });
+      await page.emulateMedia({ colorScheme: 'light', reducedMotion: 'reduce' });
       await page.goto(locale === 'en' ? '/en' : '/');
       if (theme === 'dark') {
         const messages = locale === 'en' ? english : spanish;

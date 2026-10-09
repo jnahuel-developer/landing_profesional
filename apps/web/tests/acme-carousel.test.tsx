@@ -193,8 +193,8 @@ const imageNames = {
     '01-operations-overview',
     '02-connected-sale',
     '03-stock-replenishment',
-    '04-reservations-tables',
-    '05-assisted-service',
+    '04-reservations-tables-v2',
+    '05-assisted-service-v2',
   ],
   'acme-logistica': [
     '01-control-center',
@@ -239,7 +239,10 @@ describe('activos productivos aprobados', () => {
       expect(readdirSync(directory).sort()).toEqual(names.map((name) => `${name}.webp`).sort());
       for (const name of names) {
         const png = readFileSync(
-          resolve('../../docs/design/mockups', `${demo}-carousel-${name}-v2.png`),
+          resolve(
+            '../../docs/design/mockups',
+            `${demo}-carousel-${name.replace(/-v2$/, '')}-v2.png`,
+          ),
         );
         expect(png.subarray(1, 4).toString()).toBe('PNG');
         expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1600, 900]);

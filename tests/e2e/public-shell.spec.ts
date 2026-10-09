@@ -181,6 +181,7 @@ test('mantiene /dev/ui libre de errores de consola e hidratación', async ({ pag
 
 for (const path of ['/', '/en', '/lab', '/admin']) {
   test(`no presenta violaciones críticas de axe en ${path}`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto(path);
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations.filter(({ impact }) => impact === 'critical')).toEqual([]);

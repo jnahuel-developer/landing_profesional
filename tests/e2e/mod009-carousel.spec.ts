@@ -1,4 +1,5 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { expect, test } from '@playwright/test';
 import spanish from '../../apps/web/src/messages/es.json';
 import english from '../../apps/web/src/messages/en.json';
@@ -74,8 +75,8 @@ const imageNames = {
     '01-operations-overview',
     '02-connected-sale',
     '03-stock-replenishment',
-    '04-reservations-tables',
-    '05-assisted-service',
+    '04-reservations-tables-v2',
+    '05-assisted-service-v2',
   ],
   logistics: [
     '01-control-center',
@@ -370,3 +371,54 @@ for (const [path, messages] of [
     expect(external).toEqual([]);
   });
 }
+
+test('activos versionados conservan bytes y metadatos sin rutas antiguas', () => {
+  const hashes = {
+    'acme-cafe/01-operations-overview.webp':
+      'f278574778bdf205335844492b04399b129d9e682a17c9161c06cd1e4fa9a74c',
+    'acme-cafe/02-connected-sale.webp':
+      'f3f32e93ea2ae910b3c078509943d07d109cbf877ee94985b699095c80ed3030',
+    'acme-cafe/03-stock-replenishment.webp':
+      '824ee10a5a6886614f1b0fc3c412f7e98115f769b7ee8662ad78bdeeb9651d59',
+    'acme-cafe/04-reservations-tables-v2.webp':
+      '27e8884905bcc412243e6ed7560877581ed3046454124ced118e7dd9240d902a',
+    'acme-cafe/05-assisted-service-v2.webp':
+      '9abc8fa1fdfae805d6c9ba8e9f211167b7e28c14c57d7f54ce0c0c0009fdb8c7',
+    'acme-logistica/01-control-center.webp':
+      'a62f5057cad015020fe60d791af33b2087637f82ba08bbea2f68d193c0eceff9',
+    'acme-logistica/02-route-planning.webp':
+      '1f7db04ea9877f11096b049973b6ecf575361590bacc9842f0d5688839e35af1',
+    'acme-logistica/03-fleet-telemetry.webp':
+      'e7e8132e9be514b075b9a01f48c28f150377fe5173f0812d07e7343a0747d049',
+    'acme-logistica/04-coordinated-incident.webp':
+      '2540151ffd78962870986a89cec2c604e5c54add2ca95c5e5a7c6a9c2b7a5253',
+    'acme-logistica/05-driver-app.webp':
+      'f832f05481dadfba243abd6952f41cdb78889b3bb2f2d9a293c69eff71c4d3a9',
+  };
+  const base = 'apps/web/public/images/experience/';
+  for (const name of ['04-reservations-tables', '05-assisted-service']) {
+    expect(existsSync(`${base}acme-cafe/${name}.webp`)).toBe(false);
+  }
+  for (const [path, hash] of Object.entries(hashes)) {
+    const file = readFileSync(base + path);
+    expect(createHash('sha256').update(file).digest('hex')).toBe(hash);
+    expect(file.length).toBeLessThanOrEqual(400000);
+    expect(file.subarray(0, 4).toString()).toBe('RIFF');
+    expect(file.subarray(8, 12).toString()).toBe('WEBP');
+    const chunks = new Map<string, Buffer>();
+    for (let offset = 12; offset < file.length;) {
+      const size = file.readUInt32LE(offset + 4);
+      chunks.set(
+        file.subarray(offset, offset + 4).toString(),
+        file.subarray(offset + 8, offset + 8 + size),
+      );
+      offset += 8 + size + (size % 2);
+    }
+    const dimensions = chunks.get('VP8X');
+    expect(dimensions).toBeDefined();
+    if (!dimensions) throw new Error('Missing WebP extended header');
+    expect([dimensions.readUIntLE(4, 3) + 1, dimensions.readUIntLE(7, 3) + 1]).toEqual([1600, 900]);
+    expect(dimensions[0]! & 0x10).toBe(0);
+    expect(chunks.get('ICCP')?.subarray(16, 20).toString()).toBe('RGB ');
+  }
+});

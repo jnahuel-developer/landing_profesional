@@ -58,8 +58,8 @@ Dirección visual: producto SaaS comercial de alta fidelidad, identidad cálida,
 | 1 | Resumen operativo | ventas del día, pedidos activos, ocupación y una lectura ejecutiva inmediata | `apps/web/public/images/experience/acme-cafe/01-operations-overview.webp` |
 | 2 | Venta conectada | flujo POS con productos, pedido actual y total, mostrando conexión entre caja y operación | `apps/web/public/images/experience/acme-cafe/02-connected-sale.webp` |
 | 3 | Stock y reposición | inventario reconocible, niveles de existencias y una alerta de reposición | `apps/web/public/images/experience/acme-cafe/03-stock-replenishment.webp` |
-| 4 | Reservas y mesas | plano simple del salón, estados de mesas y agenda breve | `apps/web/public/images/experience/acme-cafe/04-reservations-tables.webp` |
-| 5 | Atención asistida | conversación contextual, pedido asociado y una sugerencia útil de asistencia | `apps/web/public/images/experience/acme-cafe/05-assisted-service.webp` |
+| 4 | Reservas y mesas | plano simple del salón, estados de mesas y agenda breve | `apps/web/public/images/experience/acme-cafe/04-reservations-tables-v2.webp` |
+| 5 | Atención asistida | conversación contextual, pedido asociado y una sugerencia útil de asistencia | `apps/web/public/images/experience/acme-cafe/05-assisted-service-v2.webp` |
 
 ## 6. ACME Logística
 
@@ -117,4 +117,4 @@ No se generará el prompt correctivo de MOD009 hasta que:
 
 Los diez mockups aprobados quedaron normalizados a `1600×900 px` y registrados en [`docs/design/mockups/`](mockups/). Sus nombres y correspondencia por escena se encuentran en el [índice de diseño](README.md#carruseles-acme-aprobados). La conversión a WebP y su copia a las rutas públicas previstas quedaron integradas mediante la implementación correctiva de MOD009.
 
-En la iteración 02 el propietario revisó y volvió a aprobar `acme-cafe-carousel-04-reservations-tables-v2.png` y `acme-cafe-carousel-05-assisted-service-v2.png`. Se conservaron como fuentes inmutables y se regeneraron únicamente `acme-cafe/04-reservations-tables.webp` y `acme-cafe/05-assisted-service.webp`: 1600×900, sRGB, sin alfa, sin recorte ni deformación y dentro del objetivo de 150–300 KB. Los otros ocho PNG v2 y WebP no cambiaron.
+En la iteración 02 el propietario revisó y volvió a aprobar `acme-cafe-carousel-04-reservations-tables-v2.png` y `acme-cafe-carousel-05-assisted-service-v2.png`. Se conservaron como fuentes inmutables y se regeneraron únicamente `acme-cafe/04-reservations-tables-v2.webp` y `acme-cafe/05-assisted-service-v2.webp`: 1600×900, sRGB, sin alfa, sin recorte ni deformación y dentro del objetivo de 150–300 KB. Los otros ocho PNG v2 y WebP no cambiaron.

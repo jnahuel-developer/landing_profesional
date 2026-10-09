@@ -138,8 +138,8 @@ const demoScenes = {
     { id: 'overview', src: '/images/experience/acme-cafe/01-operations-overview.webp' },
     { id: 'connected', src: '/images/experience/acme-cafe/02-connected-sale.webp' },
     { id: 'resources', src: '/images/experience/acme-cafe/03-stock-replenishment.webp' },
-    { id: 'coordination', src: '/images/experience/acme-cafe/04-reservations-tables.webp' },
-    { id: 'field', src: '/images/experience/acme-cafe/05-assisted-service.webp' },
+    { id: 'coordination', src: '/images/experience/acme-cafe/04-reservations-tables-v2.webp' },
+    { id: 'field', src: '/images/experience/acme-cafe/05-assisted-service-v2.webp' },
   ],
   logistics: [
     { id: 'overview', src: '/images/experience/acme-logistica/01-control-center.webp' },
