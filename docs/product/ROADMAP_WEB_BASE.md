@@ -1,7 +1,7 @@
 # Roadmap de implementación de la web base
 
 **Proyecto:** Web profesional y portfolio interactivo de Nahuel Martínez  
-**Versión:** 1.0  
+**Versión:** 1.1  
 **Estado:** Aprobado para planificación de mods  
 **Fecha:** 2026-10-06  
 **Alcance:** Desde el bootstrap inicial hasta la web base preparada para incorporar ACME Café y ACME Logística  
@@ -70,7 +70,7 @@ El detalle implementable de cada rama se encuentra en [`mods/`](mods/README.md).
 |---|---|---|---|
 | 1 | Fundación ejecutable | `mod001`–`mod003` | Web, API, base y CI funcionando |
 | 2 | Sistema visual y shell global | `mod004`–`mod006` | Experiencia visual, navegación e i18n comunes |
-| 3 | Web comercial completa | `mod007`–`mod009` | Portfolio público terminado |
+| 3 | Web comercial continua | `mod007`–`mod009` | Portfolio público terminado |
 | 4 | Datos permanentes y panel interno | `mod010`–`mod013` | Contactos, analítica y administración operativos |
 | 5 | Plataforma base del laboratorio | `mod014`–`mod016` | Sesiones y marco común de demos listos |
 | 6 | Consolidación de la web base | `mod017`–`mod019` | Versión candidata a `v0.1.0` |
@@ -136,10 +136,10 @@ Aplicaciones técnicas funcionales sin experiencia visual definitiva.
 - estructura desktop-first orientada a landscape;
 - contingencia responsive para pantallas menores;
 - navegación global y estado de sección activa;
-- temas y densidades aprobados;
+- temas y densidades disponibles en el sistema base; su exposición pública se simplificará en `mod007`;
 - español como idioma predeterminado sin prefijo;
 - inglés bajo `/en`;
-- persistencia de idioma, tema y preferencias visuales;
+- persistencia de idioma, tema y preferencias visuales de base;
 - estados de foco, carga, error y contenido vacío reutilizables.
 
 ### Pruebas y controles
@@ -158,7 +158,7 @@ Existe un shell visual consistente y accesible sobre el cual pueden construirse 
 
 ---
 
-## 7. Bloque 3 — Web comercial completa
+## 7. Bloque 3 — Web comercial continua
 
 ### Inicio
 
@@ -166,18 +166,23 @@ Shell funcional con rutas provisionales o sin contenido final.
 
 ### Mods previstas
 
-- `mod007`: inicio y posicionamiento profesional.
-- `mod008`: soluciones, experiencia y metodología.
-- `mod009`: sobre mí, contacto, privacidad y presentación del laboratorio.
+- `mod007`: shell público continuo, inicio y posicionamiento profesional.
+- `mod008`: secciones de soluciones, experiencia y metodología.
+- `mod009`: secciones de sobre mí y contacto, privacidad y presentación del laboratorio.
 
 ### Funcionalidades esperadas
 
-- página de inicio completa;
+- página comercial única con recorrido narrativo continuo;
 - posicionamiento **“Ingeniería de software para negocios”**;
 - secciones de soluciones, experiencia, cómo trabajo y sobre mí;
+- cabecera persistente con navegación por anclas y sección activa;
+- selector compacto de idioma y conmutador binario claro/oscuro;
+- densidad fija y reducción de movimiento resuelta desde el sistema, sin controles públicos;
+- transiciones de entrada, escenas ligadas al scroll y tarjetas interactivas como mejora progresiva;
 - presentación de ACME Café y ACME Logística sin implementar sus dominios;
 - formulario visual de contacto preparado para su integración;
 - página de privacidad;
+- pie legal compacto precedido por un cierre comercial en Contacto;
 - llamados a la acción consistentes;
 - títulos, descripciones, canonical, `hreflang`, sitemap y robots.txt;
 - páginas de error y estados no encontrados;
@@ -185,17 +190,20 @@ Shell funcional con rutas provisionales o sin contenido final.
 
 ### Pruebas y controles
 
-- navegación de todas las páginas públicas;
+- navegación por anclas, enlace profundo y sección activa;
+- historial del navegador y conservación de contexto al cambiar de idioma;
 - enlaces internos y llamados a la acción;
 - renderizado de ambos idiomas;
 - metadatos y SEO técnico;
 - accesibilidad de páginas públicas;
+- reducción de movimiento y operabilidad sin animaciones;
+- ausencia de errores de consola e hidratación;
 - smoke tests de recorridos comerciales;
 - validación funcional de la estructura aprobada; la comparación visual será realizada por el propietario.
 
 ### Fin
 
-El portfolio comunica la propuesta profesional completa y permite recorrer todo el contenido comercial, aunque el formulario aún no persista datos y las demos permanezcan sin implementar.
+El portfolio comunica la propuesta profesional completa mediante una experiencia continua, enlazable y accesible, aunque el formulario aún no persista datos y las demos permanezcan sin implementar.
 
 ---
 

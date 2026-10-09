@@ -11,8 +11,8 @@
   "Routes": {
     "home": {
       "label": "Home",
-      "title": "Nahuel Martínez",
-      "description": "Temporary introduction to the professional portfolio."
+      "title": "Software engineering for business | Nahuel Martínez",
+      "description": "Digital product design and development for sales, management, automation, data, and artificial intelligence."
     },
     "solutions": {
       "label": "Solutions",
@@ -59,6 +59,75 @@
     "siteTitle": "Nahuel Martínez's portfolio",
     "siteDescription": "Temporary technical page for the professional portfolio."
   },
+  "Home": {
+    "hero": {
+      "eyebrow": "Software engineering for business",
+      "title": "Systems that turn real-world operations into concrete advantages.",
+      "description": "I design and build digital products for sales, management, automation, data, and artificial intelligence.",
+      "primaryCta": "Explore the Laboratory",
+      "secondaryCta": "Let's discuss your project",
+      "capabilitiesLabel": "Core capabilities",
+      "capabilities": {
+        "product": "Product",
+        "architecture": "Architecture",
+        "development": "Development",
+        "operations": "Operations"
+      }
+    },
+    "visual": {
+      "label": "A central system connected to sales, operations, mobile application, data and artificial intelligence, inventory, and routing modules",
+      "coreEyebrow": "Core",
+      "core": "Connected system",
+      "modules": {
+        "sales": "Sales",
+        "operations": "Operations",
+        "mobile": "Mobile application",
+        "data": "Data and AI",
+        "inventory": "Inventory",
+        "routes": "Routing"
+      },
+      "details": {
+        "sales": "Orders and conversion",
+        "operations": "Coordinated workflows",
+        "mobile": "Field work",
+        "data": "Informed decisions",
+        "inventory": "Real availability",
+        "routes": "Logistics execution"
+      }
+    },
+    "sections": {
+      "home": {
+        "eyebrow": "Software engineering for business",
+        "title": "Systems that turn real-world operations into concrete advantages.",
+        "description": "I design and build digital products for sales, management, automation, data, and artificial intelligence."
+      },
+      "solutions": {
+        "eyebrow": "Solutions",
+        "title": "Technology applied where the business needs it.",
+        "description": "Management systems, automation, applications, and data are shaped around concrete processes."
+      },
+      "experience": {
+        "eyebrow": "Interactive experience",
+        "title": "Demonstrations built to explore decisions, not abstract promises.",
+        "description": "The Laboratory will make it possible to explore fictional scenarios and understand how connected solutions work."
+      },
+      "process": {
+        "eyebrow": "How I work",
+        "title": "From an operational problem to a sustainable delivery.",
+        "description": "Each initiative is structured through context, explicit decisions, verifiable implementation, and operational continuity."
+      },
+      "about": {
+        "eyebrow": "About me",
+        "title": "Technical judgment with a product perspective.",
+        "description": "The work combines engineering, communication, and accountability across the full lifecycle of a digital solution."
+      },
+      "contact": {
+        "eyebrow": "Contact",
+        "title": "Let's discuss the system your operation needs.",
+        "description": "This space prepares a direct channel to assess context, scope, and next steps, without a persistent form yet."
+      }
+    }
+  },
   "States": {
     "notFoundEyebrow": "Error 404",
     "notFoundTitle": "Page not found",
@@ -82,17 +151,11 @@
     "appearance": "Appearance preferences",
     "spanish": "Spanish",
     "english": "English",
-    "theme": "Theme",
-    "density": "Density",
-    "motion": "Motion",
-    "themes": {
-      "system": "System",
-      "light": "Light",
-      "dark": "Dark",
-      "high-contrast": "High contrast"
-    },
-    "densities": { "comfortable": "Comfortable", "compact": "Compact" },
-    "motions": { "system": "System", "reduced": "Reduced" }
+    "toggleTheme": "Toggle light or dark theme",
+    "useTheme": {
+      "light": "Use light theme",
+      "dark": "Use dark theme"
+    }
   },
   "Common": {
     "unavailable": "Content temporarily unavailable",

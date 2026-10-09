@@ -4,7 +4,7 @@ import { createTranslator } from 'next-intl';
 import { describe, expect, it, vi } from 'vitest';
 
 import { LanguageSelector } from '../src/components/preferences/language-selector';
-import { appRoutes, isRouteActive } from '../src/config/routes';
+import { appRoutes, getSectionHref, isDocumentActive } from '../src/config/routes';
 import { getSafeMessageFallback, loadMessages } from '../src/i18n/messages';
 import {
   defaultLocale,
@@ -45,10 +45,10 @@ describe('configuración internacional', () => {
     }
   });
 
-  it('calcula la sección activa con pathnames internos', () => {
-    expect(isRouteActive('/soluciones/caso', '/soluciones')).toBe(true);
-    expect(isRouteActive('/en/soluciones', '/soluciones')).toBe(false);
-    expect(isRouteActive('/contacto', '/')).toBe(false);
+  it('distingue documentos de destinos de sección', () => {
+    expect(isDocumentActive('/privacidad/detalle', '/privacidad')).toBe(true);
+    expect(isDocumentActive('/en/privacidad', '/privacidad')).toBe(false);
+    expect(getSectionHref('contact')).toBe('/#contact');
   });
 
   it('ofrece un fallback localizado sin revelar identificadores', () => {

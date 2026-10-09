@@ -3,13 +3,13 @@
 ## 1. Precondiciones
 
 - [ ] La rama corresponde a `modxxx`.
-- [ ] La rama parte del `develop` esperado.
 - [ ] No se modificaron `main` ni `develop`.
 - [ ] No existen cambios ajenos mezclados.
+- [ ] No se realizaron verificaciones remotas fuera del alcance.
 
 ## 2. Commits
 
-- [ ] La cantidad coincide con el prompt.
+- [ ] La cantidad coincide con el plan o incluye el único correctivo adicional autorizado.
 - [ ] El orden coincide con el plan.
 - [ ] Los mensajes fueron utilizados literalmente.
 - [ ] Los mensajes están en español, voz pasiva refleja y tono técnico.
@@ -42,19 +42,23 @@
 - [ ] No se introdujeron conexiones externas no aprobadas.
 - [ ] No se ejecutaron operaciones destructivas sobre datos relevantes.
 
-## 6. Pruebas locales
+## 6. Pruebas locales aplicables
 
 - [ ] Formato.
 - [ ] Lint.
 - [ ] Typecheck.
 - [ ] Unitarias aplicables.
-- [ ] Integración aplicable.
-- [ ] Playwright funcional aplicable.
-- [ ] Axe aplicable.
-- [ ] Lighthouse aplicable.
-- [ ] Migraciones desde base limpia cuando corresponda.
-- [ ] Build de producción.
+- [ ] Integración únicamente cuando se afectaron API, persistencia, migraciones o correo.
+- [ ] Playwright funcional cuando se afectó comportamiento web.
+- [ ] Axe cuando se afectó interfaz o accesibilidad.
+- [ ] Lighthouse únicamente cuando existió un objetivo de rendimiento.
+- [ ] Migraciones desde base limpia únicamente cuando cambió el esquema.
+- [ ] Build cuando el alcance lo requiere.
+- [ ] Audit únicamente ante cambios de dependencias o cierre de bloque/entrega.
+- [ ] Smoke únicamente ante cambios de arranque, configuración, build o runtime.
 - [ ] Toda prueba omitida fue declarada y justificada.
+- [ ] No se repitieron suites verdes sin una causa técnica.
+- [ ] La validación completa se ejecutó una sola vez después de terminar el desarrollo.
 
 Las pruebas visuales y la comparación con mockups no forman parte de esta checklist. La aceptación visual corresponde al propietario.
 

@@ -1,13 +1,11 @@
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import Script from 'next/script';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 import { routing } from '../../i18n/routing';
-import { appearanceBootstrap } from '../../preferences/bootstrap';
 import { PreferencesProvider } from '../../preferences/preferences-provider';
 
 import '../../styles/globals.css';
@@ -51,13 +49,6 @@ export default async function LocaleLayout({
       lang={locale}
       suppressHydrationWarning
     >
-      <head>
-        <Script
-          dangerouslySetInnerHTML={{ __html: appearanceBootstrap }}
-          id="appearance-bootstrap"
-          strategy="beforeInteractive"
-        />
-      </head>
       <body>
         <NextIntlClientProvider>
           <PreferencesProvider>{children}</PreferencesProvider>

@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 import { routes } from '../../config/routes';
 import { Link } from '../../i18n/navigation';
 import { LanguageSelector } from '../preferences/language-selector';
-import { PreferencesControls } from '../preferences/preferences-controls';
+import { ThemeToggle } from '../preferences/theme-toggle';
 import { SkipLink } from '../navigation/skip-link';
 
 export function LaboratoryLayout({ children }: Readonly<{ children: ReactNode }>) {
@@ -18,7 +18,7 @@ export function LaboratoryLayout({ children }: Readonly<{ children: ReactNode }>
           <p className="section-shell-label">{t('labLabel')}</p>
           <div className="section-shell-actions">
             <LanguageSelector />
-            <PreferencesControls />
+            <ThemeToggle />
             <Link href={routes.home.path}>{t('backPortfolio')}</Link>
           </div>
         </Container>

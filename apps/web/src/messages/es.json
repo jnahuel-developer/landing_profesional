@@ -11,8 +11,8 @@
   "Routes": {
     "home": {
       "label": "Inicio",
-      "title": "Nahuel Martínez",
-      "description": "Presentación provisional del portfolio profesional."
+      "title": "Ingeniería de software para negocios | Nahuel Martínez",
+      "description": "Diseño y desarrollo de productos digitales para ventas, gestión, automatización, datos e inteligencia artificial."
     },
     "solutions": {
       "label": "Soluciones",
@@ -59,6 +59,75 @@
     "siteTitle": "Portfolio de Nahuel Martínez",
     "siteDescription": "Página técnica temporal del portfolio profesional."
   },
+  "Home": {
+    "hero": {
+      "eyebrow": "Ingeniería de software para negocios",
+      "title": "Sistemas que convierten operaciones reales en ventajas concretas.",
+      "description": "Diseño y desarrollo productos digitales para ventas, gestión, automatización, datos e inteligencia artificial.",
+      "primaryCta": "Explorar el Laboratorio",
+      "secondaryCta": "Hablemos de tu proyecto",
+      "capabilitiesLabel": "Capacidades principales",
+      "capabilities": {
+        "product": "Producto",
+        "architecture": "Arquitectura",
+        "development": "Desarrollo",
+        "operations": "Operación"
+      }
+    },
+    "visual": {
+      "label": "Sistema central conectado con módulos de ventas, operaciones, aplicación móvil, datos e inteligencia artificial, inventario y rutas",
+      "coreEyebrow": "Núcleo",
+      "core": "Sistema conectado",
+      "modules": {
+        "sales": "Ventas",
+        "operations": "Operaciones",
+        "mobile": "Aplicación móvil",
+        "data": "Datos e IA",
+        "inventory": "Inventario",
+        "routes": "Rutas"
+      },
+      "details": {
+        "sales": "Pedidos y conversión",
+        "operations": "Flujos coordinados",
+        "mobile": "Trabajo en campo",
+        "data": "Decisiones informadas",
+        "inventory": "Disponibilidad real",
+        "routes": "Ejecución logística"
+      }
+    },
+    "sections": {
+      "home": {
+        "eyebrow": "Ingeniería de software para negocios",
+        "title": "Sistemas que convierten operaciones reales en ventajas concretas.",
+        "description": "Diseño y desarrollo productos digitales para ventas, gestión, automatización, datos e inteligencia artificial."
+      },
+      "solutions": {
+        "eyebrow": "Soluciones",
+        "title": "Tecnología aplicada donde el negocio la necesita.",
+        "description": "Sistemas de gestión, automatización, aplicaciones y datos se articulan alrededor de procesos concretos."
+      },
+      "experience": {
+        "eyebrow": "Experiencia interactiva",
+        "title": "Demostraciones para explorar decisiones, no promesas abstractas.",
+        "description": "El Laboratorio permitirá recorrer escenarios ficticios y comprender cómo trabajan las soluciones conectadas."
+      },
+      "process": {
+        "eyebrow": "Cómo trabajo",
+        "title": "Del problema operativo a una entrega sostenible.",
+        "description": "Cada iniciativa se ordena con contexto, decisiones explícitas, implementación verificable y continuidad operativa."
+      },
+      "about": {
+        "eyebrow": "Sobre mí",
+        "title": "Criterio técnico con perspectiva de producto.",
+        "description": "El trabajo combina ingeniería, comunicación y responsabilidad sobre el ciclo completo de una solución digital."
+      },
+      "contact": {
+        "eyebrow": "Contacto",
+        "title": "Conversemos sobre el sistema que tu operación necesita.",
+        "description": "Este espacio prepara un canal directo para evaluar contexto, alcance y próximos pasos sin formularios persistentes todavía."
+      }
+    }
+  },
   "States": {
     "notFoundEyebrow": "Error 404",
     "notFoundTitle": "Página no encontrada",
@@ -82,17 +151,11 @@
     "appearance": "Preferencias de apariencia",
     "spanish": "Español",
     "english": "Inglés",
-    "theme": "Tema",
-    "density": "Densidad",
-    "motion": "Movimiento",
-    "themes": {
-      "system": "Sistema",
-      "light": "Claro",
-      "dark": "Oscuro",
-      "high-contrast": "Alto contraste"
-    },
-    "densities": { "comfortable": "Cómoda", "compact": "Compacta" },
-    "motions": { "system": "Sistema", "reduced": "Reducido" }
+    "toggleTheme": "Alternar tema claro u oscuro",
+    "useTheme": {
+      "light": "Usar tema claro",
+      "dark": "Usar tema oscuro"
+    }
   },
   "Common": {
     "unavailable": "Contenido temporalmente no disponible",

@@ -1,52 +1,45 @@
-import { applyAppearance, isDensity, isTheme, type Density, type Theme } from '@portfolio/ui';
+export const preferenceStorageKey = 'nahuelmartinez.preferences.v2';
+export const legacyPreferenceStorageKey = 'nahuelmartinez.preferences.v1';
+export const preferenceVersion = 2;
 
-export const preferenceStorageKey = 'nahuelmartinez.preferences.v1';
-export const preferenceVersion = 1;
-export const themePreferences = ['system', 'light', 'dark', 'high-contrast'] as const;
-export const motionPreferences = ['system', 'reduced'] as const;
-
-export type ThemePreference = (typeof themePreferences)[number];
-export type MotionPreference = (typeof motionPreferences)[number];
+export type ThemePreference = 'light' | 'dark';
 export type ResolvedMotion = 'full' | 'reduced';
 
 export interface Preferences {
   readonly version: typeof preferenceVersion;
   readonly theme: ThemePreference;
-  readonly density: Density;
-  readonly motion: MotionPreference;
 }
-
-export const defaultPreferences: Preferences = {
-  version: preferenceVersion,
-  theme: 'system',
-  density: 'comfortable',
-  motion: 'system',
-};
 
 export function isThemePreference(value: unknown): value is ThemePreference {
-  return typeof value === 'string' && (value === 'system' || isTheme(value));
+  return value === 'light' || value === 'dark';
 }
 
-export function isMotionPreference(value: unknown): value is MotionPreference {
-  return value === 'system' || value === 'reduced';
-}
-
-export function parsePreferences(value: string | null): Preferences {
-  if (!value) return defaultPreferences;
+export function parsePreferences(value: string | null): Preferences | null {
+  if (!value) return null;
   try {
     const candidate = JSON.parse(value) as Partial<Preferences>;
-    if (
-      candidate.version !== preferenceVersion ||
-      !isThemePreference(candidate.theme) ||
-      typeof candidate.density !== 'string' ||
-      !isDensity(candidate.density) ||
-      !isMotionPreference(candidate.motion)
-    ) {
-      return defaultPreferences;
-    }
-    return candidate as Preferences;
+    return candidate.version === preferenceVersion && isThemePreference(candidate.theme)
+      ? { version: preferenceVersion, theme: candidate.theme }
+      : null;
   } catch {
-    return defaultPreferences;
+    return null;
+  }
+}
+
+export function migrateLegacyPreferences(value: string | null): Preferences | null {
+  if (!value) return null;
+  try {
+    const candidate = JSON.parse(value) as { theme?: unknown; version?: unknown };
+    if (candidate.version !== 1) return null;
+    if (isThemePreference(candidate.theme)) {
+      return { version: preferenceVersion, theme: candidate.theme };
+    }
+    if (candidate.theme === 'high-contrast') {
+      return { version: preferenceVersion, theme: 'dark' };
+    }
+    return null;
+  } catch {
+    return null;
   }
 }
 
@@ -54,27 +47,22 @@ export function serializePreferences(preferences: Preferences) {
   return JSON.stringify(preferences);
 }
 
-export function resolveTheme(preference: ThemePreference, systemDark: boolean): Theme {
-  return preference === 'system' ? (systemDark ? 'dark' : 'light') : preference;
+export function resolveTheme(preference: ThemePreference | null, systemDark: boolean) {
+  return preference ?? (systemDark ? 'dark' : 'light');
 }
 
-export function resolveMotion(
-  preference: MotionPreference,
-  systemReduced: boolean,
-): ResolvedMotion {
-  return preference === 'reduced' || systemReduced ? 'reduced' : 'full';
+export function resolveMotion(systemReduced: boolean): ResolvedMotion {
+  return systemReduced ? 'reduced' : 'full';
 }
 
 export function applyPreferences(
   element: HTMLElement,
-  preferences: Preferences,
+  preference: ThemePreference | null,
   system: Readonly<{ dark: boolean; reducedMotion: boolean }>,
 ) {
-  applyAppearance(element, {
-    theme: resolveTheme(preferences.theme, system.dark),
-    density: preferences.density,
-  });
-  element.dataset.themePreference = preferences.theme;
-  element.dataset.motionPreference = preferences.motion;
-  element.dataset.motion = resolveMotion(preferences.motion, system.reducedMotion);
+  element.dataset.theme = resolveTheme(preference, system.dark);
+  element.dataset.themePreference = preference ?? 'system';
+  element.dataset.density = 'comfortable';
+  element.dataset.motionPreference = 'system';
+  element.dataset.motion = resolveMotion(system.reducedMotion);
 }

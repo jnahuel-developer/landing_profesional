@@ -7,7 +7,7 @@ import { useRef, useState, type MouseEvent } from 'react';
 import { primaryRoutes, routes } from '../../config/routes';
 import { Link } from '../../i18n/navigation';
 import { LanguageSelector } from '../preferences/language-selector';
-import { PreferencesControls } from '../preferences/preferences-controls';
+import { ThemeToggle } from '../preferences/theme-toggle';
 import { RouteLink } from './route-link';
 
 export function PublicHeader() {
@@ -30,14 +30,19 @@ export function PublicHeader() {
 
         <nav aria-label={t('primary')} className="desktop-navigation">
           {primaryRoutes.map((route) => (
-            <RouteLink className="navigation-link" key={route.path} route={route} />
+            <RouteLink className="navigation-link" key={route.id} route={route} />
           ))}
         </nav>
 
         <div className="desktop-navigation header-actions">
           <LanguageSelector />
-          <PreferencesControls />
-          <RouteLink className="laboratory-cta" route={routes.laboratory} />
+          <ThemeToggle />
+          <RouteLink
+            className="laboratory-cta"
+            data-track-event="navigation_select"
+            data-track-target="laboratory"
+            route={routes.laboratory}
+          />
         </div>
 
         <details
@@ -50,16 +55,22 @@ export function PublicHeader() {
           </summary>
           <nav aria-label={t('compact')} className="compact-navigation__panel">
             <LanguageSelector />
-            <PreferencesControls />
+            <ThemeToggle />
             {primaryRoutes.map((route) => (
               <RouteLink
                 className="navigation-link"
-                key={route.path}
+                key={route.id}
                 onClick={closeMenu}
                 route={route}
               />
             ))}
-            <RouteLink className="laboratory-cta" onClick={closeMenu} route={routes.laboratory} />
+            <RouteLink
+              className="laboratory-cta"
+              data-track-event="navigation_select"
+              data-track-target="laboratory"
+              onClick={closeMenu}
+              route={routes.laboratory}
+            />
           </nav>
         </details>
       </Container>

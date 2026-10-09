@@ -41,7 +41,7 @@ test('opera componentes complejos con teclado', async ({ page }) => {
 
   await page.getByRole('combobox', { name: 'Selección' }).focus();
   await page.keyboard.press('Enter');
-  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('Home');
   await page.keyboard.press('Enter');
   await expect(page.getByRole('combobox', { name: 'Selección' })).toContainText('Primera opción');
 });
