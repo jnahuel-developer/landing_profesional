@@ -12,3 +12,5 @@ export {
   type LiveResponse,
   type ReadyResponse,
 } from './health.js';
+
+export { ContactInputSchema, type ContactInput } from './contact.js';

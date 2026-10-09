@@ -42,12 +42,12 @@
     "privacy": {
       "label": "Privacidad",
       "title": "Privacidad",
-      "description": "Información provisional sobre privacidad y tratamiento de datos."
+      "description": "Datos necesarios, preferencias, analítica opcional y reglas de privacidad de las demostraciones."
     },
     "laboratory": {
       "label": "Laboratorio",
       "title": "Laboratorio",
-      "description": "Estructura preliminar del laboratorio, sin demos ni sesiones activas."
+      "description": "Conocé ACME Café y ACME Logística: empresas ficticias para explorar productos conectados. Próximamente."
     },
     "admin": {
       "label": "Administración",
@@ -119,12 +119,12 @@
       "about": {
         "eyebrow": "Sobre mí",
         "title": "Criterio técnico con perspectiva de producto.",
-        "description": "El trabajo combina ingeniería, comunicación y responsabilidad sobre el ciclo completo de una solución digital."
+        "description": "Comprender la operación para construir productos que puedan sostenerse y evolucionar."
       },
       "contact": {
         "eyebrow": "Contacto",
         "title": "Conversemos sobre el sistema que tu operación necesita.",
-        "description": "Este espacio prepara un canal directo para evaluar contexto, alcance y próximos pasos sin formularios persistentes todavía."
+        "description": "Conversemos sobre el problema que necesitás resolver."
       }
     },
     "solutions": {
@@ -190,7 +190,34 @@
             "two": "Stock, reservas y gestión",
             "three": "Automatización y asistencia"
           },
-          "link": "Conocer ACME Café en el Laboratorio"
+          "link": "Conocer ACME Café en el Laboratorio",
+          "scenes": {
+            "overview": {
+              "title": "Resumen operativo",
+              "description": "Indicadores y actividad de las sucursales en una sola vista."
+            },
+            "connected": {
+              "title": "Venta conectada",
+              "description": "Una venta conecta caja, stock y comprobante.",
+              "from": "Caja",
+              "to": "Stock"
+            },
+            "resources": {
+              "title": "Stock y reposición",
+              "description": "Disponibilidad por sucursal para anticipar faltantes."
+            },
+            "coordination": {
+              "title": "Reservas y mesas",
+              "description": "Agenda y salón coordinados.",
+              "status": "Mesas asignadas"
+            },
+            "field": {
+              "title": "Atención asistida",
+              "description": "Consultas conectadas con la operación.",
+              "from": "¿Hay una mesa disponible?",
+              "to": "Consultar disponibilidad"
+            }
+          }
         },
         "logistics": {
           "name": "ACME Logística",
@@ -205,7 +232,34 @@
             "two": "Central y aplicación de campo",
             "three": "Telemetría, eventos y datos"
           },
-          "link": "Conocer ACME Logística en el Laboratorio"
+          "link": "Conocer ACME Logística en el Laboratorio",
+          "scenes": {
+            "overview": {
+              "title": "Central operativa",
+              "description": "Una vista compartida de rutas y entregas."
+            },
+            "connected": {
+              "title": "Planificación de rutas",
+              "description": "De las entregas pendientes a un recorrido coordinado.",
+              "from": "Entregas",
+              "to": "Ruta"
+            },
+            "resources": {
+              "title": "Flota y telemetría",
+              "description": "Señales del vehículo para decidir con contexto."
+            },
+            "coordination": {
+              "title": "Incidente coordinado",
+              "description": "Central y chofer comparten el siguiente paso.",
+              "status": "Desvío acordado"
+            },
+            "field": {
+              "title": "Aplicación del chofer",
+              "description": "La próxima entrega y su estado desde el campo.",
+              "from": "Próxima parada",
+              "to": "Entrega registrada"
+            }
+          }
         }
       }
     },
@@ -245,6 +299,24 @@
           "professional": "Documentar, acompañar el despliegue y proponer evolución según el alcance acordado."
         }
       }
+    },
+    "carousel": {
+      "role": "carrusel",
+      "scene": "escena",
+      "previous": "Escena anterior",
+      "next": "Escena siguiente",
+      "pause": "Pausar avance",
+      "resume": "Reanudar avance",
+      "goTo": "Ver {title}",
+      "withoutJs": "Escenas de esta vista previa:"
+    },
+    "about": {
+      "approach": "Combino producto, arquitectura, desarrollo y datos para transformar necesidades de negocio en soluciones concretas. La tecnología se elige después de entender el contexto, las restricciones y las personas que la van a usar.",
+      "responsibility": "Me hago responsable de fundamentar decisiones, cuidar la calidad y documentar lo necesario para operar, mantener y continuar el producto.",
+      "collaboration": "Trabajo con colaboración directa y comunicación clara: avances revisables, límites explícitos y próximos pasos acordados."
+    },
+    "contact": {
+      "context": "Podés empezar por describir cómo trabajás hoy, qué te está frenando y qué debería cambiar. A partir de ese contexto se podrá definir un alcance y un próximo paso realista."
     }
   },
   "States": {
@@ -255,13 +327,14 @@
     "errorTitle": "No pudimos completar la operación",
     "errorDescription": "Intentá nuevamente. Si el problema continúa, podés volver al inicio.",
     "retry": "Intentar nuevamente",
-    "backHome": "Volver al inicio"
+    "backHome": "Volver al inicio",
+    "contact": "Ir a Contacto"
   },
   "Layouts": {
     "skip": "Saltar al contenido principal",
     "portfolio": "Portfolio profesional.",
     "copyright": "© 2026 Nahuel Martínez.",
-    "labLabel": "Nahuel Martínez · Entorno preliminar",
+    "labLabel": "Nahuel Martínez · Laboratorio",
     "adminLabel": "Área técnica preliminar",
     "backPortfolio": "Volver al portfolio",
     "placeholder": "Contenido provisional"
@@ -280,5 +353,97 @@
     "unavailable": "Contenido temporalmente no disponible",
     "welcome": "Hola, {name}",
     "itemCount": "{count, plural, =0 {Ningún elemento} one {# elemento} other {# elementos}}"
+  },
+  "Contact": {
+    "title": "Contame sobre tu proyecto",
+    "preparation": "El canal de contacto está en preparación. Este formulario permite revisar los datos, pero no los envía ni los guarda.",
+    "fields": {
+      "name": "Nombre (obligatorio)",
+      "email": "Correo (obligatorio)",
+      "company": "Empresa (opcional)",
+      "projectType": "Tipo de proyecto (opcional)",
+      "message": "Mensaje (obligatorio)",
+      "privacyAccepted": "Leí y acepto la política de privacidad (obligatorio)"
+    },
+    "projects": {
+      "web": "Sitio o comercio web",
+      "product": "Producto o sistema de gestión",
+      "automation": "Automatización e integraciones",
+      "data": "Datos e inteligencia aplicada",
+      "other": "Otro proyecto"
+    },
+    "choose": "Sin definir",
+    "messageHint": "Hasta {limit} caracteres. No incluyas información sensible.",
+    "readPrivacy": "Leer la política de privacidad",
+    "submit": "Revisar consulta",
+    "errorSummary": "Revisá los siguientes campos:",
+    "errors": {
+      "required": "Completá este campo.",
+      "length": "El contenido supera el límite permitido.",
+      "email": "Ingresá un correo válido, por ejemplo nombre@empresa.com.",
+      "category": "Elegí una opción de la lista.",
+      "privacy": "Aceptá la política de privacidad para continuar."
+    },
+    "prepared": "La consulta es válida. El canal todavía está en preparación: ningún dato fue enviado ni guardado.",
+    "withoutJs": "La revisión de datos requiere JavaScript. El canal de envío aún no está habilitado."
+  },
+  "Privacy": {
+    "eyebrow": "Información sobre datos",
+    "introduction": "Esta política describe el funcionamiento actual y las reglas aprobadas para las próximas funciones. La analítica opcional, el envío de contacto y las sesiones demo todavía no están habilitados.",
+    "contactLink": "Consultar la sección Contacto",
+    "topics": {
+      "responsible": {
+        "title": "Responsable y finalidades",
+        "body": "Nahuel Martínez es responsable de este sitio profesional. Los datos necesarios permiten ofrecer contenido, conservar preferencias y, cuando estén habilitadas, responder consultas y operar demostraciones temporales."
+      },
+      "contact": {
+        "title": "Contacto y mensajes",
+        "body": "El formulario solicita nombre, correo, empresa opcional, tipo de proyecto opcional, mensaje y aceptación de privacidad. En esta versión la validación ocurre en tu navegador: no se envía ni guarda ningún dato. Cuando se habilite el canal, se conservará el contacto antes de intentar notificarlo por correo, sin respuesta automática inicial."
+      },
+      "preferences": {
+        "title": "Preferencias necesarias",
+        "body": "El idioma se conserva mediante una cookie propia durante un año. La elección explícita de tema se guarda localmente en el navegador hasta que la cambies o borres los datos del sitio. Las futuras sesiones demo y administrativas usarán cookies estrictamente necesarias mientras se utilicen esas funciones."
+      },
+      "analytics": {
+        "title": "Analítica opcional",
+        "body": "La analítica propia permanecerá desactivada hasta recibir consentimiento explícito. Cuando se implemente el mecanismo, podrás aceptar, rechazar o modificar la elección; la preferencia durará 180 días salvo un cambio material de finalidad. Rechazarla no limitará el contenido ni las demos. Esta versión no recoge ni envía eventos analíticos."
+      },
+      "demos": {
+        "title": "Demostraciones y datos descartables",
+        "body": "ACME Café y ACME Logística son empresas ficticias. Sus demos aún no están disponibles. Cuando se habiliten, las operaciones usarán datos simulados en sesiones de una hora, con limpieza diaria posterior. No deberán introducirse datos personales reales en las demos."
+      },
+      "excluded": {
+        "title": "Datos excluidos de analítica",
+        "body": "No se almacenarán IP, nombres, correos, mensajes, texto libre, firmas, fotografías ni contenido interno de las demos como datos analíticos. Las dimensiones previstas se limitan a eventos categóricos, páginas, idioma, tema, dispositivo, familia de navegador, referencia permitida, duración agregada y una sesión pseudónima."
+      },
+      "recipients": {
+        "title": "Destinatarios y servicios",
+        "body": "No se incorporan trackers de terceros, Google Analytics, Meta Pixel ni servicios equivalentes. La analítica futura será propia. Para las notificaciones de contacto de producción se prevé Resend; Mailpit se utilizará en el entorno local. Ese transporte todavía no está conectado al formulario público. Los destinatarios y sus condiciones deberán confirmarse en la revisión legal previa a producción."
+      },
+      "retention": {
+        "title": "Retenciones aprobadas",
+        "body": "Contactos: 24 meses desde la última interacción. Eventos analíticos crudos: 180 días; resúmenes de sesión: 24 meses; agregados diarios anonimizados: mientras sean útiles. Demos: una hora de uso y limpieza diaria posterior. Sesiones administrativas: 8 horas; auditoría administrativa: 180 días; logs técnicos ordinarios: 30 días. Estas reglas se aplicarán a medida que se habiliten las funciones."
+      },
+      "rights": {
+        "title": "Ejercicio de derechos",
+        "body": "Podés solicitar acceso, rectificación o supresión de tus datos al responsable a través del canal de contacto, una vez habilitado. Una solicitud válida de supresión tendrá prioridad sobre la retención prevista cuando corresponda. Actualmente el canal no recibe solicitudes; deberá publicarse una vía operativa antes de producción."
+      },
+      "review": {
+        "title": "Revisión antes de producción",
+        "body": "Esta redacción requiere revisión legal antes de producción. Se confirmarán el canal para ejercer derechos, los destinatarios y las condiciones aplicables, respetando las decisiones técnicas aprobadas."
+      }
+    }
+  },
+  "Laboratory": {
+    "eyebrow": "Productos para explorar",
+    "introduction": "Dos empresas ficticias para explorar cómo se conectan las decisiones, las interfaces y los procesos de un negocio. Las experiencias interactivas están en preparación.",
+    "soon": "Próximamente",
+    "demos": {
+      "cafe": "Una cafetería con sucursales: podrás explorar cómo una venta conecta caja, stock, clientes y comprobantes, y cómo las reservas y la atención comparten el mismo contexto.",
+      "logistics": "Una operación de distribución: podrás seguir la coordinación entre central y choferes, desde la planificación de rutas y la telemetría hasta los incidentes y las entregas."
+    },
+    "availability": "El catálogo es informativo. Todavía no se pueden iniciar demos ni crear sesiones. Las futuras experiencias utilizarán datos simulados y descartables.",
+    "contact": "Hablemos de tu proyecto",
+    "home": "Explorar el portfolio"
   }
 }

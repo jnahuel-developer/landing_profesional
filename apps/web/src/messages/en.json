@@ -42,12 +42,12 @@
     "privacy": {
       "label": "Privacy",
       "title": "Privacy",
-      "description": "Temporary information about privacy and data handling."
+      "description": "Necessary data, preferences, optional analytics and privacy rules for demonstrations."
     },
     "laboratory": {
       "label": "Laboratory",
       "title": "Laboratory",
-      "description": "Preliminary laboratory structure, without demos or active sessions."
+      "description": "Meet ACME Café and ACME Logística: fictional businesses for exploring connected products. Coming soon."
     },
     "admin": {
       "label": "Administration",
@@ -119,12 +119,12 @@
       "about": {
         "eyebrow": "About me",
         "title": "Technical judgment with a product perspective.",
-        "description": "The work combines engineering, communication, and accountability across the full lifecycle of a digital solution."
+        "description": "Understanding operations to build products that can last and evolve."
       },
       "contact": {
         "eyebrow": "Contact",
         "title": "Let's discuss the system your operation needs.",
-        "description": "This space prepares a direct channel to assess context, scope, and next steps, without a persistent form yet."
+        "description": "Let’s talk about the problem you need to solve."
       }
     },
     "solutions": {
@@ -190,7 +190,34 @@
             "two": "Stock, reservations and management",
             "three": "Automation and assistance"
           },
-          "link": "Meet ACME Café in the Laboratory"
+          "link": "Meet ACME Café in the Laboratory",
+          "scenes": {
+            "overview": {
+              "title": "Operational overview",
+              "description": "Branch indicators and activity in one view."
+            },
+            "connected": {
+              "title": "Connected sale",
+              "description": "One sale connects checkout, stock and receipt.",
+              "from": "Checkout",
+              "to": "Stock"
+            },
+            "resources": {
+              "title": "Stock and replenishment",
+              "description": "Availability by branch helps anticipate shortages."
+            },
+            "coordination": {
+              "title": "Reservations and tables",
+              "description": "Bookings and seating in sync.",
+              "status": "Tables assigned"
+            },
+            "field": {
+              "title": "Assisted service",
+              "description": "Questions connected to operations.",
+              "from": "Is a table available?",
+              "to": "Check availability"
+            }
+          }
         },
         "logistics": {
           "name": "ACME Logística",
@@ -205,7 +232,34 @@
             "two": "Operations center and field app",
             "three": "Telemetry, events and data"
           },
-          "link": "Meet ACME Logística in the Laboratory"
+          "link": "Meet ACME Logística in the Laboratory",
+          "scenes": {
+            "overview": {
+              "title": "Operations centre",
+              "description": "A shared view of routes and deliveries."
+            },
+            "connected": {
+              "title": "Route planning",
+              "description": "From pending deliveries to a coordinated route.",
+              "from": "Deliveries",
+              "to": "Route"
+            },
+            "resources": {
+              "title": "Fleet and telemetry",
+              "description": "Vehicle signals to support informed decisions."
+            },
+            "coordination": {
+              "title": "Coordinated incident",
+              "description": "Dispatch and driver share the next step.",
+              "status": "Diversion agreed"
+            },
+            "field": {
+              "title": "Driver application",
+              "description": "The next delivery and its status in the field.",
+              "from": "Next stop",
+              "to": "Delivery recorded"
+            }
+          }
         }
       }
     },
@@ -245,6 +299,24 @@
           "professional": "Document, support deployment and propose improvements within the agreed scope."
         }
       }
+    },
+    "carousel": {
+      "role": "carousel",
+      "scene": "slide",
+      "previous": "Previous scene",
+      "next": "Next scene",
+      "pause": "Pause autoplay",
+      "resume": "Resume autoplay",
+      "goTo": "Show {title}",
+      "withoutJs": "Scenes in this preview:"
+    },
+    "about": {
+      "approach": "I bring together product thinking, architecture, development and data to turn business needs into practical solutions. Technology choices follow an understanding of the context, constraints and people who will use the product.",
+      "responsibility": "I take responsibility for explaining decisions, maintaining quality and documenting what is needed to operate, maintain and continue the product.",
+      "collaboration": "I work through direct collaboration and clear communication: reviewable progress, explicit limits and agreed next steps."
+    },
+    "contact": {
+      "context": "Start with how you work today, what is holding you back and what needs to change. That context can help define a scope and a realistic next step."
     }
   },
   "States": {
@@ -255,13 +327,14 @@
     "errorTitle": "We couldn't complete the operation",
     "errorDescription": "Try again. If the problem continues, you can return home.",
     "retry": "Try again",
-    "backHome": "Return home"
+    "backHome": "Return home",
+    "contact": "Go to Contact"
   },
   "Layouts": {
     "skip": "Skip to main content",
     "portfolio": "Professional portfolio.",
     "copyright": "© 2026 Nahuel Martínez.",
-    "labLabel": "Nahuel Martínez · Preliminary environment",
+    "labLabel": "Nahuel Martínez · Laboratory",
     "adminLabel": "Preliminary technical area",
     "backPortfolio": "Return to portfolio",
     "placeholder": "Temporary content"
@@ -280,5 +353,97 @@
     "unavailable": "Content temporarily unavailable",
     "welcome": "Hello, {name}",
     "itemCount": "{count, plural, =0 {No items} one {# item} other {# items}}"
+  },
+  "Contact": {
+    "title": "Tell me about your project",
+    "preparation": "The contact channel is being prepared. You can check your details here, but this form does not send or store them.",
+    "fields": {
+      "name": "Name (required)",
+      "email": "Email (required)",
+      "company": "Company (optional)",
+      "projectType": "Project type (optional)",
+      "message": "Message (required)",
+      "privacyAccepted": "I have read and accept the privacy policy (required)"
+    },
+    "projects": {
+      "web": "Website or online commerce",
+      "product": "Product or management system",
+      "automation": "Automation and integrations",
+      "data": "Data and applied intelligence",
+      "other": "Other project"
+    },
+    "choose": "Not decided",
+    "messageHint": "Up to {limit} characters. Do not include sensitive information.",
+    "readPrivacy": "Read the privacy policy",
+    "submit": "Check enquiry",
+    "errorSummary": "Please review these fields:",
+    "errors": {
+      "required": "Complete this field.",
+      "length": "The content exceeds the permitted limit.",
+      "email": "Enter a valid email, such as name@company.com.",
+      "category": "Choose an option from the list.",
+      "privacy": "Accept the privacy policy to continue."
+    },
+    "prepared": "Your enquiry is valid. The channel is still being prepared: no data was sent or stored.",
+    "withoutJs": "Checking details requires JavaScript. Sending enquiries is not available yet."
+  },
+  "Privacy": {
+    "eyebrow": "Information about data",
+    "introduction": "This policy describes current behaviour and the approved rules for upcoming features. Optional analytics, contact delivery and demo sessions are not enabled yet.",
+    "contactLink": "Visit the Contact section",
+    "topics": {
+      "responsible": {
+        "title": "Controller and purposes",
+        "body": "Nahuel Martínez is responsible for this professional website. Necessary data supports content and preferences and, when enabled, responding to enquiries and running temporary demonstrations."
+      },
+      "contact": {
+        "title": "Contact and messages",
+        "body": "The form asks for a name, email, optional company, optional project type, message and privacy acceptance. In this version validation happens in your browser: no data is sent or stored. Once enabled, the channel will save the enquiry before attempting an email notification, without an initial automatic reply."
+      },
+      "preferences": {
+        "title": "Necessary preferences",
+        "body": "Your language is kept in a first-party cookie for one year. An explicit theme choice is stored locally in the browser until you change it or clear site data. Future demo and administrative sessions will use strictly necessary cookies while those features are in use."
+      },
+      "analytics": {
+        "title": "Optional analytics",
+        "body": "First-party analytics will remain disabled until explicit consent. Once the mechanism is available, you will be able to accept, reject or change your choice; the preference will last 180 days unless the purpose changes materially. Rejection will not limit content or demos. This version does not collect or send analytics events."
+      },
+      "demos": {
+        "title": "Demonstrations and disposable data",
+        "body": "ACME Café and ACME Logística are fictional businesses. Their demos are not available yet. Once enabled, operations will use simulated data in one-hour sessions, followed by daily cleanup. Real personal data should not be entered in the demos."
+      },
+      "excluded": {
+        "title": "Data excluded from analytics",
+        "body": "IP addresses, names, emails, messages, free text, signatures, photographs and internal demo content will not be stored as analytics. Planned dimensions are limited to categorical events, pages, language, theme, device, browser family, permitted referral information, aggregate duration and a pseudonymous session."
+      },
+      "recipients": {
+        "title": "Recipients and services",
+        "body": "There are no third-party trackers, Google Analytics, Meta Pixel or equivalent services. Future analytics will be first-party. Resend is planned for production contact notifications; Mailpit will be used locally. This transport is not connected to the public form yet. Recipients and their terms must be confirmed in the legal review before production."
+      },
+      "retention": {
+        "title": "Approved retention periods",
+        "body": "Contacts: 24 months from the last interaction. Raw analytics events: 180 days; session summaries: 24 months; anonymised daily aggregates: while useful. Demos: one hour of use followed by daily cleanup. Administrative sessions: 8 hours; administrative audit: 180 days; ordinary technical logs: 30 days. These rules will apply as features are enabled."
+      },
+      "rights": {
+        "title": "Exercising your rights",
+        "body": "You can request access, correction or deletion of your data from the controller through the contact channel once enabled. A valid deletion request will take precedence over planned retention where applicable. The channel does not currently receive requests; an operational route must be published before production."
+      },
+      "review": {
+        "title": "Review before production",
+        "body": "This wording requires legal review before production. The channel for exercising rights, recipients and applicable terms will be confirmed while respecting the approved technical decisions."
+      }
+    }
+  },
+  "Laboratory": {
+    "eyebrow": "Products to explore",
+    "introduction": "Two fictional businesses to explore how decisions, interfaces and business processes connect. The interactive experiences are being prepared.",
+    "soon": "Coming soon",
+    "demos": {
+      "cafe": "A café with multiple branches: explore how a sale connects checkout, stock, customers and receipts, and how reservations and service share the same context.",
+      "logistics": "A distribution operation: follow coordination between dispatch and drivers, from route planning and telemetry to incidents and deliveries."
+    },
+    "availability": "This catalogue is informational. Demos and sessions cannot be started yet. Future experiences will use simulated, disposable data.",
+    "contact": "Let’s talk about your project",
+    "home": "Explore the portfolio"
   }
 }

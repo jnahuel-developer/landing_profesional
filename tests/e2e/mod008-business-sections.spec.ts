@@ -34,10 +34,10 @@ async function assertContent(page: Page, messages: typeof spanish) {
     await expect(card.getByText(demo.description)).toBeVisible();
     for (const capability of Object.values(demo.capabilities))
       await expect(card.getByRole('listitem').filter({ hasText: capability })).toBeVisible();
-    await expect(card.getByRole('img', { name: demo.previewLabel })).toBeVisible();
+    await expect(card.getByRole('region', { name: demo.previewLabel })).toBeVisible();
     await expect(card.getByRole('link', { name: demo.link })).toHaveAttribute('href', /\/lab$/);
   }
-  await expect(experience.getByText(messages.Home.experience.availability)).toBeVisible();
+  await expect(experience.getByText(messages.Home.experience.availability)).toHaveCount(0);
   for (const [id, name, target, href] of [
     ['solutions', messages.Home.solutions.cta, 'contact', /#contact$/],
     ['experience', messages.Home.experience.cta, 'laboratory', /\/lab$/],
