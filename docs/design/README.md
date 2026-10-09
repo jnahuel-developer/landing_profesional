@@ -11,3 +11,7 @@ Como referencias de dinamismo se consideran [Cheetos](https://www.cheetos.com/) 
 - home pública en tema claro;
 - ACME Café: laboratorio/POS, dashboard, inventario, reservas y asistente del cliente;
 - ACME Logística: operación en vivo, planificación de rutas, flota/telemetría, incidentes y experiencia offline del chofer.
+
+## Contratos de activos
+
+- [Imágenes de los carruseles ACME](ACME_CAROUSELES_IMAGENES.md): dimensiones, escenas, nombres de archivo y reglas de integración para las diez imágenes estáticas de Experiencia.
