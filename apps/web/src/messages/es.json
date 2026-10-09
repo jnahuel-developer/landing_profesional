@@ -17,17 +17,17 @@
     "solutions": {
       "label": "Soluciones",
       "title": "Soluciones",
-      "description": "Contenido provisional sobre las áreas de solución."
+      "description": "Sistemas de gestión, automatización, aplicaciones y datos se articulan alrededor de procesos concretos."
     },
     "experience": {
       "label": "Experiencia",
       "title": "Experiencia",
-      "description": "Contenido provisional sobre experiencia y casos."
+      "description": "El Laboratorio permitirá recorrer escenarios ficticios y comprender cómo trabajan las soluciones conectadas."
     },
     "process": {
       "label": "Cómo trabajo",
       "title": "Cómo trabajo",
-      "description": "Contenido provisional sobre la metodología de trabajo."
+      "description": "Cada iniciativa se ordena con contexto, decisiones explícitas, implementación verificable y continuidad operativa."
     },
     "about": {
       "label": "Sobre mí",
@@ -125,6 +125,125 @@
         "eyebrow": "Contacto",
         "title": "Conversemos sobre el sistema que tu operación necesita.",
         "description": "Este espacio prepara un canal directo para evaluar contexto, alcance y próximos pasos sin formularios persistentes todavía."
+      }
+    },
+    "solutions": {
+      "cta": "Conversemos sobre tu operación",
+      "examplesLabel": "Por ejemplo:",
+      "sceneLabel": "Capacidades conectadas",
+      "sceneCore": "Una operación, un sistema",
+      "areas": {
+        "commerce": {
+          "title": "Sistemas comerciales",
+          "problem": "Cuando ventas y atención trabajan con información separada, cada pedido exige reconstruir el contexto.",
+          "solution": "Conecto pedidos, clientes y disponibilidad para acompañar la venta y el seguimiento desde un mismo sistema.",
+          "result": "Menos tareas repetidas y una atención con contexto.",
+          "examples": "Un punto de venta conectado al stock; un portal de pedidos para clientes."
+        },
+        "operations": {
+          "title": "Gestión y operaciones",
+          "problem": "Las planillas dispersas y los traspasos informales dificultan saber qué está pendiente y quién debe actuar.",
+          "solution": "Diseño herramientas de gestión con estados, responsabilidades y trazabilidad de los procesos.",
+          "result": "Una operación visible y mejor coordinada.",
+          "examples": "Inventario por sucursal; planificación y seguimiento de entregas."
+        },
+        "applications": {
+          "title": "Aplicaciones web y móviles",
+          "problem": "El trabajo no ocurre siempre frente a un escritorio: clientes y equipos necesitan acceso desde distintos dispositivos.",
+          "solution": "Construyo experiencias web y móviles alrededor de las tareas de cada persona, conectadas con la operación central.",
+          "result": "Información y acciones disponibles donde se necesitan.",
+          "examples": "Una aplicación de campo; un portal de autogestión para clientes."
+        },
+        "automation": {
+          "title": "Automatización e integraciones",
+          "problem": "Copiar datos entre herramientas consume tiempo y puede dejar versiones distintas de una misma operación.",
+          "solution": "Integro sistemas y automatizo tareas con reglas explícitas, seguimiento y tratamiento de errores.",
+          "result": "Flujos más consistentes y menos intervención manual.",
+          "examples": "Generación de documentos a partir de pedidos; sincronización entre ventas y gestión."
+        },
+        "intelligence": {
+          "title": "Datos e inteligencia artificial",
+          "problem": "Acumular datos no alcanza cuando falta una lectura útil para decidir o responder consultas.",
+          "solution": "Organizo información, construyo indicadores e incorporo asistencia con IA cuando el problema y los datos lo justifican.",
+          "result": "Decisiones con evidencia y asistencia con límites claros.",
+          "examples": "Un tablero operativo; un asistente que consulta información del negocio."
+        }
+      }
+    },
+    "experience": {
+      "disclosure": "Empresa ficticia · Simulación interactiva",
+      "capabilitiesLabel": "Capacidades que anticipa la demostración",
+      "previewBadge": "Esquema ilustrativo",
+      "availability": "Estas presentaciones anticipan las demostraciones. El Laboratorio está en preparación; por ahora encontrarás su presentación provisional.",
+      "cta": "Explorar el Laboratorio",
+      "demos": {
+        "cafe": {
+          "name": "ACME Café",
+          "description": "Una cafetería ficticia para explorar cómo ventas y atención, stock, reservas y gestión pueden compartir contexto. La propuesta conecta automatización e interacción asistida con la actividad del negocio.",
+          "previewLabel": "Esquema ilustrativo de ventas conectadas con stock y reservas en ACME Café, sin datos reales",
+          "previewTitle": "Operación conectada",
+          "signalOne": "Ventas y atención",
+          "signalTwo": "Stock y reservas",
+          "event": "Una venta conecta disponibilidad y gestión",
+          "capabilities": {
+            "one": "Ventas y atención",
+            "two": "Stock, reservas y gestión",
+            "three": "Automatización y asistencia"
+          },
+          "link": "Conocer ACME Café en el Laboratorio"
+        },
+        "logistics": {
+          "name": "ACME Logística",
+          "description": "Una distribuidora ficticia para explorar una flota y recorridos conectados con la central operativa y la aplicación de campo. Telemetría y eventos aportan contexto para decisiones basadas en datos.",
+          "previewLabel": "Esquema ilustrativo de recorridos y eventos conectados con una central operativa en ACME Logística, sin cartografía ni datos reales",
+          "previewTitle": "Operación coordinada",
+          "signalOne": "Flota y recorridos",
+          "signalTwo": "Central y campo",
+          "event": "Un evento de campo informa a la central",
+          "capabilities": {
+            "one": "Flota y recorridos",
+            "two": "Central y aplicación de campo",
+            "three": "Telemetría, eventos y datos"
+          },
+          "link": "Conocer ACME Logística en el Laboratorio"
+        }
+      }
+    },
+    "process": {
+      "cta": "Hablemos de tu proyecto",
+      "collaboration": "El cliente aporta contexto y valida decisiones. Yo diseño, implemento, pruebo y documento la solución, y acompaño la puesta en marcha según el alcance acordado. El ritmo y los próximos pasos se definen para cada proyecto.",
+      "deliverableLabel": "Qué recibís",
+      "clientLabel": "Tu participación",
+      "professionalLabel": "Mi responsabilidad",
+      "stages": {
+        "understand": {
+          "title": "Comprender",
+          "work": "Relevar la operación, el problema, las restricciones y los objetivos antes de proponer una solución.",
+          "deliverable": "Una síntesis compartida del problema, los objetivos y los puntos que requieren confirmación.",
+          "client": "Compartir contexto, procesos y restricciones; validar que el problema esté bien entendido.",
+          "professional": "Escuchar, analizar y ordenar los hallazgos y las preguntas pendientes."
+        },
+        "define": {
+          "title": "Definir",
+          "work": "Acordar alcance y prioridades, diseñar la experiencia y fundamentar las decisiones técnicas.",
+          "deliverable": "Un alcance acordado, prioridades y criterios de aceptación para orientar la implementación.",
+          "client": "Priorizar necesidades y validar alcance, experiencia y decisiones de negocio.",
+          "professional": "Proponer alternativas, explicar compromisos y diseñar una solución viable."
+        },
+        "build": {
+          "title": "Construir y validar",
+          "work": "Implementar por entregas incrementales y contrastar cada avance con pruebas y revisión.",
+          "deliverable": "Incrementos revisables, evidencia de pruebas y registro de ajustes acordados.",
+          "client": "Revisar los avances y aportar feedback sobre su ajuste a la operación.",
+          "professional": "Implementar, probar, corregir y comunicar avances y límites."
+        },
+        "evolve": {
+          "title": "Entregar y evolucionar",
+          "work": "Preparar documentación y despliegue, definir métricas útiles y acordar la continuidad.",
+          "deliverable": "La solución y la documentación acordadas, con criterios de puesta en marcha y próximos pasos.",
+          "client": "Validar la entrega, coordinar la adopción y priorizar mejoras futuras.",
+          "professional": "Documentar, acompañar el despliegue y proponer evolución según el alcance acordado."
+        }
       }
     }
   },

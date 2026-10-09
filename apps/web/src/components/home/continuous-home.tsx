@@ -4,6 +4,7 @@ import { sections } from '../../config/routes';
 import { ProgressiveReveal } from '../motion/progressive-reveal';
 import { ScrollProgress } from '../motion/scroll-progress';
 import { HeroSection } from './hero-section';
+import { SolutionsSection, ExperienceSection, ProcessSection } from './business-sections';
 
 export function ContinuousHome() {
   const t = useTranslations('Home');
@@ -11,7 +12,10 @@ export function ContinuousHome() {
     <div className="continuous-home">
       <ScrollProgress />
       <HeroSection />
-      {sections.slice(1).map(({ id }) => (
+      <SolutionsSection />
+      <ExperienceSection />
+      <ProcessSection />
+      {sections.slice(4).map(({ id }) => (
         <section
           aria-labelledby={`${id}-title`}
           className="narrative-section"

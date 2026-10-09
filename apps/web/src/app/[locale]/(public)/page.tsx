@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
+import { solutionAreas } from '../../../components/home/business-sections';
 import { ContinuousHome } from '../../../components/home/continuous-home';
 import { defaultLocale, routing } from '../../../i18n/routing';
 
@@ -35,6 +36,7 @@ export default async function HomePage({
   const { locale: localeValue } = await params;
   const locale = hasLocale(routing.locales, localeValue) ? localeValue : defaultLocale;
   const t = await getTranslations({ locale, namespace: 'Home.hero' });
+  const solutions = await getTranslations({ locale, namespace: 'Home.solutions' });
   const structuredData = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -51,12 +53,7 @@ export default async function HomePage({
         name: t('eyebrow'),
         description: t('description'),
         provider: { '@id': 'https://www.nahuelmartinez.com.ar/#person' },
-        serviceType: [
-          t('capabilities.product'),
-          t('capabilities.architecture'),
-          t('capabilities.development'),
-          t('capabilities.operations'),
-        ],
+        serviceType: solutionAreas.map((area) => solutions(`areas.${area}.title`)),
         inLanguage: locale,
       },
     ],

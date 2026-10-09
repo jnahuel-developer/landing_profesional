@@ -63,7 +63,10 @@ export function SectionNavigationProvider({ children }: Readonly<{ children: Rea
       }
     };
 
-    syncRequestedSection(window.location.hash !== '#home');
+    // Native anchor positioning already resolves home. A delayed scroll here
+    // could overwrite the visitor's first scroll into a longer narrative section.
+    if (window.location.hash === '#home') requestSection('home', false, false);
+    else syncRequestedSection();
 
     const observer = new IntersectionObserver(
       (entries) => {
