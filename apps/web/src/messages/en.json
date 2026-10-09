@@ -17,17 +17,17 @@
     "solutions": {
       "label": "Solutions",
       "title": "Solutions",
-      "description": "Temporary content about solution areas."
+      "description": "Management systems, automation, applications, and data are shaped around concrete processes."
     },
     "experience": {
       "label": "Experience",
       "title": "Experience",
-      "description": "Temporary content about experience and case studies."
+      "description": "The Laboratory will make it possible to explore fictional scenarios and understand how connected solutions work."
     },
     "process": {
       "label": "How I work",
       "title": "How I work",
-      "description": "Temporary content about the working method."
+      "description": "Each initiative is structured through context, explicit decisions, verifiable implementation, and operational continuity."
     },
     "about": {
       "label": "About me",
@@ -125,6 +125,125 @@
         "eyebrow": "Contact",
         "title": "Let's discuss the system your operation needs.",
         "description": "This space prepares a direct channel to assess context, scope, and next steps, without a persistent form yet."
+      }
+    },
+    "solutions": {
+      "cta": "Let’s talk about your operation",
+      "examplesLabel": "For example:",
+      "sceneLabel": "Connected capabilities",
+      "sceneCore": "One operation, one system",
+      "areas": {
+        "commerce": {
+          "title": "Commercial systems",
+          "problem": "When sales and customer service use separate information, every order means piecing the context back together.",
+          "solution": "I connect orders, customers and availability so sales and follow-up can work from the same system.",
+          "result": "Less duplicate work and better-informed customer service.",
+          "examples": "A point of sale linked to inventory; a customer ordering portal."
+        },
+        "operations": {
+          "title": "Management and operations",
+          "problem": "Scattered spreadsheets and informal handovers make it hard to see what is pending and who needs to act.",
+          "solution": "I design management tools with clear states, responsibilities and traceable processes.",
+          "result": "A clearer view of operations and better coordination.",
+          "examples": "Inventory across locations; delivery planning and tracking."
+        },
+        "applications": {
+          "title": "Web and mobile applications",
+          "problem": "Work does not always happen at a desk: customers and teams need access from different devices.",
+          "solution": "I build web and mobile experiences around each person’s tasks, connected to the central operation.",
+          "result": "Information and actions available where they are needed.",
+          "examples": "A field application; a customer self-service portal."
+        },
+        "automation": {
+          "title": "Automation and integrations",
+          "problem": "Copying data between tools takes time and can leave conflicting versions of the same operation.",
+          "solution": "I integrate systems and automate tasks with explicit rules, traceability and error handling.",
+          "result": "More consistent workflows with less manual intervention.",
+          "examples": "Generating documents from orders; synchronizing sales and management systems."
+        },
+        "intelligence": {
+          "title": "Data and artificial intelligence",
+          "problem": "Collecting data is not enough without a useful way to interpret it, make decisions or answer questions.",
+          "solution": "I organize information, build indicators and introduce AI assistance where the problem and available data support it.",
+          "result": "Evidence-based decisions and assistance with clear boundaries.",
+          "examples": "An operations dashboard; an assistant that queries business information."
+        }
+      }
+    },
+    "experience": {
+      "disclosure": "Fictional company · Interactive simulation",
+      "capabilitiesLabel": "Capabilities previewed by this demonstration",
+      "previewBadge": "Illustrative diagram",
+      "availability": "These previews introduce the planned demonstrations. The Laboratory is being prepared and currently offers a provisional introduction.",
+      "cta": "Explore the Laboratory",
+      "demos": {
+        "cafe": {
+          "name": "ACME Café",
+          "description": "A fictional café exploring how sales and customer service, inventory, reservations and management can share context. The concept connects automation and assisted interaction with everyday business activity.",
+          "previewLabel": "Illustrative diagram of sales connected to inventory and reservations at ACME Café, with no real data",
+          "previewTitle": "Connected operations",
+          "signalOne": "Sales and service",
+          "signalTwo": "Stock and reservations",
+          "event": "A sale connects availability and management",
+          "capabilities": {
+            "one": "Sales and customer service",
+            "two": "Stock, reservations and management",
+            "three": "Automation and assistance"
+          },
+          "link": "Meet ACME Café in the Laboratory"
+        },
+        "logistics": {
+          "name": "ACME Logística",
+          "description": "A fictional distributor exploring how a fleet and its routes connect with an operations center and a field application. Telemetry and events provide context for decisions informed by data.",
+          "previewLabel": "Illustrative diagram of routes and events connected to an operations center at ACME Logística, with no real maps or data",
+          "previewTitle": "Coordinated operations",
+          "signalOne": "Fleet and routes",
+          "signalTwo": "Center and field",
+          "event": "A field event informs the operations center",
+          "capabilities": {
+            "one": "Fleet and routes",
+            "two": "Operations center and field app",
+            "three": "Telemetry, events and data"
+          },
+          "link": "Meet ACME Logística in the Laboratory"
+        }
+      }
+    },
+    "process": {
+      "cta": "Let’s talk about your project",
+      "collaboration": "You provide context and validate decisions. I design, implement, test and document the solution, and support its launch within the agreed scope. Pace and next steps are defined for each project.",
+      "deliverableLabel": "What you receive",
+      "clientLabel": "Your contribution",
+      "professionalLabel": "My responsibility",
+      "stages": {
+        "understand": {
+          "title": "Understand",
+          "work": "Explore the operation, the problem, constraints and objectives before proposing a solution.",
+          "deliverable": "A shared summary of the problem, objectives and points that need confirmation.",
+          "client": "Share context, processes and constraints; confirm that the problem has been understood.",
+          "professional": "Listen, analyze and organize findings and open questions."
+        },
+        "define": {
+          "title": "Define",
+          "work": "Agree on scope and priorities, design the experience and explain technical decisions.",
+          "deliverable": "An agreed scope, priorities and acceptance criteria to guide implementation.",
+          "client": "Prioritize needs and validate scope, experience and business decisions.",
+          "professional": "Propose options, explain trade-offs and design a feasible solution."
+        },
+        "build": {
+          "title": "Build and validate",
+          "work": "Implement in increments and assess each delivery through testing and review.",
+          "deliverable": "Reviewable increments, test evidence and a record of agreed adjustments.",
+          "client": "Review progress and give feedback on how it fits the operation.",
+          "professional": "Implement, test, fix issues and communicate progress and limitations."
+        },
+        "evolve": {
+          "title": "Deliver and evolve",
+          "work": "Prepare documentation and deployment, define useful metrics and agree on continued support.",
+          "deliverable": "The agreed solution and documentation, with launch criteria and next steps.",
+          "client": "Validate delivery, coordinate adoption and prioritize future improvements.",
+          "professional": "Document, support deployment and propose improvements within the agreed scope."
+        }
       }
     }
   },

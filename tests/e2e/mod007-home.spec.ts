@@ -14,20 +14,20 @@ test('presenta el hero localizado, sus capacidades y el sistema conectado', asyn
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(messages.Home.hero.title);
     await expect(page.getByText(messages.Home.hero.description)).toBeVisible();
     for (const capability of Object.values(messages.Home.hero.capabilities)) {
-      await expect(page.getByRole('listitem').filter({ hasText: capability })).toBeVisible();
+      await expect(
+        page.locator('.hero-capabilities').getByRole('listitem').filter({ hasText: capability }),
+      ).toBeVisible();
     }
     const visual = page.getByRole('img', { name: messages.Home.visual.label });
     for (const module of Object.values(messages.Home.visual.modules)) {
       await expect(visual.getByText(module, { exact: true })).toBeVisible();
     }
-    await expect(page.getByRole('link', { name: messages.Home.hero.primaryCta })).toHaveAttribute(
-      'data-track-target',
-      'laboratory',
-    );
-    await expect(page.getByRole('link', { name: messages.Home.hero.secondaryCta })).toHaveAttribute(
-      'data-track-target',
-      'contact',
-    );
+    await expect(
+      page.locator('#home').getByRole('link', { name: messages.Home.hero.primaryCta }),
+    ).toHaveAttribute('data-track-target', 'laboratory');
+    await expect(
+      page.locator('#home').getByRole('link', { name: messages.Home.hero.secondaryCta }),
+    ).toHaveAttribute('data-track-target', 'contact');
   }
 });
 
