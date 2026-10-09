@@ -163,6 +163,22 @@ test('conserva documentos, 404 y catálogo interno aprobados', async ({ page }) 
   ).toBeVisible();
 });
 
+test('mantiene /dev/ui libre de errores de consola e hidratación', async ({ page }) => {
+  const consoleErrors: string[] = [];
+  const pageErrors: string[] = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error') consoleErrors.push(message.text());
+  });
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+
+  await page.goto('/dev/ui');
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Sistema visual compartido' }),
+  ).toBeVisible();
+  expect(consoleErrors).toEqual([]);
+  expect(pageErrors).toEqual([]);
+});
+
 for (const path of ['/', '/en', '/lab', '/admin']) {
   test(`no presenta violaciones críticas de axe en ${path}`, async ({ page }) => {
     await page.goto(path);

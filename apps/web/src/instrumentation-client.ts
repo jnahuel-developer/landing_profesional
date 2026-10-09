@@ -1,3 +1,5 @@
 import { bootstrapAppearance } from './preferences/bootstrap';
 
-bootstrapAppearance();
+if (!window.location.pathname.startsWith('/dev/')) {
+  bootstrapAppearance();
+}

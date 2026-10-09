@@ -38,7 +38,7 @@ export function RouteLink({ className, route, ...props }: RouteLinkProps) {
     if (window.location.hash !== route.hash) {
       window.history.pushState(window.history.state, '', route.hash);
     }
-    document.getElementById(route.id)?.scrollIntoView();
+    window.dispatchEvent(new CustomEvent('section-navigation', { detail: route.id }));
   };
 
   return (

@@ -621,7 +621,10 @@ nav.desktop-navigation {
   }
 
   .system-visual {
-    min-height: 31rem;
+    aspect-ratio: auto;
+    height: clamp(20rem, 82vw, 31rem);
+    min-height: 0;
+    width: 100%;
   }
 
   .system-module {

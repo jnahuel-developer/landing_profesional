@@ -40,7 +40,7 @@ test('normaliza /es y maneja locales no soportados sin loops', async ({ page }) 
   await expect(page.locator('html')).toHaveAttribute('lang', 'es');
 });
 
-test('detecta Accept-Language sin cookie y prioriza la preferencia explícita', async ({
+test('prioriza una ruta inglesa explícita frente a la preferencia previa en español', async ({
   browser,
 }) => {
   const context = await browser.newContext({ locale: 'en-US' });
@@ -54,7 +54,7 @@ test('detecta Accept-Language sin cookie y prioriza la preferencia explícita', 
   const cookie = (await context.cookies()).find(({ name }) => name === 'NEXT_LOCALE');
   expect(cookie).toMatchObject({ value: 'es', sameSite: 'Lax' });
   await page.goto('/en/contacto');
-  await expect(page).toHaveURL(/\/#contact$/);
+  await expect(page).toHaveURL(/\/en#contact$/);
   await context.close();
 });
 
