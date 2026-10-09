@@ -297,7 +297,7 @@ nav.desktop-navigation {
   scroll-margin-top: var(--ui-space-7);
 }
 
-.shell-main:focus {
+.shell-main:focus-visible {
   outline: 3px solid var(--ui-color-focus);
   outline-offset: -3px;
 }
@@ -347,10 +347,6 @@ nav.desktop-navigation {
   min-height: min(72rem, calc(100vh - var(--shell-header-height)));
   padding-block: clamp(5rem, 11vw, 9rem);
   scroll-margin-top: calc(var(--shell-header-height) + var(--ui-space-3));
-}
-
-.narrative-section + .narrative-section {
-  border-top: var(--ui-border-width) solid var(--ui-color-border);
 }
 
 .narrative-section__content {
@@ -739,21 +735,6 @@ nav.desktop-navigation {
   min-width: 0;
 }
 
-.solutions-section::before,
-.process-section::before {
-  background: linear-gradient(
-    var(--ui-color-border),
-    var(--ui-color-action),
-    var(--ui-color-border)
-  );
-  content: '';
-  width: 1px;
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  opacity: 0.45;
-}
-
 .section-introduction {
   max-width: 60rem;
 }
@@ -912,12 +893,6 @@ nav.desktop-navigation {
 .entry-examples {
   color: var(--ui-color-text-muted);
   font-size: var(--ui-font-size-sm);
-}
-
-.experience-section {
-  background: linear-gradient(180deg, var(--ui-color-surface), var(--ui-color-background));
-  border-radius: var(--ui-radius-lg);
-  padding-inline: clamp(1rem, 3vw, 3rem);
 }
 
 .experience-cards {
@@ -1086,7 +1061,7 @@ nav.desktop-navigation {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: var(--ui-space-5);
 }
 
@@ -1104,7 +1079,7 @@ nav.desktop-navigation {
 
 .process-introduction .inline-action,
 .capability-path > .inline-action {
-  justify-self: start;
+  justify-self: center;
 }
 
 .process-path {
@@ -1160,7 +1135,7 @@ nav.desktop-navigation {
 .process-stage dl {
   display: grid;
   gap: var(--ui-space-4);
-  margin: 0;
+  margin: var(--ui-space-6) 0 0;
 }
 
 .process-stage dt {
@@ -1174,11 +1149,8 @@ nav.desktop-navigation {
 }
 
 .stage-deliverable {
-  border-inline-start: 2px solid var(--ui-color-border);
-  padding-inline-start: var(--ui-space-3);
-}
-
-.process-stage article:is(:hover, :focus-visible) .stage-deliverable {
+  border-inline-start: 2px solid var(--ui-color-action);
+  padding: var(--ui-space-3);
   border-color: var(--ui-color-action);
   background: var(--ui-color-info-surface);
 }
@@ -1252,4 +1224,195 @@ nav.desktop-navigation {
     transform: none !important;
     opacity: 1 !important;
   }
+}
+
+/* MOD009: stable scenes and local, progressive carousel controls. */
+.shell-main:focus:not(:focus-visible) {
+  outline: none;
+}
+.process-introduction {
+  top: calc(var(--shell-header-height) + (100svh - var(--shell-header-height)) / 2);
+  transform: translateY(-50%);
+}
+.acme-carousel {
+  min-width: 0;
+}
+.acme-carousel__viewport {
+  min-height: 18rem;
+}
+.acme-scene {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--ui-color-surface-raised);
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-md);
+  min-height: 18rem;
+}
+.acme-scene__interface {
+  align-items: center;
+  display: grid;
+  min-height: 9rem;
+  background: var(--demo-surface);
+  border-radius: var(--ui-radius-sm);
+  padding: 1rem;
+}
+.acme-scene__interface--logistics {
+  padding: 1.5rem;
+}
+.acme-flow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.acme-flow svg {
+  width: 3rem;
+  flex-shrink: 0;
+  color: var(--demo-accent);
+}
+.acme-resources {
+  display: grid;
+  gap: 1rem;
+}
+.acme-resources > div {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.acme-resources meter {
+  width: 100%;
+}
+.acme-coordination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.acme-coordination > span {
+  padding: 1rem;
+  border: 1px solid var(--demo-accent);
+  border-radius: 1rem;
+}
+.acme-device {
+  max-width: 14rem;
+  width: 100%;
+  justify-self: center;
+  padding: 1rem;
+  border: 1px solid var(--demo-accent);
+  border-radius: 1rem;
+}
+.acme-device__message {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: var(--ui-color-surface-raised);
+  border-radius: var(--ui-radius-sm);
+}
+.acme-carousel__controls,
+.acme-carousel__dots {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.acme-carousel button {
+  min-width: var(--ui-hit-target);
+  min-height: var(--ui-hit-target);
+  background: var(--ui-color-surface-raised);
+  color: var(--ui-color-text);
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-sm);
+  cursor: pointer;
+  padding-inline: 0.5rem;
+}
+.acme-carousel button[aria-pressed='true'] {
+  border-color: var(--demo-accent);
+  font-weight: 750;
+}
+.acme-carousel button:disabled {
+  cursor: default;
+}
+.luminous-action {
+  --demo-accent: var(--ui-color-info);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  min-height: var(--ui-hit-target);
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  background: var(--ui-color-surface-raised);
+  color: var(--ui-color-text);
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid var(--demo-accent);
+}
+.experience-card--cafe .luminous-action {
+  --demo-accent: var(--ui-color-warning);
+}
+.luminous-action::before {
+  content: '';
+  position: absolute;
+  inset: -0.8rem;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse,
+    color-mix(in srgb, var(--demo-accent) 28%, transparent),
+    transparent 70%
+  );
+  filter: blur(0.5rem);
+  pointer-events: none;
+}
+@property --glow-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.luminous-action::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--glow-angle),
+    transparent 65%,
+    var(--demo-accent),
+    transparent 95%
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: perimeter-glow 14s linear infinite;
+}
+.luminous-action--primary {
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  min-height: 4.5rem;
+  padding-inline: clamp(1rem, 4vw, 4rem);
+}
+@keyframes perimeter-glow {
+  to {
+    --glow-angle: 360deg;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .luminous-action::after {
+    animation: none;
+  }
+}
+@media (max-width: 59.99rem) {
+  .process-introduction {
+    transform: none;
+  }
+}
+
+.acme-carousel [hidden] {
+  display: none;
 }

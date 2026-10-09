@@ -190,7 +190,34 @@
             "two": "Stock, reservas y gestión",
             "three": "Automatización y asistencia"
           },
-          "link": "Conocer ACME Café en el Laboratorio"
+          "link": "Conocer ACME Café en el Laboratorio",
+          "scenes": {
+            "overview": {
+              "title": "Resumen operativo",
+              "description": "Indicadores y actividad de las sucursales en una sola vista."
+            },
+            "connected": {
+              "title": "Venta conectada",
+              "description": "Una venta conecta caja, stock y comprobante.",
+              "from": "Caja",
+              "to": "Stock"
+            },
+            "resources": {
+              "title": "Stock y reposición",
+              "description": "Disponibilidad por sucursal para anticipar faltantes."
+            },
+            "coordination": {
+              "title": "Reservas y mesas",
+              "description": "Agenda y salón coordinados.",
+              "status": "Mesas asignadas"
+            },
+            "field": {
+              "title": "Atención asistida",
+              "description": "Consultas conectadas con la operación.",
+              "from": "¿Hay una mesa disponible?",
+              "to": "Consultar disponibilidad"
+            }
+          }
         },
         "logistics": {
           "name": "ACME Logística",
@@ -205,7 +232,34 @@
             "two": "Central y aplicación de campo",
             "three": "Telemetría, eventos y datos"
           },
-          "link": "Conocer ACME Logística en el Laboratorio"
+          "link": "Conocer ACME Logística en el Laboratorio",
+          "scenes": {
+            "overview": {
+              "title": "Central operativa",
+              "description": "Una vista compartida de rutas y entregas."
+            },
+            "connected": {
+              "title": "Planificación de rutas",
+              "description": "De las entregas pendientes a un recorrido coordinado.",
+              "from": "Entregas",
+              "to": "Ruta"
+            },
+            "resources": {
+              "title": "Flota y telemetría",
+              "description": "Señales del vehículo para decidir con contexto."
+            },
+            "coordination": {
+              "title": "Incidente coordinado",
+              "description": "Central y chofer comparten el siguiente paso.",
+              "status": "Desvío acordado"
+            },
+            "field": {
+              "title": "Aplicación del chofer",
+              "description": "La próxima entrega y su estado desde el campo.",
+              "from": "Próxima parada",
+              "to": "Entrega registrada"
+            }
+          }
         }
       }
     },
@@ -245,6 +299,16 @@
           "professional": "Documentar, acompañar el despliegue y proponer evolución según el alcance acordado."
         }
       }
+    },
+    "carousel": {
+      "role": "carrusel",
+      "scene": "escena",
+      "previous": "Escena anterior",
+      "next": "Escena siguiente",
+      "pause": "Pausar avance",
+      "resume": "Reanudar avance",
+      "goTo": "Ver {title}",
+      "withoutJs": "Escenas de esta vista previa:"
     }
   },
   "States": {

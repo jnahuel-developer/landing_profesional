@@ -4,6 +4,7 @@ import { CheckIcon } from '@portfolio/ui';
 import { routes } from '../../config/routes';
 import { Link } from '../../i18n/navigation';
 import { ProgressiveReveal } from '../motion/progressive-reveal';
+import { AcmeCarousel } from './acme-carousel';
 import { NarrativeJourney } from './narrative-journey';
 
 export const solutionAreas = [
@@ -134,59 +135,65 @@ function DemoMark({ demo }: Readonly<{ demo: (typeof demos)[number] }>) {
 
 function DemoPreview({ demo }: Readonly<{ demo: (typeof demos)[number] }>) {
   const t = useTranslations('Home.experience');
+  const scenes = ['overview', 'connected', 'resources', 'coordination', 'field'] as const;
   return (
-    <div className="demo-preview" role="img" aria-label={t(`demos.${demo}.previewLabel`)}>
-      <ProgressiveReveal>
-        <div className="demo-preview__header" aria-hidden="true">
-          <span className="demo-signal" />
-          <strong>{t(`demos.${demo}.previewTitle`)}</strong>
-          <span>{t('previewBadge')}</span>
-        </div>
-        <div className="demo-preview__body" aria-hidden="true">
-          {demo === 'cafe' ? (
-            <div className="demo-bars">
-              {[35, 58, 44, 72, 61, 88, 76].map((height, index) => (
-                <span key={index} style={{ height: `${height}%` }} />
-              ))}
-            </div>
-          ) : (
-            <svg className="demo-route" viewBox="0 0 260 110" fill="none">
-              <path d="M20 85 70 60 115 75 160 25 235 40" stroke="currentColor" strokeWidth="3" />
-              {[
-                [20, 85],
-                [70, 60],
-                [115, 75],
-                [160, 25],
-                [235, 40],
-              ].map(([cx, cy], index) => (
-                <circle
-                  key={index}
-                  cx={cx}
-                  cy={cy}
-                  r="6"
-                  fill="var(--ui-color-surface-raised)"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-              ))}
-            </svg>
-          )}
-          <div className="demo-preview__labels">
-            <span>{t(`demos.${demo}.signalOne`)}</span>
-            <span>
-              <CheckIcon />
-              {t(`demos.${demo}.signalTwo`)}
-            </span>
+    <AcmeCarousel
+      demo={demo}
+      label={t(`demos.${demo}.previewLabel`)}
+      titles={scenes.map((scene) => t(`demos.${demo}.scenes.${scene}.title`))}
+    >
+      {scenes.map((scene) => (
+        <div className={`acme-scene acme-scene--${scene}`} key={scene}>
+          <div className="demo-preview__header">
+            <span className="demo-signal" />
+            <strong>{t(`demos.${demo}.scenes.${scene}.title`)}</strong>
+            <span>{t('previewBadge')}</span>
           </div>
+          <div
+            className={`acme-scene__interface acme-scene__interface--${demo}`}
+            aria-hidden="true"
+          >
+            {scene === 'overview' ? (
+              <div className="demo-bars">
+                {[35, 58, 44, 72, 61, 88, 76].slice(0, demo === 'cafe' ? 7 : 4).map((height, i) => (
+                  <span key={i} style={{ height: `${height}%` }} />
+                ))}
+              </div>
+            ) : scene === 'connected' ? (
+              <div className="acme-flow">
+                <span>{t(`demos.${demo}.scenes.${scene}.from`)}</span>
+                <svg viewBox="0 0 80 24" fill="none">
+                  <path d="M4 12h68m-10-8 10 8-10 8" stroke="currentColor" strokeWidth="2" />
+                </svg>
+                <span>{t(`demos.${demo}.scenes.${scene}.to`)}</span>
+              </div>
+            ) : scene === 'resources' ? (
+              <div className="acme-resources">
+                {[72, 32, 55].slice(0, demo === 'cafe' ? 3 : 2).map((width, i) => (
+                  <div key={i}>
+                    <span>{String.fromCharCode(65 + i)}</span>
+                    <meter min="0" max="100" value={width} />
+                  </div>
+                ))}
+              </div>
+            ) : scene === 'coordination' ? (
+              <div className="acme-coordination">
+                {[1, 2, 3].slice(0, demo === 'cafe' ? 3 : 2).map((n) => (
+                  <span key={n}>{n.toString().padStart(2, '0')}</span>
+                ))}
+                <strong>{t(`demos.${demo}.scenes.${scene}.status`)}</strong>
+              </div>
+            ) : (
+              <div className="acme-device">
+                <span>{t(`demos.${demo}.scenes.${scene}.from`)}</span>
+                <div className="acme-device__message">{t(`demos.${demo}.scenes.${scene}.to`)}</div>
+              </div>
+            )}
+          </div>
+          <p>{t(`demos.${demo}.scenes.${scene}.description`)}</p>
         </div>
-      </ProgressiveReveal>
-      <ProgressiveReveal>
-        <div className="demo-preview__event" aria-hidden="true">
-          <CheckIcon />
-          <span>{t(`demos.${demo}.event`)}</span>
-        </div>
-      </ProgressiveReveal>
-    </div>
+      ))}
+    </AcmeCarousel>
   );
 }
 
@@ -224,21 +231,20 @@ export function ExperienceSection() {
                 ))}
               </ul>
               <Link
-                className="demo-link"
+                className="demo-link luminous-action"
                 data-track-event="cta_select"
                 data-track-target="laboratory"
                 href={routes.laboratory.path}
               >
-                {t(`demos.${demo}.link`)} <span aria-hidden="true">↗</span>
+                {t(`demos.${demo}.link`)}
               </Link>
             </article>
           </ProgressiveReveal>
         ))}
       </div>
       <div className="experience-next">
-        <p>{t('availability')}</p>
         <Link
-          className="inline-action"
+          className="inline-action luminous-action luminous-action--primary"
           data-track-event="cta_select"
           data-track-target="laboratory"
           href={routes.laboratory.path}
