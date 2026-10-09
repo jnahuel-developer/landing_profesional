@@ -14,7 +14,7 @@ Como referencias de dinamismo se consideran [Cheetos](https://www.cheetos.com/) 
 
 ## Carruseles ACME aprobados
 
-Las siguientes referencias `v2` corresponden a las escenas aprobadas para reemplazar las miniinterfaces provisionales de la sección Experiencia. Se conservan como PNG de diseño; la integración productiva utilizará las variantes WebP definidas en el contrato de activos.
+Las siguientes referencias `v2` corresponden a las escenas aprobadas para reemplazar las miniinterfaces provisionales de la sección Experiencia. Se conservan como PNG de diseño; la integración productiva utiliza las variantes WebP definidas en el contrato de activos, ya integradas en MOD009.
 
 ### ACME Café
 

@@ -133,67 +133,36 @@ function DemoMark({ demo }: Readonly<{ demo: (typeof demos)[number] }>) {
   );
 }
 
+const demoScenes = {
+  cafe: [
+    { id: 'overview', src: '/images/experience/acme-cafe/01-operations-overview.webp' },
+    { id: 'connected', src: '/images/experience/acme-cafe/02-connected-sale.webp' },
+    { id: 'resources', src: '/images/experience/acme-cafe/03-stock-replenishment.webp' },
+    { id: 'coordination', src: '/images/experience/acme-cafe/04-reservations-tables.webp' },
+    { id: 'field', src: '/images/experience/acme-cafe/05-assisted-service.webp' },
+  ],
+  logistics: [
+    { id: 'overview', src: '/images/experience/acme-logistica/01-control-center.webp' },
+    { id: 'connected', src: '/images/experience/acme-logistica/02-route-planning.webp' },
+    { id: 'resources', src: '/images/experience/acme-logistica/03-fleet-telemetry.webp' },
+    { id: 'coordination', src: '/images/experience/acme-logistica/04-coordinated-incident.webp' },
+    { id: 'field', src: '/images/experience/acme-logistica/05-driver-app.webp' },
+  ],
+} as const;
+
 function DemoPreview({ demo }: Readonly<{ demo: (typeof demos)[number] }>) {
   const t = useTranslations('Home.experience');
-  const scenes = ['overview', 'connected', 'resources', 'coordination', 'field'] as const;
   return (
     <AcmeCarousel
       demo={demo}
       label={t(`demos.${demo}.previewLabel`)}
-      titles={scenes.map((scene) => t(`demos.${demo}.scenes.${scene}.title`))}
-    >
-      {scenes.map((scene) => (
-        <div className={`acme-scene acme-scene--${scene}`} key={scene}>
-          <div className="demo-preview__header">
-            <span className="demo-signal" />
-            <strong>{t(`demos.${demo}.scenes.${scene}.title`)}</strong>
-            <span>{t('previewBadge')}</span>
-          </div>
-          <div
-            className={`acme-scene__interface acme-scene__interface--${demo}`}
-            aria-hidden="true"
-          >
-            {scene === 'overview' ? (
-              <div className="demo-bars">
-                {[35, 58, 44, 72, 61, 88, 76].slice(0, demo === 'cafe' ? 7 : 4).map((height, i) => (
-                  <span key={i} style={{ height: `${height}%` }} />
-                ))}
-              </div>
-            ) : scene === 'connected' ? (
-              <div className="acme-flow">
-                <span>{t(`demos.${demo}.scenes.${scene}.from`)}</span>
-                <svg viewBox="0 0 80 24" fill="none">
-                  <path d="M4 12h68m-10-8 10 8-10 8" stroke="currentColor" strokeWidth="2" />
-                </svg>
-                <span>{t(`demos.${demo}.scenes.${scene}.to`)}</span>
-              </div>
-            ) : scene === 'resources' ? (
-              <div className="acme-resources">
-                {[72, 32, 55].slice(0, demo === 'cafe' ? 3 : 2).map((width, i) => (
-                  <div key={i}>
-                    <span>{String.fromCharCode(65 + i)}</span>
-                    <meter min="0" max="100" value={width} />
-                  </div>
-                ))}
-              </div>
-            ) : scene === 'coordination' ? (
-              <div className="acme-coordination">
-                {[1, 2, 3].slice(0, demo === 'cafe' ? 3 : 2).map((n) => (
-                  <span key={n}>{n.toString().padStart(2, '0')}</span>
-                ))}
-                <strong>{t(`demos.${demo}.scenes.${scene}.status`)}</strong>
-              </div>
-            ) : (
-              <div className="acme-device">
-                <span>{t(`demos.${demo}.scenes.${scene}.from`)}</span>
-                <div className="acme-device__message">{t(`demos.${demo}.scenes.${scene}.to`)}</div>
-              </div>
-            )}
-          </div>
-          <p>{t(`demos.${demo}.scenes.${scene}.description`)}</p>
-        </div>
-      ))}
-    </AcmeCarousel>
+      scenes={demoScenes[demo].map(({ id, src }) => ({
+        id,
+        src,
+        title: t(`demos.${demo}.scenes.${id}.title`),
+        description: t(`demos.${demo}.scenes.${id}.description`),
+      }))}
+    />
   );
 }
 
@@ -236,6 +205,7 @@ export function ExperienceSection() {
                 data-track-target="laboratory"
                 href={routes.laboratory.path}
               >
+                <span aria-hidden="true" className="luminous-action__perimeter" />
                 {t(`demos.${demo}.link`)}
               </Link>
             </article>
@@ -249,6 +219,7 @@ export function ExperienceSection() {
           data-track-target="laboratory"
           href={routes.laboratory.path}
         >
+          <span aria-hidden="true" className="luminous-action__perimeter" />
           {t('cta')}
         </Link>
       </div>

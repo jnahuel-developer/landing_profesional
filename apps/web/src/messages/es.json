@@ -303,10 +303,6 @@
     "carousel": {
       "role": "carrusel",
       "scene": "escena",
-      "previous": "Escena anterior",
-      "next": "Escena siguiente",
-      "pause": "Pausar avance",
-      "resume": "Reanudar avance",
       "goTo": "Ver {title}",
       "withoutJs": "Escenas de esta vista previa:"
     },

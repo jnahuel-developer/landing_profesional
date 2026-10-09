@@ -112,6 +112,18 @@ for (const [prefix, messages] of [
         await expect(page.locator('#contact button[type="submit"]')).toBeDisabled();
         await expect(page.getByText(messages.Contact.withoutJs)).toBeVisible();
         await expect(page.locator('.acme-carousel__fallback')).toHaveCount(2);
+        await expect(page.locator('.acme-carousel .acme-scene:not([hidden]) img')).toHaveCount(2);
+        for (const carousel of await page.locator('.acme-carousel').all()) {
+          await expect(carousel.getByRole('button')).toHaveCount(0);
+          await expect(carousel.locator('.acme-scene:not([hidden]) img')).toHaveAttribute(
+            'width',
+            '1600',
+          );
+          await expect(carousel.locator('.acme-scene:not([hidden]) img')).toHaveAttribute(
+            'height',
+            '900',
+          );
+        }
         for (const fallback of await page.locator('.acme-carousel__fallback').all())
           await expect(fallback.getByRole('listitem')).toHaveCount(5);
       }

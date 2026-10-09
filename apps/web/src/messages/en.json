@@ -303,10 +303,6 @@
     "carousel": {
       "role": "carousel",
       "scene": "slide",
-      "previous": "Previous scene",
-      "next": "Next scene",
-      "pause": "Pause autoplay",
-      "resume": "Resume autoplay",
       "goTo": "Show {title}",
       "withoutJs": "Scenes in this preview:"
     },
