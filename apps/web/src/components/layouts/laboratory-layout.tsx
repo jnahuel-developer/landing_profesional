@@ -1,18 +1,26 @@
 import { Container } from '@portfolio/ui';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 
 import { routes } from '../../config/routes';
+import { Link } from '../../i18n/navigation';
+import { LanguageSelector } from '../preferences/language-selector';
+import { PreferencesControls } from '../preferences/preferences-controls';
 import { SkipLink } from '../navigation/skip-link';
 
 export function LaboratoryLayout({ children }: Readonly<{ children: ReactNode }>) {
+  const t = useTranslations('Layouts');
   return (
     <div className="laboratory-shell" data-layout="laboratory">
       <SkipLink />
       <header className="section-shell-header">
         <Container className="section-shell-header__inner">
-          <p className="section-shell-label">Nahuel Martínez · Entorno preliminar</p>
-          <Link href={routes.home.path}>Volver al portfolio</Link>
+          <p className="section-shell-label">{t('labLabel')}</p>
+          <div className="section-shell-actions">
+            <LanguageSelector />
+            <PreferencesControls />
+            <Link href={routes.home.path}>{t('backPortfolio')}</Link>
+          </div>
         </Container>
       </header>
       <main className="shell-main" id="main-content" tabIndex={-1}>

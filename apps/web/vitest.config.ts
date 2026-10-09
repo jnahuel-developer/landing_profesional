@@ -8,6 +8,11 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    server: {
+      deps: {
+        inline: ['next-intl'],
+      },
+    },
     setupFiles: ['./tests/setup.ts'],
   },
 });

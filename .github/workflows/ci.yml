@@ -33,6 +33,8 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Validate translations
+        run: pnpm i18n:check
       - name: Check formatting
         run: pnpm format:check
       - name: Lint

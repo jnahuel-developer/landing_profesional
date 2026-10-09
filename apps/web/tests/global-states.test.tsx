@@ -1,14 +1,20 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { usePathname } from 'next/navigation';
 import { describe, expect, it, vi } from 'vitest';
 
-import ErrorPage from '../src/app/error';
-import NotFoundPage from '../src/app/not-found';
+import ErrorPage from '../src/app/[locale]/error';
+import NotFoundPage from '../src/app/[locale]/not-found';
 import { routes } from '../src/config/routes';
+import { renderWithIntl as render } from './test-utils';
 
 vi.mock('next/navigation', () => ({
+  permanentRedirect: vi.fn(),
+  redirect: vi.fn(),
+  useParams: vi.fn(() => ({ locale: 'es' })),
   usePathname: vi.fn(() => '/ruta-inexistente'),
+  useRouter: vi.fn(() => ({ replace: vi.fn() })),
+  useSearchParams: vi.fn(() => new URLSearchParams()),
 }));
 
 describe('estados globales', () => {

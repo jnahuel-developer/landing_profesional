@@ -2,31 +2,34 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 import { appRoutes, primaryRoutes, routes } from '../../apps/web/src/config/routes';
+import messages from '../../apps/web/src/messages/es.json';
 
 test('todas las rutas obligatorias son alcanzables y presentan su título', async ({ page }) => {
   for (const route of appRoutes) {
     const response = await page.goto(route.path);
     expect(response?.ok(), route.path).toBe(true);
-    await expect(page.getByRole('heading', { level: 1, name: route.title })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 1, name: messages.Routes[route.id].title }),
+    ).toBeVisible();
   }
 });
 
 test('navega con teclado, conserva estado activo y respeta el historial', async ({ page }) => {
   await page.goto(routes.home.path);
   const primary = page.getByRole('navigation', { name: 'Navegación principal' });
-  await expect(primary.getByRole('link', { name: routes.home.label })).toHaveAttribute(
+  await expect(primary.getByRole('link', { name: messages.Routes.home.label })).toHaveAttribute(
     'aria-current',
     'page',
   );
 
-  const solutions = primary.getByRole('link', { name: routes.solutions.label });
+  const solutions = primary.getByRole('link', { name: messages.Routes.solutions.label });
   await solutions.focus();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(new RegExp(`${routes.solutions.path}$`));
   await expect(
     page
       .getByRole('navigation', { name: 'Navegación principal' })
-      .getByRole('link', { name: routes.solutions.label }),
+      .getByRole('link', { name: messages.Routes.solutions.label }),
   ).toHaveAttribute('aria-current', 'page');
 
   await page.goBack();
@@ -37,7 +40,7 @@ test('navega con teclado, conserva estado activo y respeta el historial', async 
 
 test('entra al laboratorio y ofrece una salida al portfolio', async ({ page }) => {
   await page.goto(routes.home.path);
-  await page.getByRole('link', { name: routes.laboratory.label }).first().click();
+  await page.getByRole('link', { name: messages.Routes.laboratory.label }).first().click();
   await expect(page).toHaveURL(new RegExp(`${routes.laboratory.path}$`));
   await page.getByRole('link', { name: 'Volver al portfolio' }).click();
   await expect(page).toHaveURL(new RegExp('/$'));
@@ -65,7 +68,7 @@ test('el menú reducido abre, navega y se cierra con teclado', async ({ page }) 
 
   const contact = page
     .getByRole('navigation', { name: 'Navegación reducida' })
-    .getByRole('link', { name: routes.contact.label });
+    .getByRole('link', { name: messages.Routes.contact.label });
   await contact.focus();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(new RegExp(`${routes.contact.path}$`));
@@ -79,15 +82,13 @@ test('mantiene enlaces esenciales disponibles sin JavaScript', async ({ browser 
   const primary = page.getByRole('navigation', { name: 'Navegación principal' });
 
   for (const route of primaryRoutes) {
-    await expect(primary.getByRole('link', { name: route.label })).toHaveAttribute(
-      'href',
-      route.path,
-    );
+    await expect(
+      primary.getByRole('link', { name: messages.Routes[route.id].label }),
+    ).toHaveAttribute('href', route.path);
   }
-  await expect(page.getByRole('link', { name: routes.laboratory.label }).first()).toHaveAttribute(
-    'href',
-    routes.laboratory.path,
-  );
+  await expect(
+    page.getByRole('link', { name: messages.Routes.laboratory.label }).first(),
+  ).toHaveAttribute('href', routes.laboratory.path);
   await context.close();
 });
 

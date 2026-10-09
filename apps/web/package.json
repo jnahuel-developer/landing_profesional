@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "next dev --port 3000",
+    "i18n:check": "node ./scripts/check-i18n.ts",
     "build": "next build",
     "start": "next start --port 3000",
     "lint": "eslint .",
@@ -17,6 +18,7 @@
   "dependencies": {
     "@portfolio/ui": "workspace:*",
     "next": "^16.4.0",
+    "next-intl": "4.14.9",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },

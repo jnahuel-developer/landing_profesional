@@ -27,6 +27,7 @@
     "db:studio": "node ./scripts/run-with-env.mjs db:studio:workspace",
     "db:studio:workspace": "pnpm --filter @portfolio/database db:studio",
     "lint": "eslint playwright.config.ts tests/e2e && pnpm -r --if-present run lint",
+    "i18n:check": "pnpm --filter @portfolio/web i18n:check",
     "typecheck": "tsc --project tsconfig.playwright.json --noEmit && pnpm -r --if-present run typecheck",
     "test": "pnpm -r --if-present run test",
     "test:integration": "pnpm --filter @portfolio/database test:integration && pnpm --filter @portfolio/api test:integration",
@@ -39,7 +40,7 @@
     "build:workspace-dependencies": "pnpm --filter @portfolio/contracts build && pnpm --filter @portfolio/database build && pnpm run build:ui",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm lint && pnpm typecheck && pnpm test"
+    "check": "pnpm i18n:check && pnpm lint && pnpm typecheck && pnpm test"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

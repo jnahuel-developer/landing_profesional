@@ -1,13 +1,24 @@
-import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
-import AdminPage from '../src/app/admin/page';
-import LaboratoryPage from '../src/app/lab/page';
+import AdminPage from '../src/app/[locale]/admin/page';
+import LaboratoryPage from '../src/app/[locale]/lab/page';
 import { AdminLayout } from '../src/components/layouts/admin-layout';
 import { LaboratoryLayout } from '../src/components/layouts/laboratory-layout';
 import { PublicLayout } from '../src/components/layouts/public-layout';
 import { PlaceholderPage } from '../src/components/placeholder-page';
 import { appRoutes, routes } from '../src/config/routes';
+import messages from '../src/messages/es.json';
+import { renderWithIntl as render } from './test-utils';
+
+vi.mock('next/navigation', () => ({
+  permanentRedirect: vi.fn(),
+  redirect: vi.fn(),
+  useParams: vi.fn(() => ({ locale: 'es' })),
+  usePathname: vi.fn(() => '/'),
+  useRouter: vi.fn(() => ({ replace: vi.fn() })),
+  useSearchParams: vi.fn(() => new URLSearchParams()),
+}));
 
 describe('configuración de rutas', () => {
   it('mantiene rutas absolutas y únicas con la clasificación aprobada', () => {
@@ -43,18 +54,25 @@ describe.each([
 
 describe('placeholders', () => {
   it.each(appRoutes)('renderiza un único h1 para $path', (route) => {
-    const { unmount } = render(<PlaceholderPage route={route} />);
+    const { unmount } = render(<PlaceholderPage routeId={route.id} />);
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(route.title);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
+      messages.Routes[route.id].title,
+    );
     unmount();
   });
 
   it('mantiene laboratorio y administración como superficies separadas', () => {
-    const { rerender } = render(<LaboratoryPage />);
-    expect(screen.getByRole('heading', { level: 1, name: routes.laboratory.title })).toBeVisible();
+    const { unmount } = render(<LaboratoryPage />);
+    expect(
+      screen.getByRole('heading', { level: 1, name: messages.Routes.laboratory.title }),
+    ).toBeVisible();
 
-    rerender(<AdminPage />);
-    expect(screen.getByRole('heading', { level: 1, name: routes.admin.title })).toBeVisible();
+    unmount();
+    render(<AdminPage />);
+    expect(
+      screen.getByRole('heading', { level: 1, name: messages.Routes.admin.title }),
+    ).toBeVisible();
   });
 
   it('no incluye administración entre las rutas visibles', () => {

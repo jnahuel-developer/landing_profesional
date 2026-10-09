@@ -1,77 +1,67 @@
 export type RouteKind = 'primary' | 'secondary' | 'lab' | 'internal';
 export type AppPath = `/${string}`;
+export type RouteId =
+  | 'home'
+  | 'solutions'
+  | 'experience'
+  | 'process'
+  | 'about'
+  | 'contact'
+  | 'privacy'
+  | 'laboratory'
+  | 'admin';
 
 export interface AppRoute {
-  readonly description: string;
+  readonly id: RouteId;
   readonly kind: RouteKind;
-  readonly label: string;
   readonly path: AppPath;
-  readonly title: string;
 }
 
 export const routes = {
   home: {
-    description: 'Presentación provisional del portfolio profesional.',
+    id: 'home',
     kind: 'primary',
-    label: 'Inicio',
     path: '/',
-    title: 'Nahuel Martínez',
   },
   solutions: {
-    description: 'Contenido provisional sobre las áreas de solución.',
+    id: 'solutions',
     kind: 'primary',
-    label: 'Soluciones',
     path: '/soluciones',
-    title: 'Soluciones',
   },
   experience: {
-    description: 'Contenido provisional sobre experiencia y casos.',
+    id: 'experience',
     kind: 'primary',
-    label: 'Experiencia',
     path: '/experiencia',
-    title: 'Experiencia',
   },
   process: {
-    description: 'Contenido provisional sobre la metodología de trabajo.',
+    id: 'process',
     kind: 'primary',
-    label: 'Cómo trabajo',
     path: '/como-trabajo',
-    title: 'Cómo trabajo',
   },
   about: {
-    description: 'Contenido provisional sobre el perfil profesional.',
+    id: 'about',
     kind: 'primary',
-    label: 'Sobre mí',
     path: '/sobre-mi',
-    title: 'Sobre mí',
   },
   contact: {
-    description: 'Contenido provisional para iniciar una conversación profesional.',
+    id: 'contact',
     kind: 'primary',
-    label: 'Contacto',
     path: '/contacto',
-    title: 'Contacto',
   },
   privacy: {
-    description: 'Información provisional sobre privacidad y tratamiento de datos.',
+    id: 'privacy',
     kind: 'secondary',
-    label: 'Privacidad',
     path: '/privacidad',
-    title: 'Privacidad',
   },
   laboratory: {
-    description: 'Estructura preliminar del laboratorio, sin demos ni sesiones activas.',
+    id: 'laboratory',
     kind: 'lab',
-    label: 'Laboratorio',
     path: '/lab',
-    title: 'Laboratorio',
   },
   admin: {
-    description: 'Estructura técnica preliminar, sin autenticación, métricas ni datos reales.',
+    id: 'admin',
     kind: 'internal',
-    label: 'Administración',
     path: '/admin',
-    title: 'Administración',
   },
 } as const satisfies Record<string, AppRoute>;
 
