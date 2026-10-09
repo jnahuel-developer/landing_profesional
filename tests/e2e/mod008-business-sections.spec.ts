@@ -32,9 +32,18 @@ async function assertContent(page: Page, messages: typeof spanish) {
     const card = experience.getByRole('article', { name: demo.name });
     await expect(card.getByText(messages.Home.experience.disclosure)).toBeVisible();
     await expect(card.getByText(demo.description)).toBeVisible();
-    for (const capability of Object.values(demo.capabilities))
-      await expect(card.getByRole('listitem').filter({ hasText: capability })).toBeVisible();
-    await expect(card.getByRole('region', { name: demo.previewLabel })).toBeVisible();
+    const carousel = card.getByRole('region', { name: demo.previewLabel });
+    await expect(carousel).toBeVisible();
+    const overview = demo.scenes.overview;
+    const scene = carousel.getByRole('group', { name: overview.title });
+    await expect(carousel.getByRole('group')).toHaveCount(1);
+    await expect(scene).toBeVisible();
+    await expect(scene.locator('.acme-scene__caption strong')).toHaveText(overview.title);
+    await expect(scene.locator('.acme-scene__caption p')).toHaveText(overview.description);
+    await expect(scene.getByRole('listitem')).toHaveCount(3);
+    expect(await scene.getByRole('listitem').allTextContents()).toEqual(
+      Object.values(overview.chips),
+    );
     await expect(card.getByRole('link', { name: demo.link })).toHaveAttribute('href', /\/lab$/);
   }
   await expect(experience.getByText(messages.Home.experience.availability)).toHaveCount(0);
@@ -122,7 +131,11 @@ test('scroll y hover activan conexiones y nodos sin ocultar información', async
   await page.goto('/');
   for (const area of Object.keys(spanish.Home.solutions.areas)) {
     const entry = page.locator(`[data-journey-step="${area}"]`);
-    await entry.evaluate((element) => element.scrollIntoView({ block: 'center' }));
+    // Finish the previous hover before testing activation by scroll alone.
+    await page.locator('header').hover();
+    await entry.evaluate((element) =>
+      element.scrollIntoView({ block: 'center', behavior: 'instant' }),
+    );
     await expect(entry).toHaveAttribute('data-current', 'true');
     await entry.hover();
     await expect(page.locator(`[data-scene-step="${area}"]`)).toHaveAttribute(
@@ -132,7 +145,10 @@ test('scroll y hover activan conexiones y nodos sin ocultar información', async
   }
   for (const stage of Object.keys(spanish.Home.process.stages)) {
     const entry = page.locator(`[data-journey-step="${stage}"]`);
-    await entry.evaluate((element) => element.scrollIntoView({ block: 'center' }));
+    await page.locator('header').hover();
+    await entry.evaluate((element) =>
+      element.scrollIntoView({ block: 'center', behavior: 'instant' }),
+    );
     await expect(entry).toHaveAttribute('data-current', 'true');
     await expect(entry).toHaveAttribute('data-reached', 'true');
   }

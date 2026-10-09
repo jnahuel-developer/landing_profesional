@@ -118,7 +118,7 @@ for (const [locale, path, messages] of [
 ] as const) {
   for (const theme of ['light', 'dark'] as const) {
     test(`axe sin violaciones críticas en home ${locale}/${theme}`, async ({ page }) => {
-      await page.emulateMedia({ colorScheme: 'light' });
+      await page.emulateMedia({ colorScheme: 'light', reducedMotion: 'reduce' });
       await page.goto(path);
       if (theme === 'dark') {
         await page.getByRole('button', { name: messages.Preferences.toggleTheme }).click();

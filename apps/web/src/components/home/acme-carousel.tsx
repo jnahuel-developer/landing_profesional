@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 const subscribeReady = () => () => {};
@@ -20,17 +21,24 @@ function subscribeMotion(callback: () => void) {
 }
 
 export function AcmeCarousel({
-  children,
-  titles,
+  scenes,
   label,
+  chipsLabel,
   demo,
 }: Readonly<{
-  children: ReactNode[];
-  titles: string[];
+  scenes: readonly {
+    id: string;
+    title: string;
+    description: string;
+    src: string;
+    chips: readonly [string, string, string];
+  }[];
   label: string;
+  chipsLabel: string;
   demo: 'cafe' | 'logistics';
 }>) {
   const t = useTranslations('Home.carousel');
+  const id = useId();
   const root = useRef<HTMLDivElement>(null);
   const start = useRef<{ x: number; y: number } | null>(null);
   const ready = useSyncExternalStore(subscribeReady, clientReady, serverNotReady);
@@ -38,37 +46,37 @@ export function AcmeCarousel({
   const [visible, setVisible] = useState(false);
   const hidden = useSyncExternalStore(subscribeVisibility, isHidden, serverPaused);
   const reduced = useSyncExternalStore(subscribeMotion, isReduced, serverPaused);
-  const [paused, setPaused] = useState(false);
+  const [stopped, setStopped] = useState(false);
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
   const [announcement, setAnnouncement] = useState('');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => setVisible(Boolean(entry?.isIntersecting)),
+      ([entry]) => setVisible(Boolean(entry?.isIntersecting && entry.intersectionRatio >= 0.35)),
       { threshold: 0.35 },
     );
-    if (root.current) observer.observe(root.current);
+    if (root.current) observer.observe(root.current.closest('article') ?? root.current);
     return () => {
       observer.disconnect();
     };
   }, []);
 
-  const playing = visible && !hidden && !reduced && !paused && !hover && !focus;
+  const playing = visible && !hidden && !reduced && !stopped && !hover && !focus;
   useEffect(() => {
     if (!playing) return;
     const timer = window.setInterval(
-      () => setIndex((current) => (current + 1) % titles.length),
+      () => setIndex((current) => (current + 1) % scenes.length),
       9000,
     );
     return () => window.clearInterval(timer);
-  }, [playing, titles.length]);
+  }, [playing, scenes.length]);
 
   function select(next: number) {
-    const value = (next + titles.length) % titles.length;
-    setPaused(true);
+    const value = (next + scenes.length) % scenes.length;
+    setStopped(true);
     setIndex(value);
-    setAnnouncement(`${value + 1} / ${titles.length}: ${titles[value]}`);
+    setAnnouncement(scenes[value]?.title ?? '');
   }
 
   return (
@@ -78,6 +86,8 @@ export function AcmeCarousel({
       role="region"
       aria-roledescription={t('role')}
       aria-label={label}
+      tabIndex={ready ? 0 : undefined}
+      onPointerDown={() => setStopped(true)}
       data-playing={playing}
       data-track-demo={demo}
       onMouseEnter={() => setHover(true)}
@@ -95,7 +105,7 @@ export function AcmeCarousel({
       onTouchStart={(event) => {
         const touch = event.touches[0];
         if (touch) start.current = { x: touch.clientX, y: touch.clientY };
-        setPaused(true);
+        setStopped(true);
       }}
       onTouchEnd={(event) => {
         const touch = event.changedTouches[0];
@@ -109,59 +119,51 @@ export function AcmeCarousel({
       }}
     >
       <div className="acme-carousel__viewport">
-        {children.map((child, position) => (
+        {scenes.map((scene, position) => (
           <div
-            key={titles[position]}
+            key={scene.id}
+            className="acme-scene"
             hidden={position !== index}
+            aria-hidden={position !== index}
+            inert={position !== index}
             role="group"
             aria-roledescription={t('scene')}
-            aria-label={`${position + 1} / ${titles.length}: ${titles[position]}`}
+            aria-labelledby={`${id}-${scene.id}`}
           >
-            {child}
+            <div className="acme-scene__image">
+              {/* The localized caption supplies the meaning; embedded UI microtext is decorative. */}
+              <Image
+                src={scene.src}
+                alt=""
+                width={1600}
+                height={900}
+                sizes="(max-width: 959px) 100vw, (max-width: 1440px) 50vw, 640px"
+                loading={position === 0 ? 'eager' : 'lazy'}
+              />
+            </div>
+            <div className="acme-scene__caption">
+              <strong id={`${id}-${scene.id}`}>{scene.title}</strong>
+              <p>{scene.description}</p>
+            </div>
+            <ul className="demo-capabilities acme-scene__chips" aria-label={chipsLabel}>
+              {scene.chips.map((chip) => (
+                <li key={chip}>{chip}</li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>
-      <div className="acme-carousel__controls" hidden={!ready}>
-        <button
-          type="button"
-          aria-label={t('previous')}
-          onClick={() => select(index - 1)}
-          data-track-event="carousel_select"
-        >
-          ←
-        </button>
-        <span aria-hidden="true">
-          {index + 1} / {titles.length}
-        </span>
-        <button
-          type="button"
-          aria-label={t('next')}
-          onClick={() => select(index + 1)}
-          data-track-event="carousel_select"
-        >
-          →
-        </button>
-        <button
-          type="button"
-          aria-pressed={paused}
-          disabled={reduced}
-          onClick={() => setPaused((value) => !value)}
-          data-track-event="carousel_pause"
-        >
-          {paused ? t('resume') : t('pause')}
-        </button>
-      </div>
       <div className="acme-carousel__dots" hidden={!ready}>
-        {titles.map((title, position) => (
+        {scenes.map((scene, position) => (
           <button
-            key={title}
+            key={scene.id}
             type="button"
-            aria-label={t('goTo', { title })}
+            aria-label={t('goTo', { title: scene.title })}
             aria-pressed={index === position}
             onClick={() => select(position)}
             data-track-event="carousel_select"
           >
-            <span aria-hidden="true">●</span>
+            <span aria-hidden="true" />
           </button>
         ))}
       </div>
@@ -172,8 +174,10 @@ export function AcmeCarousel({
         <div className="acme-carousel__fallback">
           <p>{t('withoutJs')}</p>
           <ol>
-            {titles.map((title) => (
-              <li key={title}>{title}</li>
+            {scenes.map((scene) => (
+              <li key={scene.id}>
+                {scene.title}: {scene.description} ({scene.chips.join(' · ')})
+              </li>
             ))}
           </ol>
         </div>

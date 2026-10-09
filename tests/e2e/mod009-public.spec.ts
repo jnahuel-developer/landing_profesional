@@ -51,6 +51,7 @@ for (const [prefix, messages] of [
   for (const documentPath of ['/', '/privacidad', '/lab'] as const) {
     const path = `${prefix}${documentPath === '/' ? (prefix ? '' : '/') : documentPath}`;
     test(`smoke, SEO, consola y axe ${path}`, async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: 'reduce' });
       const errors: string[] = [];
       const external: string[] = [];
       page.on('console', (message) => {
@@ -112,8 +113,30 @@ for (const [prefix, messages] of [
         await expect(page.locator('#contact button[type="submit"]')).toBeDisabled();
         await expect(page.getByText(messages.Contact.withoutJs)).toBeVisible();
         await expect(page.locator('.acme-carousel__fallback')).toHaveCount(2);
+        await expect(page.locator('.acme-carousel .acme-scene:not([hidden]) img')).toHaveCount(2);
+        for (const carousel of await page.locator('.acme-carousel').all()) {
+          await expect(carousel.getByRole('button')).toHaveCount(0);
+          await expect(
+            carousel.locator('.acme-scene:not([hidden]) .acme-scene__chips li'),
+          ).toHaveCount(3);
+          await expect(carousel.locator('.acme-scene:not([hidden]) img')).toHaveAttribute(
+            'width',
+            '1600',
+          );
+          await expect(carousel.locator('.acme-scene:not([hidden]) img')).toHaveAttribute(
+            'height',
+            '900',
+          );
+        }
         for (const fallback of await page.locator('.acme-carousel__fallback').all())
           await expect(fallback.getByRole('listitem')).toHaveCount(5);
+        for (const [position, demo] of (['cafe', 'logistics'] as const).entries()) {
+          const fallback = page.locator('.acme-carousel__fallback').nth(position);
+          for (const scene of Object.values(messages.Home.experience.demos[demo].scenes)) {
+            for (const chip of Object.values(scene.chips))
+              await expect(fallback).toContainText(chip);
+          }
+        }
       }
       await page
         .getByRole('navigation', { name: messages.Navigation.secondary })
