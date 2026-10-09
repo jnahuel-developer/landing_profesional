@@ -1,9 +1,12 @@
-import { act, fireEvent, screen } from '@testing-library/react';
+import { act, fireEvent, screen, within } from '@testing-library/react';
+import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { AcmeCarousel } from '../src/components/home/acme-carousel';
 import { renderWithIntl } from './test-utils';
+import spanish from '../src/messages/es.json';
+import english from '../src/messages/en.json';
 
 afterEach(() => {
   vi.useRealTimers();
@@ -38,10 +41,11 @@ describe('carrusel definitivo', () => {
       title,
       description: `Description ${title}`,
       src: `/images/${title}.webp`,
+      chips: [`${title} one`, `${title} two`, `${title} three`] as const,
     }));
     const result = renderWithIntl(
       <article>
-        <AcmeCarousel demo="cafe" label="Vista previa" scenes={scenes} />
+        <AcmeCarousel demo="cafe" label="Vista previa" chipsLabel="Capacidades" scenes={scenes} />
       </article>,
     );
     const root = screen.getByRole('region', { name: 'Vista previa' });
@@ -71,6 +75,17 @@ describe('carrusel definitivo', () => {
     expect(root.textContent).not.toMatch(/\d \/ 5|←|→|Pausar|Reanudar/);
     fireEvent.click(screen.getByRole('button', { name: 'Ver B' }));
     expect(screen.getByRole('group')).toHaveAccessibleName('B');
+    expect(within(screen.getByRole('group')).getByText('Description B')).toBeVisible();
+    expect(screen.getAllByRole('listitem').map((item) => item.textContent)).toEqual([
+      'B one',
+      'B two',
+      'B three',
+    ]);
+    expect(screen.getByRole('group').querySelector('img')?.getAttribute('src')).toContain('B.webp');
+    for (const inactive of root.querySelectorAll('.acme-scene[hidden]')) {
+      expect(inactive).toHaveAttribute('aria-hidden', 'true');
+      expect(inactive).toHaveAttribute('inert');
+    }
     expect(root.querySelector('[aria-live]')).toHaveTextContent('B');
     fireEvent.keyDown(root, { key: 'ArrowLeft' });
     expect(screen.getByRole('group')).toHaveAccessibleName('A');
@@ -90,6 +105,11 @@ describe('carrusel definitivo', () => {
     fireEvent.touchStart(root, { touches: [{ clientX: 180, clientY: 100 }] });
     fireEvent.touchEnd(root, { changedTouches: [{ clientX: 60, clientY: 110 }] });
     expect(screen.getByRole('group')).toHaveAccessibleName('B');
+    expect(screen.getAllByRole('listitem').map((item) => item.textContent)).toEqual([
+      'B one',
+      'B two',
+      'B three',
+    ]);
   });
 
   it('observa la card, pausa temporalmente por hover/foco/visibilidad y limpia al desmontar', () => {
@@ -103,6 +123,11 @@ describe('carrusel definitivo', () => {
     expect(vi.getTimerCount()).toBe(1);
     act(() => vi.runOnlyPendingTimers());
     expect(screen.getByRole('group')).toHaveAccessibleName('B');
+    expect(screen.getAllByRole('listitem').map((item) => item.textContent)).toEqual([
+      'B one',
+      'B two',
+      'B three',
+    ]);
     expect(root.querySelector('[aria-live]')).toBeEmptyDOMElement();
     fireEvent.mouseEnter(root);
     expect(vi.getTimerCount()).toBe(0);
@@ -181,6 +206,33 @@ const imageNames = {
 };
 
 describe('activos productivos aprobados', () => {
+  it('conserva sin cambios los otros ocho WebP aprobados', () => {
+    const unchanged = {
+      'acme-cafe/01-operations-overview.webp':
+        'f278574778bdf205335844492b04399b129d9e682a17c9161c06cd1e4fa9a74c',
+      'acme-cafe/02-connected-sale.webp':
+        'f3f32e93ea2ae910b3c078509943d07d109cbf877ee94985b699095c80ed3030',
+      'acme-cafe/03-stock-replenishment.webp':
+        '824ee10a5a6886614f1b0fc3c412f7e98115f769b7ee8662ad78bdeeb9651d59',
+      'acme-logistica/01-control-center.webp':
+        'a62f5057cad015020fe60d791af33b2087637f82ba08bbea2f68d193c0eceff9',
+      'acme-logistica/02-route-planning.webp':
+        '1f7db04ea9877f11096b049973b6ecf575361590bacc9842f0d5688839e35af1',
+      'acme-logistica/03-fleet-telemetry.webp':
+        'e7e8132e9be514b075b9a01f48c28f150377fe5173f0812d07e7343a0747d049',
+      'acme-logistica/04-coordinated-incident.webp':
+        '2540151ffd78962870986a89cec2c604e5c54add2ca95c5e5a7c6a9c2b7a5253',
+      'acme-logistica/05-driver-app.webp':
+        'f832f05481dadfba243abd6952f41cdb78889b3bb2f2d9a293c69eff71c4d3a9',
+    };
+    for (const [file, hash] of Object.entries(unchanged)) {
+      expect(
+        createHash('sha256')
+          .update(readFileSync(resolve('public/images/experience', file)))
+          .digest('hex'),
+      ).toBe(hash);
+    }
+  });
   for (const [demo, names] of Object.entries(imageNames)) {
     it(`${demo}: cinco WebP 1600×900 con ICC RGB, opacos y hasta 400 KB`, () => {
       const directory = resolve('public/images/experience', demo);
@@ -214,5 +266,22 @@ describe('activos productivos aprobados', () => {
         expect(chunks.get('ICCP')?.subarray(16, 20).toString()).toBe('RGB ');
       }
     });
+  }
+});
+
+it('mantiene paridad ES/EN y tres chips específicos en cada una de las diez escenas', () => {
+  for (const demo of ['cafe', 'logistics'] as const) {
+    const es = spanish.Home.experience.demos[demo].scenes;
+    const en = english.Home.experience.demos[demo].scenes;
+    expect(Object.keys(es)).toEqual(Object.keys(en));
+    for (const id of Object.keys(es) as (keyof typeof es)[]) {
+      for (const scene of [es[id], en[id]]) {
+        expect(scene.description.length).toBeGreaterThan(0);
+        expect(Object.keys(scene.chips)).toEqual(['one', 'two', 'three']);
+        expect(new Set(Object.values(scene.chips)).size).toBe(3);
+        expect(Object.values(scene.chips).every((chip) => chip.trim().length > 0)).toBe(true);
+      }
+      expect(es[id].description).not.toBe(en[id].description);
+    }
   }
 });

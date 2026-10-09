@@ -194,28 +194,53 @@
           "scenes": {
             "overview": {
               "title": "Resumen operativo",
-              "description": "Indicadores y actividad de las sucursales en una sola vista."
+              "description": "Ventas, ocupación y actividad diaria reunidas para entender el negocio de un vistazo.",
+              "chips": {
+                "one": "Ventas del día",
+                "two": "Ocupación",
+                "three": "Estado de sucursales"
+              }
             },
             "connected": {
               "title": "Venta conectada",
-              "description": "Una venta conecta caja, stock y comprobante.",
+              "description": "Cada cobro actualiza el pedido, descuenta stock y prepara el comprobante dentro del mismo flujo.",
               "from": "Caja",
-              "to": "Stock"
+              "to": "Stock",
+              "chips": {
+                "one": "Pago integrado",
+                "two": "Stock actualizado",
+                "three": "Comprobante listo"
+              }
             },
             "resources": {
               "title": "Stock y reposición",
-              "description": "Disponibilidad por sucursal para anticipar faltantes."
+              "description": "Las existencias de cada sucursal anticipan faltantes y coordinan una reposición antes de detener la venta.",
+              "chips": {
+                "one": "Stock por sucursal",
+                "two": "Alertas de faltantes",
+                "three": "Reposición coordinada"
+              }
             },
             "coordination": {
               "title": "Reservas y mesas",
-              "description": "Agenda y salón coordinados.",
-              "status": "Mesas asignadas"
+              "description": "El plano del salón y la agenda permiten asignar mesas y seguir la ocupación prevista desde una sola vista.",
+              "status": "Mesas asignadas",
+              "chips": {
+                "one": "Plano del salón",
+                "two": "Agenda de reservas",
+                "three": "Ocupación prevista"
+              }
             },
             "field": {
               "title": "Atención asistida",
-              "description": "Consultas conectadas con la operación.",
+              "description": "Un asistente con IA consulta disponibilidad y gestiona pedidos, sucursales y fechas con información del negocio.",
               "from": "¿Hay una mesa disponible?",
-              "to": "Consultar disponibilidad"
+              "to": "Consultar disponibilidad",
+              "chips": {
+                "one": "Asistente con IA",
+                "two": "Stock en contexto",
+                "three": "Retiro coordinado"
+              }
             }
           }
         },
@@ -236,28 +261,53 @@
           "scenes": {
             "overview": {
               "title": "Central operativa",
-              "description": "Una vista compartida de rutas y entregas."
+              "description": "Flota, recorridos y entregas convergen en una vista operativa para coordinar la jornada.",
+              "chips": {
+                "one": "Flota activa",
+                "two": "Entregas en curso",
+                "three": "Alertas operativas"
+              }
             },
             "connected": {
               "title": "Planificación de rutas",
-              "description": "De las entregas pendientes a un recorrido coordinado.",
+              "description": "Rutas alternativas comparan tiempo, consumo y tráfico para elegir el recorrido más conveniente.",
               "from": "Entregas",
-              "to": "Ruta"
+              "to": "Ruta",
+              "chips": {
+                "one": "Menor tiempo",
+                "two": "Menor consumo",
+                "three": "Tráfico evitado"
+              }
             },
             "resources": {
               "title": "Flota y telemetría",
-              "description": "Señales del vehículo para decidir con contexto."
+              "description": "Ubicación y señales básicas de cada unidad permiten conocer su estado durante el recorrido.",
+              "chips": {
+                "one": "Ubicación en ruta",
+                "two": "Estado del vehículo",
+                "three": "Telemetría básica"
+              }
             },
             "coordination": {
               "title": "Incidente coordinado",
-              "description": "Central y chofer comparten el siguiente paso.",
-              "status": "Desvío acordado"
+              "description": "La central y el chofer comparten el incidente, acuerdan una respuesta y mantienen el recorrido actualizado.",
+              "status": "Desvío acordado",
+              "chips": {
+                "one": "Alerta compartida",
+                "two": "Respuesta coordinada",
+                "three": "Ruta actualizada"
+              }
             },
             "field": {
               "title": "Aplicación del chofer",
-              "description": "La próxima entrega y su estado desde el campo.",
+              "description": "La aplicación reúne ruta, próximas paradas, entregas y comprobantes para acompañar el trabajo en campo.",
               "from": "Próxima parada",
-              "to": "Entrega registrada"
+              "to": "Entrega registrada",
+              "chips": {
+                "one": "Próxima parada",
+                "two": "Entrega registrada",
+                "three": "Trabajo conectado"
+              }
             }
           }
         }

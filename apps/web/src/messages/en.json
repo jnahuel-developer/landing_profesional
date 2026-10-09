@@ -194,28 +194,53 @@
           "scenes": {
             "overview": {
               "title": "Operational overview",
-              "description": "Branch indicators and activity in one view."
+              "description": "Sales, occupancy and daily activity come together to explain the business at a glance.",
+              "chips": {
+                "one": "Daily sales",
+                "two": "Occupancy",
+                "three": "Branch status"
+              }
             },
             "connected": {
               "title": "Connected sale",
-              "description": "One sale connects checkout, stock and receipt.",
+              "description": "Each payment updates the order, deducts stock and prepares the receipt within the same flow.",
               "from": "Checkout",
-              "to": "Stock"
+              "to": "Stock",
+              "chips": {
+                "one": "Integrated payment",
+                "two": "Updated stock",
+                "three": "Receipt ready"
+              }
             },
             "resources": {
               "title": "Stock and replenishment",
-              "description": "Availability by branch helps anticipate shortages."
+              "description": "Stock at each branch anticipates shortages and coordinates replenishment before sales are interrupted.",
+              "chips": {
+                "one": "Stock by branch",
+                "two": "Shortage alerts",
+                "three": "Coordinated restock"
+              }
             },
             "coordination": {
               "title": "Reservations and tables",
-              "description": "Bookings and seating in sync.",
-              "status": "Tables assigned"
+              "description": "The floor plan and schedule assign tables and track expected occupancy from a single view.",
+              "status": "Tables assigned",
+              "chips": {
+                "one": "Floor plan",
+                "two": "Booking schedule",
+                "three": "Expected occupancy"
+              }
             },
             "field": {
               "title": "Assisted service",
-              "description": "Questions connected to operations.",
+              "description": "An AI assistant checks availability and manages orders, branches and dates using business context.",
               "from": "Is a table available?",
-              "to": "Check availability"
+              "to": "Check availability",
+              "chips": {
+                "one": "AI assistant",
+                "two": "Stock in context",
+                "three": "Coordinated pickup"
+              }
             }
           }
         },
@@ -236,28 +261,53 @@
           "scenes": {
             "overview": {
               "title": "Operations centre",
-              "description": "A shared view of routes and deliveries."
+              "description": "Fleet, routes and deliveries converge in one operational view to coordinate the day.",
+              "chips": {
+                "one": "Active fleet",
+                "two": "Deliveries underway",
+                "three": "Operational alerts"
+              }
             },
             "connected": {
               "title": "Route planning",
-              "description": "From pending deliveries to a coordinated route.",
+              "description": "Alternative routes compare time, fuel consumption and traffic to choose the most suitable journey.",
               "from": "Deliveries",
-              "to": "Route"
+              "to": "Route",
+              "chips": {
+                "one": "Shortest time",
+                "two": "Lowest consumption",
+                "three": "Traffic avoided"
+              }
             },
             "resources": {
               "title": "Fleet and telemetry",
-              "description": "Vehicle signals to support informed decisions."
+              "description": "Location and essential signals from each vehicle reveal its status throughout the journey.",
+              "chips": {
+                "one": "Live location",
+                "two": "Vehicle status",
+                "three": "Essential telemetry"
+              }
             },
             "coordination": {
               "title": "Coordinated incident",
-              "description": "Dispatch and driver share the next step.",
-              "status": "Diversion agreed"
+              "description": "Dispatch and driver share the incident, agree on a response and keep the route updated.",
+              "status": "Diversion agreed",
+              "chips": {
+                "one": "Shared alert",
+                "two": "Coordinated response",
+                "three": "Updated route"
+              }
             },
             "field": {
               "title": "Driver application",
-              "description": "The next delivery and its status in the field.",
+              "description": "The app brings together the route, next stops, deliveries and proof of delivery for field work.",
               "from": "Next stop",
-              "to": "Delivery recorded"
+              "to": "Delivery recorded",
+              "chips": {
+                "one": "Next stop",
+                "two": "Delivery recorded",
+                "three": "Connected work"
+              }
             }
           }
         }

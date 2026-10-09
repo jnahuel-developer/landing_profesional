@@ -6,6 +6,11 @@ import english from '../../apps/web/src/messages/en.json';
 test('correcciones DOM/CSS, foco y CTA sin separadores ni fondos de sección', async ({ page }) => {
   const cssSource = readFileSync('apps/web/src/styles/globals.css', 'utf8');
   expect(cssSource).not.toMatch(/22rem|24rem|@property --glow-angle/);
+  const arc = cssSource.match(/\.luminous-action__perimeter::before\s*\{([\s\S]*?)\n\}/)?.[1] ?? '';
+  const ends = [...arc.matchAll(/transparent (\d+)%/g)].map((match) => Number(match[1]));
+  expect(ends).toHaveLength(2);
+  expect(ends[1]! - ends[0]!).toBeGreaterThanOrEqual(25);
+  expect(ends[1]! - ends[0]!).toBeLessThanOrEqual(34);
   await page.goto('/');
   const main = page.locator('main');
   await page.locator('#solutions-title').click();
@@ -98,6 +103,20 @@ for (const [path, messages] of [
     ).toHaveCount(0);
     for (const [position, demo] of (['cafe', 'logistics'] as const).entries()) {
       const carousel = page.locator('.acme-carousel').nth(position);
+      await expect(carousel.locator('.acme-carousel__fallback')).toHaveCount(0);
+      await carousel.locator('.acme-carousel__viewport').evaluate((node) => {
+        // Detect a resize on selection without asserting pixels or screen coordinates.
+        let initialized = false;
+        const observer = new ResizeObserver(() => {
+          node.setAttribute('data-resized', initialized ? 'true' : 'false');
+          initialized = true;
+        });
+        observer.observe(node);
+      });
+      await expect(carousel.locator('.acme-carousel__viewport')).toHaveAttribute(
+        'data-resized',
+        'false',
+      );
       const scenes = Object.values(messages.Home.experience.demos[demo].scenes);
       expect(await carousel.locator('.acme-scene__caption strong').allTextContents()).toEqual(
         scenes.map((scene) => scene.title),
@@ -135,6 +154,28 @@ for (const [path, messages] of [
         await point.click();
         await expect(point).toHaveAttribute('aria-pressed', 'true');
         await expect(carousel.getByRole('group', { name: scene.title })).toBeVisible();
+        const active = carousel.getByRole('group', { name: scene.title });
+        await expect(active.locator('.acme-scene__caption p')).toHaveText(scene.description);
+        expect(await carousel.getByRole('listitem').allTextContents()).toEqual(
+          Object.values(scene.chips),
+        );
+        await expect(carousel.getByRole('listitem')).toHaveCount(3);
+        await expect(active).toHaveCSS('animation-name', 'none');
+        await expect(active).toHaveCSS('filter', 'none');
+        await expect(active.locator('.acme-scene__caption')).toHaveCSS('text-align', 'center');
+        expect(
+          await active.locator('.acme-scene__chips').evaluate((node) => {
+            const columns = getComputedStyle(node)
+              .gridTemplateColumns.split(' ')
+              .map(Number.parseFloat);
+            // Equal fractional tracks may differ slightly when the browser rounds them.
+            return columns.length === 3 && Math.max(...columns) / Math.min(...columns) < 1.001;
+          }),
+        ).toBe(true);
+        await expect(carousel.locator('.acme-carousel__viewport')).toHaveAttribute(
+          'data-resized',
+          'false',
+        );
         await expect(carousel.locator('[aria-live]')).toHaveText(scene.title);
         await expect(image).toHaveCSS('aspect-ratio', '16 / 9');
         await expect(image.locator('..')).toHaveCSS('aspect-ratio', '16 / 9');
@@ -160,10 +201,42 @@ for (const [path, messages] of [
       );
       expect(
         await link
-          .locator('.luminous-action__perimeter')
+          .locator(':scope > .luminous-action__perimeter')
           .evaluate((node) => getComputedStyle(node, '::before').animationName),
       ).toBe('none');
       await expect(link).toHaveAttribute('href', /\/lab$/);
+    }
+  });
+
+  test(`chips por escena sin desborde en viewport estrecho ${path}`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto(path);
+    for (const [position, demo] of (['cafe', 'logistics'] as const).entries()) {
+      const carousel = page.locator('.acme-carousel').nth(position);
+      for (const scene of Object.values(messages.Home.experience.demos[demo].scenes)) {
+        await carousel
+          .getByRole('button', {
+            name: messages.Home.carousel.goTo.replace('{title}', scene.title),
+          })
+          .click();
+        expect(await carousel.getByRole('listitem').allTextContents()).toEqual(
+          Object.values(scene.chips),
+        );
+        const active = carousel.getByRole('group', { name: scene.title });
+        await expect(active.locator('.acme-scene__chips')).toHaveCSS('display', 'grid');
+        expect(
+          await active
+            .locator('.acme-scene__chips')
+            .evaluate((node) => getComputedStyle(node).gridTemplateColumns.split(' ').length),
+        ).toBe(1);
+        expect(await carousel.evaluate((node) => node.scrollWidth <= node.clientWidth)).toBe(true);
+        expect(
+          await page.evaluate(
+            () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+          ),
+        ).toBe(true);
+      }
     }
   });
 
@@ -182,6 +255,24 @@ for (const [path, messages] of [
     await page.goto(path);
     const carousel = page.locator('.acme-carousel').first();
     await expect(carousel).toHaveAttribute('data-playing', 'false');
+    const active = carousel.getByRole('group');
+    await expect(active).toHaveCSS('animation-name', 'acme-scene-enter');
+    await expect(active).toHaveCSS('transform', 'none');
+    const frames = await active.evaluate((node) =>
+      node
+        .getAnimations()
+        .flatMap((animation) =>
+          animation.effect instanceof KeyframeEffect
+            ? animation.effect
+                .getKeyframes()
+                .map((frame) => ({ opacity: frame.opacity, transform: frame.transform }))
+            : [],
+        ),
+    );
+    expect(frames.map((frame) => frame.opacity)).toEqual(['0', '1']);
+    expect(
+      frames.every((frame) => frame.transform === undefined || frame.transform === 'none'),
+    ).toBe(true);
     await carousel.locator('..').evaluate((node) => node.scrollIntoView({ block: 'center' }));
     await page.locator('header').hover();
     await expect(carousel).toHaveAttribute('data-playing', 'true');
@@ -227,6 +318,10 @@ for (const [path, messages] of [
     await expect(carousel.getByRole('group', { name: titles[0]! })).toBeVisible();
     await gesture(60, 110);
     await expect(carousel.getByRole('group', { name: titles[1]! })).toBeVisible();
+    await expect(carousel.getByRole('group')).toHaveCSS('animation-name', 'acme-scene-enter');
+    expect(await carousel.getByRole('listitem').allTextContents()).toEqual(
+      Object.values(messages.Home.experience.demos.cafe.scenes.connected.chips),
+    );
     await expect(carousel).toHaveAttribute('data-playing', 'false');
     await page.locator('#home').scrollIntoViewIfNeeded();
     await carousel.scrollIntoViewIfNeeded();
@@ -237,7 +332,24 @@ for (const [path, messages] of [
       expect(await link.evaluate((node) => getComputedStyle(node, '::before').animationName)).toBe(
         'halo-pulse',
       );
-      const perimeter = link.locator('.luminous-action__perimeter');
+      const perimeter = link.locator(':scope > .luminous-action__perimeter');
+      expect(
+        await perimeter.evaluate(
+          (node) =>
+            parseFloat(getComputedStyle(node).paddingTop) >
+            2 * parseFloat(getComputedStyle(node.parentElement!).borderTopWidth),
+        ),
+      ).toBe(true);
+      const glow = link.locator('.luminous-action__glow');
+      await expect(glow).toHaveAttribute('aria-hidden', 'true');
+      expect(await glow.evaluate((node) => getComputedStyle(node).filter.includes('blur'))).toBe(
+        true,
+      );
+      expect(
+        await perimeter.evaluate((node) =>
+          getComputedStyle(node, '::before').backgroundImage.includes('conic-gradient'),
+        ),
+      ).toBe(true);
       expect(
         await perimeter.evaluate((node) => getComputedStyle(node, '::before').animationName),
       ).toBe('perimeter-glow');

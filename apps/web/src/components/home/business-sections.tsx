@@ -156,11 +156,17 @@ function DemoPreview({ demo }: Readonly<{ demo: (typeof demos)[number] }>) {
     <AcmeCarousel
       demo={demo}
       label={t(`demos.${demo}.previewLabel`)}
+      chipsLabel={t('capabilitiesLabel')}
       scenes={demoScenes[demo].map(({ id, src }) => ({
         id,
         src,
         title: t(`demos.${demo}.scenes.${id}.title`),
         description: t(`demos.${demo}.scenes.${id}.description`),
+        chips: [
+          t(`demos.${demo}.scenes.${id}.chips.one`),
+          t(`demos.${demo}.scenes.${id}.chips.two`),
+          t(`demos.${demo}.scenes.${id}.chips.three`),
+        ],
       }))}
     />
   );
@@ -194,11 +200,6 @@ export function ExperienceSection() {
               </div>
               <p>{t(`demos.${demo}.description`)}</p>
               <DemoPreview demo={demo} />
-              <ul className="demo-capabilities" aria-label={t('capabilitiesLabel')}>
-                {(['one', 'two', 'three'] as const).map((key) => (
-                  <li key={key}>{t(`demos.${demo}.capabilities.${key}`)}</li>
-                ))}
-              </ul>
               <Link
                 className="demo-link luminous-action"
                 data-track-event="cta_select"
@@ -206,6 +207,9 @@ export function ExperienceSection() {
                 href={routes.laboratory.path}
               >
                 <span aria-hidden="true" className="luminous-action__perimeter" />
+                <span aria-hidden="true" className="luminous-action__glow">
+                  <span className="luminous-action__perimeter" />
+                </span>
                 {t(`demos.${demo}.link`)}
               </Link>
             </article>
@@ -220,6 +224,9 @@ export function ExperienceSection() {
           href={routes.laboratory.path}
         >
           <span aria-hidden="true" className="luminous-action__perimeter" />
+          <span aria-hidden="true" className="luminous-action__glow">
+            <span className="luminous-action__perimeter" />
+          </span>
           {t('cta')}
         </Link>
       </div>

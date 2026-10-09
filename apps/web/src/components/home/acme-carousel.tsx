@@ -23,10 +23,18 @@ function subscribeMotion(callback: () => void) {
 export function AcmeCarousel({
   scenes,
   label,
+  chipsLabel,
   demo,
 }: Readonly<{
-  scenes: readonly { id: string; title: string; description: string; src: string }[];
+  scenes: readonly {
+    id: string;
+    title: string;
+    description: string;
+    src: string;
+    chips: readonly [string, string, string];
+  }[];
   label: string;
+  chipsLabel: string;
   demo: 'cafe' | 'logistics';
 }>) {
   const t = useTranslations('Home.carousel');
@@ -116,6 +124,8 @@ export function AcmeCarousel({
             key={scene.id}
             className="acme-scene"
             hidden={position !== index}
+            aria-hidden={position !== index}
+            inert={position !== index}
             role="group"
             aria-roledescription={t('scene')}
             aria-labelledby={`${id}-${scene.id}`}
@@ -135,6 +145,11 @@ export function AcmeCarousel({
               <strong id={`${id}-${scene.id}`}>{scene.title}</strong>
               <p>{scene.description}</p>
             </div>
+            <ul className="demo-capabilities acme-scene__chips" aria-label={chipsLabel}>
+              {scene.chips.map((chip) => (
+                <li key={chip}>{chip}</li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>
@@ -161,7 +176,7 @@ export function AcmeCarousel({
           <ol>
             {scenes.map((scene) => (
               <li key={scene.id}>
-                {scene.title}: {scene.description}
+                {scene.title}: {scene.description} ({scene.chips.join(' · ')})
               </li>
             ))}
           </ol>

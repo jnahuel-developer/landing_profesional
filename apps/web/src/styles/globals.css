@@ -1164,9 +1164,33 @@ nav.desktop-navigation {
   outline-offset: 3px;
   border-radius: var(--ui-radius-md);
 }
+.acme-carousel__viewport {
+  display: grid;
+}
 .acme-scene {
   display: grid;
+  grid-area: 1 / 1;
+  grid-template-rows: auto 1fr auto;
+  align-content: start;
+  min-width: 0;
   gap: var(--ui-space-3);
+}
+/* Keep all scenes in the sizing grid; inactive scenes remain inaccessible and inert. */
+.acme-carousel .acme-scene[hidden] {
+  display: grid;
+  visibility: hidden;
+  pointer-events: none;
+}
+.acme-scene:not([hidden]) {
+  animation: acme-scene-enter 280ms ease-out both;
+}
+@keyframes acme-scene-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .acme-scene__image {
   width: 100%;
@@ -1183,10 +1207,35 @@ nav.desktop-navigation {
 }
 .acme-scene__caption {
   display: grid;
+  align-content: start;
+  justify-items: center;
   gap: var(--ui-space-2);
+  text-align: center;
 }
 .acme-scene__caption strong {
-  font-size: var(--ui-font-size-sm);
+  font-size: clamp(1.1rem, 2vw, calc(var(--ui-font-size-sm) * 1.5));
+}
+.acme-scene__caption p {
+  width: 100%;
+  max-inline-size: 64ch;
+  min-block-size: 2lh;
+}
+.acme-scene__chips {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: 100%;
+}
+.acme-scene__chips li {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 25rem) {
+  .acme-scene__chips {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .acme-carousel__dots {
   position: absolute;
@@ -1265,7 +1314,7 @@ nav.desktop-navigation {
   position: absolute;
   inset: -2px;
   border-radius: inherit;
-  padding: 2px;
+  padding: 4px;
   overflow: hidden;
   mask:
     linear-gradient(#fff 0 0) content-box,
@@ -1280,7 +1329,7 @@ nav.desktop-navigation {
   left: 50%;
   width: 200%;
   aspect-ratio: 1;
-  background: conic-gradient(transparent 60%, var(--demo-accent) 78%, transparent 96%);
+  background: conic-gradient(transparent 62%, var(--demo-accent) 68% 88%, transparent 94%);
   transform: translate(-50%, -50%) rotate(0deg);
   animation: perimeter-glow 4s linear infinite;
 }
@@ -1294,7 +1343,15 @@ nav.desktop-navigation {
   inset: -1.1rem;
 }
 .luminous-action--primary .luminous-action__perimeter {
-  padding: 3px;
+  padding: 5px;
+}
+.luminous-action__glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  filter: blur(3px);
+  opacity: 0.65;
 }
 .luminous-action:is(:hover, :focus-visible) {
   background: var(--ui-color-surface-raised);
@@ -1318,6 +1375,10 @@ nav.desktop-navigation {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .acme-scene:not([hidden]) {
+    animation: none;
+    filter: none;
+  }
   .luminous-action::before,
   .luminous-action__perimeter::before {
     animation: none;

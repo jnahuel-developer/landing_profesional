@@ -45,6 +45,10 @@ Las mismas diez imágenes se utilizarán en español e inglés. Por ese motivo:
 - el título, descripción y nombre accesible de cada escena permanecerán como contenido HTML localizado;
 - la imagen no repetirá información textual que ya se encuentre disponible para tecnologías de asistencia.
 
+La iteración 02 incorpora descripciones revisadas y tres chips específicos por escena en ES/EN. El arreglo localizado de escenas es la única fuente de imagen, título, descripción y chips; no hay estado independiente para estos últimos. Los títulos se conservan. Las capacidades genéricas siguen disponibles para el catálogo del Laboratorio, pero no se muestran en las cards de Experiencia.
+
+Título y descripción quedan centrados, con un título aproximadamente un 50 % mayor y descripción de ancho controlado sin saltos forzados. Todas las escenas participan de una grilla de tamaño estable: sólo la activa es visible y accesible; las restantes son inertes. Los tres chips ocupan columnas iguales con wrapping y se apilan en el viewport estrecho. El fallback sin JavaScript incluye también los chips.
+
 ## 5. ACME Café
 
 Dirección visual: producto SaaS comercial de alta fidelidad, identidad cálida, superficies azul oscuro o carbón, acentos ámbar y crema, estados verdes o rojos limitados y componentes realistas.
@@ -86,6 +90,8 @@ Los controles no formarán parte de las imágenes. Se renderizarán mediante HTM
 
 El avance automático sólo operará mientras la card sea visible. Se pausará con hover o foco y quedará detenido después de una interacción manual. No existirá acción de reanudación. Con movimiento reducido no habrá autoplay.
 
+La escena completa (imagen, título, descripción y chips) tiene una entrada por opacidad de aproximadamente 280 ms que se reinicia al cambiar la selección, sin traslación, zoom ni cambio de tamaño. Con movimiento reducido no hay animación ni desenfoque.
+
 ## 8. CTA luminosos
 
 Los CTA individuales y el CTA general del Laboratorio deberán sentirse activos incluso sin interacción:
@@ -98,6 +104,8 @@ Los CTA individuales y el CTA general del Laboratorio deberán sentirse activos 
 - sin cambios de tamaño, saltos de layout o parpadeos;
 - estado estático de alto contraste con movimiento reducido.
 
+Tratamiento final de la iteración 02: perímetro de 4 px en CTA individuales y 5 px en el general, sin cambiar la caja externa del botón. El segmento del degradado cónico ocupa aproximadamente un tercio del recorrido, con extremos suavizados y glow localizado moderado. La rotación utiliza `transform`, mantiene el ciclo de cuatro segundos y conserva el halo radial de 2,8 segundos. Movimiento reducido deja el arco estático junto al borde de contraste permanente.
+
 ## 9. Puerta de aprobación
 
 No se generará el prompt correctivo de MOD009 hasta que:
@@ -108,3 +116,5 @@ No se generará el prompt correctivo de MOD009 hasta que:
 4. se haya confirmado que ninguna imagen contiene errores de texto, marcas externas o información impropia.
 
 Los diez mockups aprobados quedaron normalizados a `1600×900 px` y registrados en [`docs/design/mockups/`](mockups/). Sus nombres y correspondencia por escena se encuentran en el [índice de diseño](README.md#carruseles-acme-aprobados). La conversión a WebP y su copia a las rutas públicas previstas quedaron integradas mediante la implementación correctiva de MOD009.
+
+En la iteración 02 el propietario revisó y volvió a aprobar `acme-cafe-carousel-04-reservations-tables-v2.png` y `acme-cafe-carousel-05-assisted-service-v2.png`. Se conservaron como fuentes inmutables y se regeneraron únicamente `acme-cafe/04-reservations-tables.webp` y `acme-cafe/05-assisted-service.webp`: 1600×900, sRGB, sin alfa, sin recorte ni deformación y dentro del objetivo de 150–300 KB. Los otros ocho PNG v2 y WebP no cambiaron.
