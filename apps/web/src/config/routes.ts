@@ -45,7 +45,7 @@ export const documents = [routes.privacy, routes.laboratory, routes.admin] as co
 export const appRoutes = [...sections, ...documents] as const;
 export const primaryRoutes = sections;
 export const secondaryRoutes = [routes.privacy] as const;
-export const footerRoutes = [routes.contact, routes.privacy] as const;
+export const footerRoutes = [routes.contact, routes.laboratory, routes.privacy] as const;
 
 const legacySlugs: Record<Locale, Partial<Record<string, SectionId>>> = {
   es: {

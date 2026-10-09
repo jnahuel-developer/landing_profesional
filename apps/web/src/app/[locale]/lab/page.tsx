@@ -1,5 +1,4 @@
-import { PlaceholderPage } from '../../../components/placeholder-page';
-
+import { LaboratoryDocument } from '../../../components/public-documents';
 export default function LaboratoryPage() {
-  return <PlaceholderPage routeId="laboratory" />;
+  return <LaboratoryDocument />;
 }

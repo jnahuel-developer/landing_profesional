@@ -1,4 +1,6 @@
 import { expect, test } from '@playwright/test';
+import spanish from '../../apps/web/src/messages/es.json';
+import english from '../../apps/web/src/messages/en.json';
 
 test('correcciones DOM/CSS, foco y CTA sin separadores ni fondos de sección', async ({ page }) => {
   await page.goto('/');
@@ -20,6 +22,24 @@ test('correcciones DOM/CSS, foco y CTA sin separadores ni fondos de sección', a
     await expect(page.locator(selector)).toHaveCSS('justify-self', 'center');
     await expect(page.locator(selector)).toHaveAttribute('href', '/#contact');
   }
+  await page.locator('#process .process-stage').nth(1).scrollIntoViewIfNeeded();
+  const introduction = page.locator('.process-introduction');
+  await expect(introduction).toHaveCSS('position', 'sticky');
+  expect(
+    await introduction.evaluate((node) => {
+      const css = getComputedStyle(node);
+      const header =
+        parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue('--shell-header-height'),
+        ) * parseFloat(getComputedStyle(document.documentElement).fontSize);
+      const usefulHeight = window.innerHeight - header;
+      // Relative centring of the sticky anchor; no exact screen coordinates.
+      return (
+        Math.abs((parseFloat(css.top) - header) / usefulHeight - 0.5) < 0.05 &&
+        css.transform !== 'none'
+      );
+    }),
+  ).toBe(true);
   const deliverable = page.locator('.stage-deliverable').first();
   const background = await deliverable.evaluate((node) => getComputedStyle(node).backgroundColor);
   await deliverable.hover();
@@ -47,8 +67,21 @@ for (const path of ['/', '/en']) {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto(path);
     await expect(page.locator('.acme-scene')).toHaveCount(10);
+    const messages = path === '/' ? spanish : english;
+    for (const [position, demo] of ['cafe', 'logistics'].entries()) {
+      const content = messages.Home.experience.demos[demo as 'cafe' | 'logistics'];
+      const titles = await page
+        .locator('.acme-carousel')
+        .nth(position)
+        .locator('.demo-preview__header strong')
+        .allTextContents();
+      expect(titles).toEqual(Object.values(content.scenes).map((scene) => scene.title));
+    }
     for (const carousel of await page.locator('.acme-carousel').all()) {
       await expect(carousel).toHaveAttribute('data-playing', 'false');
+      const sceneHeight = await carousel
+        .locator('.acme-scene:visible')
+        .evaluate((node) => getComputedStyle(node).height);
       const buttons = carousel.locator('.acme-carousel__controls button');
       await buttons.nth(1).click();
       await expect(carousel.locator('[role="group"]:visible')).toHaveAttribute(
@@ -65,6 +98,7 @@ for (const path of ['/', '/en']) {
         'aria-label',
         /^5 \/ 5/,
       );
+      await expect(carousel.locator('.acme-scene:visible')).toHaveCSS('height', sceneHeight);
       await expect(buttons.last()).toBeDisabled();
     }
     await expect(page.locator('.luminous-action').first()).toHaveCSS('animation-name', 'none');

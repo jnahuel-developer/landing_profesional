@@ -6,6 +6,7 @@ import { routes } from '../../config/routes';
 import { Link } from '../../i18n/navigation';
 import { LanguageSelector } from '../preferences/language-selector';
 import { ThemeToggle } from '../preferences/theme-toggle';
+import { PublicFooter } from '../navigation/public-footer';
 import { SkipLink } from '../navigation/skip-link';
 
 export function LaboratoryLayout({ children }: Readonly<{ children: ReactNode }>) {
@@ -26,6 +27,7 @@ export function LaboratoryLayout({ children }: Readonly<{ children: ReactNode }>
       <main className="shell-main" id="main-content" tabIndex={-1}>
         <Container>{children}</Container>
       </main>
+      <PublicFooter />
     </div>
   );
 }

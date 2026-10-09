@@ -15,6 +15,7 @@ export default function NotFoundPage() {
         <Link className="inline-action" href={routes.home.path}>
           {t('backHome')}
         </Link>
+        <Link href="/#contact">{t('contact')}</Link>
       </section>
     </PublicLayout>
   );

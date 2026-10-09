@@ -1,7 +1,23 @@
 'use client';
 
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
+
+const subscribeReady = () => () => {};
+const clientReady = () => true;
+const serverNotReady = () => false;
+const serverPaused = () => true;
+const isHidden = () => document.hidden;
+const isReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function subscribeVisibility(callback: () => void) {
+  document.addEventListener('visibilitychange', callback);
+  return () => document.removeEventListener('visibilitychange', callback);
+}
+function subscribeMotion(callback: () => void) {
+  const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+  media.addEventListener('change', callback);
+  return () => media.removeEventListener('change', callback);
+}
 
 export function AcmeCarousel({
   children,
@@ -17,25 +33,17 @@ export function AcmeCarousel({
   const t = useTranslations('Home.carousel');
   const root = useRef<HTMLDivElement>(null);
   const start = useRef<{ x: number; y: number } | null>(null);
-  const [ready, setReady] = useState(false);
+  const ready = useSyncExternalStore(subscribeReady, clientReady, serverNotReady);
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(false);
-  const [hidden, setHidden] = useState(true);
-  const [reduced, setReduced] = useState(true);
+  const hidden = useSyncExternalStore(subscribeVisibility, isHidden, serverPaused);
+  const reduced = useSyncExternalStore(subscribeMotion, isReduced, serverPaused);
   const [paused, setPaused] = useState(false);
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
   const [announcement, setAnnouncement] = useState('');
 
   useEffect(() => {
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const updateMotion = () => setReduced(media.matches);
-    const updateVisibility = () => setHidden(document.hidden);
-    setReady(true);
-    updateMotion();
-    updateVisibility();
-    media.addEventListener('change', updateMotion);
-    document.addEventListener('visibilitychange', updateVisibility);
     const observer = new IntersectionObserver(
       ([entry]) => setVisible(Boolean(entry?.isIntersecting)),
       { threshold: 0.35 },
@@ -43,8 +51,6 @@ export function AcmeCarousel({
     if (root.current) observer.observe(root.current);
     return () => {
       observer.disconnect();
-      media.removeEventListener('change', updateMotion);
-      document.removeEventListener('visibilitychange', updateVisibility);
     };
   }, []);
 
@@ -162,14 +168,16 @@ export function AcmeCarousel({
       <span className="ui-sr-only" aria-live="polite" aria-atomic="true">
         {announcement}
       </span>
-      <noscript>
-        <p>{t('withoutJs')}</p>
-        <ol>
-          {titles.map((title) => (
-            <li key={title}>{title}</li>
-          ))}
-        </ol>
-      </noscript>
+      {!ready && (
+        <div className="acme-carousel__fallback">
+          <p>{t('withoutJs')}</p>
+          <ol>
+            {titles.map((title) => (
+              <li key={title}>{title}</li>
+            ))}
+          </ol>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,34 +1,12 @@
-import type { Metadata } from 'next';
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 import { solutionAreas } from '../../../components/home/business-sections';
 import { ContinuousHome } from '../../../components/home/continuous-home';
+import { getRouteMetadata } from '../../../lib/localized-page';
 import { defaultLocale, routing } from '../../../i18n/routing';
 
-export async function generateMetadata({
-  params,
-}: Readonly<{ params: Promise<{ locale: string }> }>): Promise<Metadata> {
-  const { locale: localeValue } = await params;
-  const locale = hasLocale(routing.locales, localeValue) ? localeValue : defaultLocale;
-  const t = await getTranslations({ locale, namespace: 'Routes.home' });
-  return {
-    title: t('title'),
-    description: t('description'),
-    openGraph: {
-      type: 'website',
-      locale: locale === 'en' ? 'en_US' : 'es_AR',
-      title: t('title'),
-      description: t('description'),
-      siteName: 'Nahuel Martínez',
-    },
-    twitter: {
-      card: 'summary',
-      title: t('title'),
-      description: t('description'),
-    },
-  };
-}
+export const generateMetadata = () => getRouteMetadata('home');
 
 export default async function HomePage({
   params,
