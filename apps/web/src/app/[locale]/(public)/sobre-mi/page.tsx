@@ -1,7 +1,12 @@
-import { PlaceholderPage } from '../../../../components/placeholder-page';
-import { getRouteMetadata } from '../../../../lib/localized-page';
+import { redirectLegacySection } from '../../../../lib/legacy-routes';
 
-export const generateMetadata = () => getRouteMetadata('about');
-export default function AboutPage() {
-  return <PlaceholderPage routeId="about" />;
+export default async function AboutPage({
+  params,
+  searchParams,
+}: Readonly<{
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}>) {
+  const [{ locale }, search] = await Promise.all([params, searchParams]);
+  redirectLegacySection(locale, 'about', search);
 }

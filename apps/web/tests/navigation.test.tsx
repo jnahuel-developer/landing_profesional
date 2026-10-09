@@ -1,11 +1,10 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { usePathname } from 'next/navigation';
 import { describe, expect, it, vi } from 'vitest';
 
 import { PublicLayout } from '../src/components/layouts/public-layout';
 import { PublicHeader } from '../src/components/navigation/public-header';
-import { isRouteActive, primaryRoutes, routes } from '../src/config/routes';
+import { getSectionHref, primaryRoutes } from '../src/config/routes';
 import messages from '../src/messages/es.json';
 import { renderWithIntl as render } from './test-utils';
 
@@ -26,30 +25,23 @@ describe('navegación pública', () => {
     for (const route of primaryRoutes) {
       expect(
         within(primary).getByRole('link', { name: messages.Routes[route.id].label }),
-      ).toHaveAttribute('href', route.path);
+      ).toHaveAttribute('href', getSectionHref(route.id));
     }
     expect(within(primary).queryByRole('link', { name: messages.Routes.admin.label })).toBeNull();
     expect(screen.queryByRole('link', { name: messages.Routes.admin.label })).toBeNull();
   });
 
-  it('marca la coincidencia exacta y descendiente sin activar Inicio globalmente', () => {
-    vi.mocked(usePathname).mockReturnValue('/soluciones/caso');
+  it('marca Inicio como ubicación activa por defecto', () => {
     render(<PublicHeader />);
     const primary = screen.getByRole('navigation', { name: 'Navegación principal' });
 
-    expect(
-      within(primary).getByRole('link', { name: messages.Routes.solutions.label }),
-    ).toHaveAttribute('aria-current', 'page');
-    expect(
-      within(primary).getByRole('link', { name: messages.Routes.home.label }),
-    ).not.toHaveAttribute('aria-current');
-    expect(isRouteActive('/soluciones', routes.solutions.path)).toBe(true);
-    expect(isRouteActive('/soluciones/caso', routes.solutions.path)).toBe(true);
-    expect(isRouteActive('/contacto', routes.home.path)).toBe(false);
+    expect(within(primary).getByRole('link', { name: messages.Routes.home.label })).toHaveAttribute(
+      'aria-current',
+      'location',
+    );
   });
 
   it('abre, comunica y cierra el menú reducido mediante teclado', async () => {
-    vi.mocked(usePathname).mockReturnValue('/');
     const user = userEvent.setup();
     render(<PublicHeader />);
     const summary = screen.getByText('Abrir navegación');

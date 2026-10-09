@@ -1,18 +1,18 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-import { appRoutes, primaryRoutes } from '../../apps/web/src/config/routes';
+import { documents } from '../../apps/web/src/config/routes';
 import english from '../../apps/web/src/messages/en.json';
 import spanish from '../../apps/web/src/messages/es.json';
 const preferenceStorageKey = 'nahuelmartinez.preferences.v2';
 const legacyPreferenceStorageKey = 'nahuelmartinez.preferences.v1';
 
-test('expone las nueve rutas equivalentes con lang, metadata y sección activa', async ({
+test('expone la home y los documentos independientes con lang y metadata localizados', async ({
   page,
 }) => {
   test.slow();
 
-  for (const route of appRoutes) {
+  for (const route of [{ id: 'home' as const, path: '/' }, ...documents]) {
     for (const locale of ['es', 'en'] as const) {
       await page.context().clearCookies();
       const prefix = locale === 'en' ? '/en' : '';
@@ -28,21 +28,11 @@ test('expone las nueve rutas equivalentes con lang, metadata y sección activa',
       );
     }
   }
-
-  for (const route of primaryRoutes) {
-    await page.context().clearCookies();
-    await page.goto(route.path);
-    await expect(
-      page
-        .getByRole('navigation', { name: spanish.Navigation.primary })
-        .getByRole('link', { name: spanish.Routes[route.id].label }),
-    ).toHaveAttribute('aria-current', 'page');
-  }
 });
 
 test('normaliza /es y maneja locales no soportados sin loops', async ({ page }) => {
-  await page.goto('/es/soluciones');
-  await expect(page).toHaveURL(/\/soluciones$/);
+  await page.goto('/es/privacidad');
+  await expect(page).toHaveURL(/\/privacidad$/);
   expect(new URL(page.url()).pathname).not.toContain('/es');
 
   const response = await page.goto('/fr/soluciones');
@@ -64,7 +54,7 @@ test('detecta Accept-Language sin cookie y prioriza la preferencia explícita', 
   const cookie = (await context.cookies()).find(({ name }) => name === 'NEXT_LOCALE');
   expect(cookie).toMatchObject({ value: 'es', sameSite: 'Lax' });
   await page.goto('/en/contacto');
-  await expect(page).toHaveURL(/\/contacto$/);
+  await expect(page).toHaveURL(/\/#contact$/);
   await context.close();
 });
 
@@ -72,9 +62,10 @@ test('cambia idioma conservando pathname, query, hash y preferencias visuales', 
   page,
 }) => {
   await page.goto('/soluciones?origen=e2e#detalle');
+  await expect(page).toHaveURL(/\?origen=e2e#solutions$/);
   await page.getByRole('button', { name: spanish.Preferences.toggleTheme }).click();
   await page.getByRole('combobox', { name: spanish.Navigation.language }).selectOption('en');
-  await expect(page).toHaveURL(/\/en\/soluciones\?origen=e2e#detalle$/);
+  await expect(page).toHaveURL(/\/en\?origen=e2e#solutions$/);
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await expect(page.locator('html')).toHaveAttribute('data-density', 'comfortable');
 });
@@ -210,14 +201,14 @@ test('mantiene admin fuera de navegación pública y conserva slug e historial',
   await page.goto('/contacto');
   await expect(page.getByRole('link', { name: spanish.Routes.admin.label })).toHaveCount(0);
   await page.getByRole('combobox', { name: spanish.Navigation.language }).selectOption('en');
-  await expect(page).toHaveURL(/\/en\/contacto$/);
+  await expect(page).toHaveURL(/\/en#contact$/);
   await page.getByRole('button', { name: english.Preferences.toggleTheme }).click();
   await page.getByRole('link', { name: english.Routes.home.label }).click();
-  await expect(page).toHaveURL(/\/en$/);
+  await expect(page).toHaveURL(/\/en#home$/);
   await page.goBack();
-  await expect(page).toHaveURL(/\/en\/contacto$/);
+  await expect(page).toHaveURL(/\/en#contact$/);
   await page.goForward();
-  await expect(page).toHaveURL(/\/en$/);
+  await expect(page).toHaveURL(/\/en#home$/);
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page.goto('/en/admin');
   await expect(page).toHaveURL(/\/en\/admin$/);

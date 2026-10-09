@@ -326,6 +326,56 @@ nav.desktop-navigation {
   text-transform: uppercase;
 }
 
+.continuous-home {
+  display: grid;
+}
+
+.narrative-section {
+  align-items: center;
+  display: grid;
+  min-height: min(72rem, calc(100vh - var(--shell-header-height)));
+  padding-block: clamp(5rem, 11vw, 9rem);
+  scroll-margin-top: calc(var(--shell-header-height) + var(--ui-space-3));
+}
+
+.narrative-section + .narrative-section {
+  border-top: var(--ui-border-width) solid var(--ui-color-border);
+}
+
+.narrative-section__content {
+  display: grid;
+  gap: var(--ui-space-4);
+  max-width: 54rem;
+}
+
+.narrative-section__content h1,
+.narrative-section__content h2,
+.narrative-section__content p {
+  margin: 0;
+}
+
+.narrative-section__content h1,
+.narrative-section__content h2 {
+  font-size: clamp(2.25rem, 5vw, 4.75rem);
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.narrative-section__content > p:last-child {
+  color: var(--ui-color-text-muted);
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  line-height: var(--ui-line-height-relaxed);
+  max-width: 46rem;
+}
+
+.narrative-section__eyebrow {
+  color: var(--ui-color-action);
+  font-size: var(--ui-font-size-xs);
+  font-weight: 750;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
 .inline-action {
   align-items: center;
   align-self: start;

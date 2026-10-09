@@ -30,7 +30,7 @@ export function PublicHeader() {
 
         <nav aria-label={t('primary')} className="desktop-navigation">
           {primaryRoutes.map((route) => (
-            <RouteLink className="navigation-link" key={route.path} route={route} />
+            <RouteLink className="navigation-link" key={route.id} route={route} />
           ))}
         </nav>
 
@@ -54,7 +54,7 @@ export function PublicHeader() {
             {primaryRoutes.map((route) => (
               <RouteLink
                 className="navigation-link"
-                key={route.path}
+                key={route.id}
                 onClick={closeMenu}
                 route={route}
               />

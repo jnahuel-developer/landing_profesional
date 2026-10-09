@@ -59,6 +59,40 @@
     "siteTitle": "Portfolio de Nahuel Martínez",
     "siteDescription": "Página técnica temporal del portfolio profesional."
   },
+  "Home": {
+    "sections": {
+      "home": {
+        "eyebrow": "Ingeniería de software para negocios",
+        "title": "Sistemas pensados para operaciones reales.",
+        "description": "Una práctica profesional que conecta producto, arquitectura, desarrollo y operación."
+      },
+      "solutions": {
+        "eyebrow": "Soluciones",
+        "title": "Tecnología aplicada donde el negocio la necesita.",
+        "description": "Sistemas de gestión, automatización, aplicaciones y datos se articulan alrededor de procesos concretos."
+      },
+      "experience": {
+        "eyebrow": "Experiencia interactiva",
+        "title": "Demostraciones para explorar decisiones, no promesas abstractas.",
+        "description": "El Laboratorio permitirá recorrer escenarios ficticios y comprender cómo trabajan las soluciones conectadas."
+      },
+      "process": {
+        "eyebrow": "Cómo trabajo",
+        "title": "Del problema operativo a una entrega sostenible.",
+        "description": "Cada iniciativa se ordena con contexto, decisiones explícitas, implementación verificable y continuidad operativa."
+      },
+      "about": {
+        "eyebrow": "Sobre mí",
+        "title": "Criterio técnico con perspectiva de producto.",
+        "description": "El trabajo combina ingeniería, comunicación y responsabilidad sobre el ciclo completo de una solución digital."
+      },
+      "contact": {
+        "eyebrow": "Contacto",
+        "title": "Conversemos sobre el sistema que tu operación necesita.",
+        "description": "Este espacio prepara un canal directo para evaluar contexto, alcance y próximos pasos sin formularios persistentes todavía."
+      }
+    }
+  },
   "States": {
     "notFoundEyebrow": "Error 404",
     "notFoundTitle": "Página no encontrada",

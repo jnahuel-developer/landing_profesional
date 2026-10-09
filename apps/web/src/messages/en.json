@@ -59,6 +59,40 @@
     "siteTitle": "Nahuel Martínez's portfolio",
     "siteDescription": "Temporary technical page for the professional portfolio."
   },
+  "Home": {
+    "sections": {
+      "home": {
+        "eyebrow": "Software engineering for business",
+        "title": "Systems designed for real-world operations.",
+        "description": "A professional practice connecting product, architecture, development, and operations."
+      },
+      "solutions": {
+        "eyebrow": "Solutions",
+        "title": "Technology applied where the business needs it.",
+        "description": "Management systems, automation, applications, and data are shaped around concrete processes."
+      },
+      "experience": {
+        "eyebrow": "Interactive experience",
+        "title": "Demonstrations built to explore decisions, not abstract promises.",
+        "description": "The Laboratory will make it possible to explore fictional scenarios and understand how connected solutions work."
+      },
+      "process": {
+        "eyebrow": "How I work",
+        "title": "From an operational problem to a sustainable delivery.",
+        "description": "Each initiative is structured through context, explicit decisions, verifiable implementation, and operational continuity."
+      },
+      "about": {
+        "eyebrow": "About me",
+        "title": "Technical judgment with a product perspective.",
+        "description": "The work combines engineering, communication, and accountability across the full lifecycle of a digital solution."
+      },
+      "contact": {
+        "eyebrow": "Contact",
+        "title": "Let's discuss the system your operation needs.",
+        "description": "This space prepares a direct channel to assess context, scope, and next steps, without a persistent form yet."
+      }
+    }
+  },
   "States": {
     "notFoundEyebrow": "Error 404",
     "notFoundTitle": "Page not found",

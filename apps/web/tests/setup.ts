@@ -16,6 +16,26 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
+class IntersectionObserverMock implements IntersectionObserver {
+  readonly root = null;
+  readonly rootMargin = '0px';
+  readonly scrollMargin = '0px';
+  readonly thresholds = [0];
+  disconnect = vi.fn();
+  observe = vi.fn();
+  takeRecords = vi.fn(() => []);
+  unobserve = vi.fn();
+}
+
+Object.defineProperty(window, 'IntersectionObserver', {
+  configurable: true,
+  value: IntersectionObserverMock,
+});
+Object.defineProperty(globalThis, 'IntersectionObserver', {
+  configurable: true,
+  value: IntersectionObserverMock,
+});
+
 afterEach(() => {
   cleanup();
   window.localStorage.clear();
