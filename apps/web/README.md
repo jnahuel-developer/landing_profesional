@@ -44,3 +44,5 @@ En desarrollo se publica en `http://localhost:3000`.
 ## Catálogo de UI
 
 `/dev/ui` expone en desarrollo el catálogo técnico de tokens, temas, densidades y componentes públicos de `@portfolio/ui`. La ruta declara `noindex` y devuelve 404 cuando `NODE_ENV=production`; no debe utilizarse como página de producto.
+
+La revisión manual final de ambos idiomas, los temas claro, oscuro y alto contraste, y las densidades cómoda y compacta corresponde al propietario del proyecto; las pruebas automatizadas no constituyen aprobación estética.
