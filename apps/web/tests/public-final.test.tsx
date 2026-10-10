@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within, waitFor } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
 import { describe, expect, it, vi } from 'vitest';
 import { GlobalErrorContent } from '../src/app/global-error';
@@ -38,8 +38,10 @@ for (const [locale, messages] of [
       expect(screen.getByText(messages.Home.about.responsibility)).toBeVisible();
       expect(screen.getByText(messages.Home.about.collaboration)).toBeVisible();
     });
-    it('valida, asocia errores, enfoca y no llama a transporte o almacenamiento', () => {
-      const fetch = vi.spyOn(globalThis, 'fetch');
+    it('valida, asocia errores, enfoca y confirma el envio sin almacenamiento local', async () => {
+      const fetch = vi
+        .spyOn(globalThis, 'fetch')
+        .mockResolvedValue(new Response(JSON.stringify({ received: true }), { status: 201 }));
       const storage = vi.spyOn(Storage.prototype, 'setItem');
       localized(<ContactForm />);
       fireEvent.click(screen.getByRole('button', { name: messages.Contact.submit }));
@@ -57,8 +59,11 @@ for (const [locale, messages] of [
       fireEvent.click(screen.getByRole('checkbox'));
       fireEvent.click(screen.getByRole('button', { name: messages.Contact.submit }));
       expect(screen.queryByRole('alert')).toBeNull();
-      expect(screen.getByRole('status')).toHaveTextContent(messages.Contact.prepared);
-      expect(fetch).not.toHaveBeenCalled();
+      await waitFor(() =>
+        expect(screen.getByRole('status')).toHaveTextContent(messages.Contact.success),
+      );
+      expect(name).toHaveValue('');
+      expect(fetch).toHaveBeenCalledOnce();
       expect(storage).not.toHaveBeenCalled();
       fetch.mockRestore();
       storage.mockRestore();

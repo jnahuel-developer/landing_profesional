@@ -1,14 +1,33 @@
 import { Value } from 'typebox/value';
 import { describe, expect, it } from 'vitest';
-import { ContactInputSchema } from './contact.js';
+import { ContactInputSchema, normalizeContact } from './contact.js';
 
 const contact = {
   name: 'Visitante',
   email: 'test@example.com',
   message: 'Consulta de proyecto',
   privacyAccepted: true,
+  locale: 'es',
+  website: '',
+  formStartedAt: 0,
 };
 describe('contrato reutilizable de contacto', () => {
+  it('normaliza Unicode y opcionales vacíos sin alterar contenido interior', () => {
+    const normalized = normalizeContact({
+      ...contact,
+      name: ' Ñ 日本語 ',
+      message: ' <texto>\nConsulta & más ',
+      company: ' ',
+      projectType: '',
+    });
+    expect(normalized).toEqual({
+      ...contact,
+      name: 'Ñ 日本語',
+      message: '<texto>\nConsulta & más',
+    });
+    expect(Value.Check(ContactInputSchema, normalized)).toBe(true);
+    expect(Value.Check(ContactInputSchema, { ...contact, locale: 'en' })).toBe(true);
+  });
   it('acepta obligatorios y opcionales categóricos', () => {
     expect(Value.Check(ContactInputSchema, contact)).toBe(true);
     for (const projectType of ['web', 'product', 'automation', 'data', 'other'])
@@ -29,6 +48,9 @@ describe('contrato reutilizable de contacto', () => {
       { privacyAccepted: false },
       { projectType: 'injected' },
       { phone: '123' },
+      { locale: 'fr' },
+      { formStartedAt: -1 },
+      { privacyAccepted: 'true' },
     ])
       expect(Value.Check(ContactInputSchema, { ...contact, ...invalid })).toBe(false);
   });

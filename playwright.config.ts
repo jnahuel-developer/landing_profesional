@@ -34,6 +34,7 @@ export default defineConfig({
       timeout: 120_000,
       env: {
         NEXT_PUBLIC_API_BASE_URL: apiBaseUrl,
+        API_INTERNAL_ORIGIN: 'http://127.0.0.1:4000',
       },
     },
     {
@@ -45,6 +46,12 @@ export default defineConfig({
         API_PORT: '4000',
         DATABASE_URL: databaseUrl,
         NODE_ENV: 'test',
+        MAIL_TRANSPORT: 'smtp',
+        SMTP_HOST: '127.0.0.1',
+        SMTP_PORT: '1025',
+        MAIL_FROM: 'portfolio@localhost',
+        MAIL_TO: 'e2e@localhost',
+        CONTACT_RATE_LIMIT: '1000',
       },
     },
   ],

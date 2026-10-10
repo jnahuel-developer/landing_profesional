@@ -1,8 +1,16 @@
-import { checkDatabase, closePool, createPool } from '@portfolio/database';
+import {
+  checkDatabase,
+  closePool,
+  createPool,
+  createDatabaseClient,
+  createContactRepository,
+  type ContactRepository,
+} from '@portfolio/database';
 import type { FastifyPluginAsync } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 
 export interface DatabaseDependency {
+  contacts?: ContactRepository;
   check(): Promise<void>;
   close(): Promise<void>;
 }
@@ -35,6 +43,7 @@ export function createPostgresDependency(databaseUrl: string): DatabaseDependenc
   const pool = createPool(databaseUrl);
 
   return {
+    contacts: createContactRepository(createDatabaseClient(pool)),
     check: async () => checkDatabase(pool),
     close: async () => closePool(pool),
   };

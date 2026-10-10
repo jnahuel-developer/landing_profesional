@@ -16,9 +16,7 @@ Se excluyen nombres, correo, empresa, texto del mensaje, campos de formulario, I
 
 ## Contacto y fronteras
 
-`@portfolio/contracts` publica `ContactInputSchema` (TypeBox) para la futura API: nombre 1–100, correo hasta 254 con patrón sintáctico, empresa opcional hasta 160, tipo opcional `web | product | automation | data | other`, mensaje 1–2000 y aceptación literal `true`. Los campos obligatorios no admiten sólo espacios y no se admiten propiedades adicionales.
-
-El frontend actual conserva un validador cliente con esos límites, sin nueva dependencia ni importaciones entre directorios de workspaces. Las pruebas contrastan ambos comportamientos con los mismos casos límite. MOD010 deberá consumir el contrato al conectar el transporte y retirar ese espejo si la frontera lo permite. El formulario no realiza fetch, no tiene endpoint y no escribe almacenamiento; su único resultado válido es `prepared`.
+`@portfolio/contracts` publica `ContactInputSchema` (TypeBox), su normalización y una respuesta mínima de recepción. MOD010 incorpora locale `es`/`en`, honeypot y tiempo inicial del formulario. Web importa el contrato por la frontera del workspace y conserva la validación de campos para mensajes localizados. La API vuelve a validar el contrato y persiste antes del correo. El formulario usa una mutation sin reintentos ni almacenamiento local. El éxito se anuncia sólo después de una respuesta de recepción confirmada. No se incorpora recolección analítica ni se emite un evento de éxito al pulsar el botón.
 
 Los documentos, el contenido de About, el cierre comercial y los títulos/descripciones de las escenas son contenido renderizado en servidor. Los carruseles reciben escenas localizadas con rutas de imágenes WebP locales y usan Next Image con dimensiones intrínsecas; controlan selección, visibilidad y detención del autoplay. El formulario y las suscripciones a preferencias del navegador quedan acotados a componentes cliente. Los límites globales de error tienen su propia traducción de respaldo, sin depender del proveedor del layout.
 

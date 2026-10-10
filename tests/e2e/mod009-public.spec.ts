@@ -8,9 +8,8 @@ for (const [prefix, messages] of [
   ['', spanish],
   ['/en', english],
 ] as const) {
-  test(`About, Contacto, errores y revisión local sin envío ${prefix || 'es'}`, async ({
-    page,
-  }) => {
+  test(`About, Contacto, errores y recepción real ${prefix || 'es'}`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     const submissions: string[] = [];
     page.on('request', (request) => {
       if (request.method() !== 'GET') submissions.push(request.url());
@@ -38,9 +37,10 @@ for (const [prefix, messages] of [
     );
     await form.getByLabel(messages.Contact.fields.email).fill('test@example.com');
     await form.getByRole('checkbox').check();
+    await page.waitForTimeout(2100);
     await form.getByRole('button', { name: messages.Contact.submit }).click();
-    await expect(form.getByRole('status')).toHaveText(messages.Contact.prepared);
-    expect(submissions).toEqual([]);
+    await expect(form.getByRole('status')).toHaveText(messages.Contact.success);
+    expect(submissions.filter((url) => url.endsWith('/api/v1/contacts'))).toHaveLength(1);
     await expect(form.locator('[name="phone"]')).toHaveCount(0);
     await expect(form.getByRole('link', { name: messages.Contact.readPrivacy })).toHaveAttribute(
       'href',

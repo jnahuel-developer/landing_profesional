@@ -64,7 +64,10 @@ describe('PostgreSQL real', () => {
           where table_schema = any($1::text[])`,
         [applicationSchemaNames],
       );
-      expect(tables.rows).toEqual([]);
+      expect(tables.rows.map(({ table_name }) => table_name).sort()).toEqual([
+        'contact_events',
+        'contacts',
+      ]);
 
       await seedDatabase(pool);
       await expect(seedDatabase(pool)).resolves.toBeUndefined();

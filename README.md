@@ -44,7 +44,7 @@ pnpm install --frozen-lockfile
 
 Los scripts de desarrollo y base de datos cargan automáticamente el `.env` de la raíz con la API nativa de Node.js 24. No es necesario exportar variables manualmente y las variables ya presentes en el proceso tienen precedencia. La ausencia de `.env` también es válida en CI cuando el entorno inyecta la configuración necesaria.
 
-Las pruebas unitarias no requieren servicios. Las pruebas de integración y E2E requieren PostgreSQL.
+Las pruebas unitarias no requieren servicios. Las pruebas de integración y E2E requieren PostgreSQL y Mailpit.
 
 ## Aplicaciones
 
@@ -67,7 +67,7 @@ Las unitarias se ejecutan sin PostgreSQL; las de integración y E2E utilizan una
 
 ```powershell
 pnpm test
-docker compose up -d postgres
+docker compose up -d postgres mailpit
 pnpm test:integration
 pnpm test:e2e:install
 pnpm test:e2e
@@ -93,6 +93,27 @@ pnpm services:down
 | Mailpit UI   | `http://localhost:8025`        |
 
 No versionar `.env` ni secretos.
+
+## Contacto persistente (MOD010)
+
+Después de iniciar los servicios, ejecutar `pnpm db:migrate` y `pnpm dev`.
+Actualizar el `.env` local con `MAIL_TRANSPORT=smtp`, `SMTP_HOST=localhost`,
+`SMTP_PORT=1025`, `MAIL_FROM=portfolio@localhost` y `MAIL_TO=contact@localhost`.
+Consultar las notificaciones en [Mailpit local](http://localhost:8025).
+`CONTACT_RATE_LIMIT` permite ajustar el límite de solicitudes por minuto (5 por IP por defecto).
+
+El formulario usa `/api/v1/contacts` y Next lo reenvía mediante `API_INTERNAL_ORIGIN`
+(sólo servidor, por defecto `http://127.0.0.1:4000`). El consumidor técnico existente
+conserva `NEXT_PUBLIC_API_BASE_URL`. El contacto y su evento de recepción se guardan
+en una transacción; después se espera un intento de correo de hasta 5 segundos.
+Un fallo del correo conserva el contacto y devuelve recepción confirmada. Si falla
+el registro del resultado, permanece `PENDING` y se registra un código técnico seguro.
+No hay reintentos automáticos ni autorespuestas.
+
+Para una futura configuración explícita de Resend se requiere `MAIL_TRANSPORT=resend`,
+`RESEND_API_KEY`, `MAIL_FROM` y `MAIL_TO`; no se exigen variables SMTP. Ninguna prueba
+contacta Resend: el HTTP se simula. CI inicia PostgreSQL y Mailpit sólo en integración
+y E2E; las unitarias y build no requieren servicios ni credenciales.
 
 ## Documentación
 
