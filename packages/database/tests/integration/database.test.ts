@@ -65,6 +65,9 @@ describe('PostgreSQL real', () => {
         [applicationSchemaNames],
       );
       expect(tables.rows.map(({ table_name }) => table_name).sort()).toEqual([
+        'admin_audit',
+        'admin_sessions',
+        'admin_users',
         'analytics_consents',
         'analytics_daily',
         'analytics_events',

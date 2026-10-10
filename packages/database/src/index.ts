@@ -10,3 +10,4 @@ export { runMigrations } from './migrations.js';
 export { seedDatabase } from './seed.js';
 export { createContactRepository, type ContactRepository, type NewContact } from './contacts.js';
 export * from './analytics.js';
+export * from './admin.js';

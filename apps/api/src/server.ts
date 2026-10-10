@@ -3,6 +3,7 @@ import { loadRuntimeConfig } from './config/env.js';
 import { createPostgresDependency } from './plugins/database.js';
 import { loadContactConfig } from './modules/contacts/config.js';
 import { loadAnalyticsConfig } from './modules/analytics/config.js';
+import { loadAdminConfig } from './modules/admin/config.js';
 
 const config = loadRuntimeConfig();
 const contacts = loadContactConfig(process.env);
@@ -13,6 +14,7 @@ const app = await buildApp({
   logger: true,
   contacts,
   analytics,
+  admin: { config: loadAdminConfig() },
 });
 let isClosing = false;
 

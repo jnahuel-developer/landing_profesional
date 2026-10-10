@@ -52,7 +52,7 @@
     "admin": {
       "label": "Administración",
       "title": "Administración",
-      "description": "Estructura técnica preliminar, sin autenticación, métricas ni datos reales."
+      "description": "Acceso privado a la administración del sitio."
     }
   },
   "Metadata": {
@@ -381,7 +381,7 @@
     "portfolio": "Portfolio profesional.",
     "copyright": "© 2026 Nahuel Martínez.",
     "labLabel": "Nahuel Martínez · Laboratorio",
-    "adminLabel": "Área técnica preliminar",
+    "adminLabel": "Administración",
     "backPortfolio": "Volver al portfolio",
     "placeholder": "Contenido provisional"
   },
@@ -514,5 +514,19 @@
     "save": "Guardar preferencias",
     "close": "Cerrar",
     "failure": "La analítica está desactivada. No pudimos sincronizar la elección. Si retiraste el consentimiento, recordamos el retiro y volveremos a intentarlo sin bloquear la web."
+  },
+  "Admin": {
+    "title": "Administración",
+    "loginTitle": "Acceso administrativo",
+    "identifier": "Usuario",
+    "password": "Contraseña",
+    "login": "Ingresar",
+    "logout": "Cerrar sesión",
+    "pending": "Procesando…",
+    "error": "No se pudo completar la solicitud. Revisá los datos o intentá nuevamente.",
+    "authorized": "Acceso autorizado.",
+    "unavailableTitle": "Administración no disponible",
+    "unavailable": "No se pudo verificar la sesión. Intentá nuevamente en unos momentos.",
+    "retry": "Reintentar"
   }
 }

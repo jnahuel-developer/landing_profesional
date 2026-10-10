@@ -10,6 +10,7 @@ import type { NodeEnvironment } from './config/env.js';
 import { healthRoutes } from './modules/health/routes.js';
 import { databasePlugin, type DatabaseDependency } from './plugins/database.js';
 import { analyticsRoutes, type AnalyticsOptions } from './modules/analytics/routes.js';
+import { adminRoutes, type AdminOptions } from './modules/admin/routes.js';
 
 const serviceStatus = {
   service: 'portfolio-api',
@@ -39,6 +40,7 @@ export interface BuildAppOptions {
   logger?: boolean;
   contacts?: ContactOptions;
   analytics?: AnalyticsOptions;
+  admin?: AdminOptions;
 }
 
 function validationDetails(error: FastifyError) {
@@ -93,6 +95,16 @@ export async function buildApp(options: BuildAppOptions = {}) {
         requestId: request.id,
       });
     }
+    if (
+      request.url.startsWith('/api/v1/admin/') &&
+      [401, 403, 429, 503].includes(fastifyError.statusCode ?? 0)
+    ) {
+      return reply.status(fastifyError.statusCode!).send({
+        code: 'ADMIN_REQUEST_REJECTED',
+        message: 'La solicitud no puede completarse.',
+        requestId: request.id,
+      });
+    }
     request.log.error({ code: 'UNHANDLED_REQUEST_ERROR', requestId: request.id });
     return reply.status(500).send({
       code: ERROR_CODES.internal,
@@ -122,6 +134,12 @@ export async function buildApp(options: BuildAppOptions = {}) {
   await app.register(analyticsRoutes, {
     repository: options.database?.analytics,
     ...options.analytics,
+  });
+  await app.register(adminRoutes, {
+    prefix: '/api/v1/admin',
+    logSerializers: { req: () => 'ADMIN_REQUEST', err: () => 'ADMIN_ERROR' },
+    repository: options.database?.admin,
+    ...options.admin,
   });
 
   return app;

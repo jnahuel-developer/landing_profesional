@@ -31,7 +31,7 @@
     "typecheck": "tsc --project tsconfig.playwright.json --noEmit && pnpm -r --if-present run typecheck",
     "test": "pnpm -r --if-present run test",
     "test:integration": "pnpm --filter @portfolio/database test:integration && pnpm --filter @portfolio/api test:integration",
-    "test:e2e": "playwright test",
+    "test:e2e": "pnpm --filter @portfolio/api exec tsx tests/helpers/e2e-run.ts",
     "test:e2e:install": "playwright install --with-deps chromium",
     "test:e2e:web": "pnpm --filter @portfolio/contracts build && pnpm run build:ui && pnpm --filter @portfolio/web dev",
     "test:e2e:api": "pnpm --filter @portfolio/contracts build && pnpm --filter @portfolio/database build && pnpm --filter @portfolio/api build && pnpm db:migrate && pnpm --filter @portfolio/api start",
@@ -44,7 +44,15 @@
     "analytics:aggregate": "node ./scripts/run-with-env.mjs analytics:aggregate:workspace",
     "analytics:aggregate:workspace": "pnpm --filter @portfolio/database analytics:aggregate",
     "analytics:retain": "node ./scripts/run-with-env.mjs analytics:retain:workspace",
-    "analytics:retain:workspace": "pnpm --filter @portfolio/database analytics:retain"
+    "analytics:retain:workspace": "pnpm --filter @portfolio/database analytics:retain",
+    "admin:create": "node ./scripts/run-with-env.mjs admin:create:workspace",
+    "admin:create:workspace": "pnpm --filter @portfolio/database build && pnpm --filter @portfolio/api admin:create",
+    "admin:password": "node ./scripts/run-with-env.mjs admin:password:workspace",
+    "admin:password:workspace": "pnpm --filter @portfolio/database build && pnpm --filter @portfolio/api admin:password",
+    "admin:revoke-sessions": "node ./scripts/run-with-env.mjs admin:revoke-sessions:workspace",
+    "admin:revoke-sessions:workspace": "pnpm --filter @portfolio/database build && pnpm --filter @portfolio/api admin:revoke-sessions",
+    "admin:retain": "node ./scripts/run-with-env.mjs admin:retain:workspace",
+    "admin:retain:workspace": "pnpm --filter @portfolio/database build && pnpm --filter @portfolio/api admin:retain"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

@@ -211,5 +211,5 @@ test('mantiene admin fuera de navegación pública y conserva slug e historial',
   await expect(page).toHaveURL(/\/en#home$/);
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page.goto('/en/admin');
-  await expect(page).toHaveURL(/\/en\/admin$/);
+  await expect(page).toHaveURL(/\/en\/admin\/login$/);
 });

@@ -5,7 +5,7 @@ const apiBaseUrl = 'http://127.0.0.1:4000/api/v1';
 const databaseUrl =
   process.env.DATABASE_URL ??
   'postgresql://portfolio:portfolio_local_only@127.0.0.1:5432/portfolio';
-const reuseExistingServer = !process.env.CI;
+const reuseExistingServer = false;
 
 export default defineConfig({
   testDir: './tests/e2e',
@@ -53,6 +53,8 @@ export default defineConfig({
         MAIL_TO: 'e2e@localhost',
         CONTACT_RATE_LIMIT: '1000',
         WEB_ORIGIN: webBaseUrl,
+        ADMIN_LOGIN_GLOBAL_ATTEMPTS: '1000',
+        ADMIN_LOGIN_ATTEMPTS: '1000',
         ANALYTICS_COOKIE_SECRET: 'fictitious-e2e-only-analytics-signing-key',
       },
     },
