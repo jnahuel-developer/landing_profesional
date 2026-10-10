@@ -1,8 +1,10 @@
 'use client';
 
-import { useRef, useState, useSyncExternalStore, type FormEvent } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent } from 'react';
 import { Input, Textarea } from '@portfolio/ui';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { normalizeContact, type ContactInput } from '@portfolio/contracts';
+import { ContactQueryProvider, useContactMutation } from './contact-mutation';
 import { Link } from '../../i18n/navigation';
 import {
   contactFields,
@@ -18,24 +20,63 @@ const client = () => true;
 const server = () => false;
 
 export function ContactForm() {
+  return (
+    <ContactQueryProvider>
+      <ContactFormContent />
+    </ContactQueryProvider>
+  );
+}
+
+function ContactFormContent() {
   const t = useTranslations('Contact');
+  const locale = useLocale();
+  const mutation = useContactMutation();
+  const submitting = useRef(false);
+  const startedAt = useRef<number | null>(null);
   const form = useRef<HTMLFormElement>(null);
   const ready = useSyncExternalStore(subscribe, client, server);
+  useEffect(() => {
+    if (ready && startedAt.current === null) startedAt.current = Date.now();
+  }, [ready]);
   const [errors, setErrors] = useState<ContactErrors>({});
-  const [prepared, setPrepared] = useState(false);
   const errorText = (field: ContactField) => {
     const code = errors[field];
     return code ? t(`errors.${code}`) : undefined;
   };
 
-  function submit(event: FormEvent<HTMLFormElement>) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const next = validateContact(new FormData(event.currentTarget));
+    if (submitting.current) return;
+    const data = new FormData(event.currentTarget);
+    const next = validateContact(data);
     setErrors(next);
-    setPrepared(false);
+    mutation.reset();
     const first = contactFields.find((field) => next[field]);
     if (first) form.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
-    else setPrepared(true);
+    else {
+      submitting.current = true;
+      try {
+        await mutation.mutateAsync(
+          normalizeContact({
+            name: data.get('name'),
+            email: data.get('email'),
+            company: data.get('company'),
+            projectType: data.get('projectType'),
+            message: data.get('message'),
+            privacyAccepted: true,
+            locale,
+            website: data.get('website') ?? '',
+            formStartedAt: startedAt.current ?? Date.now(),
+          }) as ContactInput,
+        );
+        form.current?.reset();
+        startedAt.current = Date.now();
+      } catch {
+        /* La mutation conserva el error para su anuncio accesible. */
+      } finally {
+        submitting.current = false;
+      }
+    }
   }
 
   return (
@@ -48,7 +89,9 @@ export function ContactForm() {
       data-track-event="contact_started"
     >
       <h3 id="contact-form-title">{t('title')}</h3>
-      <p id="contact-preparation">{t('preparation')}</p>
+      <div hidden aria-hidden="true">
+        <input name="website" tabIndex={-1} autoComplete="off" />
+      </div>
       {Object.keys(errors).length > 0 && (
         <div role="alert" className="contact-errors">
           <p>{t('errorSummary')}</p>
@@ -148,18 +191,36 @@ export function ContactForm() {
       <button
         className="inline-action"
         type="submit"
-        disabled={!ready}
-        aria-describedby="contact-preparation"
+        disabled={!ready || mutation.isPending}
         data-track-event="contact_validation"
       >
-        {t('submit')}
+        {mutation.isPending ? t('pending') : t('submit')}
       </button>
       {!ready && <p>{t('withoutJs')}</p>}
-      {prepared && (
+      {mutation.isSuccess && (
         <p role="status" className="contact-prepared">
-          {t('prepared')}
+          {t('success')}
         </p>
+      )}
+      {mutation.isPending && <p role="status">{t('pending')}</p>}
+      {mutation.isError && (
+        <p role="alert">{t(`deliveryErrors.${deliveryError(mutation.error.message)}`)}</p>
       )}
     </form>
   );
+}
+
+function deliveryError(code: string) {
+  switch (code) {
+    case 'CONTACT_TOO_FAST':
+      return 'tooFast';
+    case 'VALIDATION_ERROR':
+      return 'validation';
+    case 'PAYLOAD_TOO_LARGE':
+      return 'payload';
+    case 'RATE_LIMITED':
+      return 'rateLimit';
+    default:
+      return 'unavailable';
+  }
 }

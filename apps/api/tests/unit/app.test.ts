@@ -111,6 +111,10 @@ describe('aplicación Fastify', () => {
     expect(userInterface.statusCode).toBe(200);
     expect(userInterface.headers['content-type']).toContain('text/html');
     expect(specification.json().paths).toHaveProperty('/api/v1/health/live');
+    expect(
+      specification.json().paths['/api/v1/contacts'].post.requestBody.content['application/json']
+        .schema.required,
+    ).toContain('locale');
     expect((await test.inject({ method: 'GET', url: '/documentation/json' })).statusCode).toBe(404);
     expect(
       (await production.inject({ method: 'GET', url: '/documentation/json' })).statusCode,

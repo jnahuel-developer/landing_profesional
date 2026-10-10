@@ -4,6 +4,7 @@ import swaggerUi from '@fastify/swagger-ui';
 import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import Fastify, { type FastifyError } from 'fastify';
 import { Type } from 'typebox';
+import { contactRoutes, type ContactOptions } from './modules/contacts/routes.js';
 
 import type { NodeEnvironment } from './config/env.js';
 import { healthRoutes } from './modules/health/routes.js';
@@ -35,6 +36,7 @@ export interface BuildAppOptions {
   nodeEnv?: NodeEnvironment;
   database?: DatabaseDependency;
   logger?: boolean;
+  contacts?: ContactOptions;
 }
 
 function validationDetails(error: FastifyError) {
@@ -46,7 +48,10 @@ function validationDetails(error: FastifyError) {
 
 export async function buildApp(options: BuildAppOptions = {}) {
   const nodeEnv = options.nodeEnv ?? 'test';
-  const app = Fastify({ logger: options.logger ?? false }).withTypeProvider<TypeBoxTypeProvider>();
+  const app = Fastify({
+    logger: options.logger ?? false,
+    ajv: { customOptions: { coerceTypes: false, removeAdditional: false } },
+  }).withTypeProvider<TypeBoxTypeProvider>();
 
   if (nodeEnv === 'development') {
     await app.register(swagger, {
@@ -78,7 +83,15 @@ export async function buildApp(options: BuildAppOptions = {}) {
       });
     }
 
-    request.log.error({ err: error }, 'Unhandled request error');
+    if (fastifyError.statusCode === 413 || fastifyError.statusCode === 400) {
+      return reply.status(fastifyError.statusCode).send({
+        code:
+          fastifyError.statusCode === 413 ? ERROR_CODES.payloadTooLarge : ERROR_CODES.validation,
+        message: 'La solicitud no es válida.',
+        requestId: request.id,
+      });
+    }
+    request.log.error({ code: 'UNHANDLED_REQUEST_ERROR', requestId: request.id });
     return reply.status(500).send({
       code: ERROR_CODES.internal,
       message: 'Ocurrió un error interno.',
@@ -100,6 +113,10 @@ export async function buildApp(options: BuildAppOptions = {}) {
   );
 
   await app.register(healthRoutes, { prefix: '/api/v1/health' });
+  await app.register(contactRoutes, {
+    repository: options.database?.contacts,
+    ...options.contacts,
+  });
 
   return app;
 }

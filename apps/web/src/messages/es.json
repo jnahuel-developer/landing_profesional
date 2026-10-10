@@ -402,7 +402,6 @@
   },
   "Contact": {
     "title": "Contame sobre tu proyecto",
-    "preparation": "El canal de contacto está en preparación. Este formulario permite revisar los datos, pero no los envía ni los guarda.",
     "fields": {
       "name": "Nombre (obligatorio)",
       "email": "Correo (obligatorio)",
@@ -421,7 +420,7 @@
     "choose": "Sin definir",
     "messageHint": "Hasta {limit} caracteres. No incluyas información sensible.",
     "readPrivacy": "Leer la política de privacidad",
-    "submit": "Revisar consulta",
+    "submit": "Enviar consulta",
     "errorSummary": "Revisá los siguientes campos:",
     "errors": {
       "required": "Completá este campo.",
@@ -430,12 +429,20 @@
       "category": "Elegí una opción de la lista.",
       "privacy": "Aceptá la política de privacidad para continuar."
     },
-    "prepared": "La consulta es válida. El canal todavía está en preparación: ningún dato fue enviado ni guardado.",
-    "withoutJs": "La revisión de datos requiere JavaScript. El canal de envío aún no está habilitado."
+    "withoutJs": "El envío requiere JavaScript. Activá JavaScript para enviar tu consulta.",
+    "pending": "Enviando consulta…",
+    "success": "Recibimos tu consulta. Gracias por escribir.",
+    "deliveryErrors": {
+      "tooFast": "Esperá unos segundos y volvé a enviar. Conservamos tus campos.",
+      "validation": "Revisá los datos de la consulta y volvé a enviar.",
+      "payload": "La consulta supera el tamaño permitido. Reducí el contenido.",
+      "rateLimit": "Alcanzaste el límite de consultas. Esperá un minuto y volvé a intentar.",
+      "unavailable": "No pudimos confirmar la recepción. Conservamos tus campos para volver a intentar."
+    }
   },
   "Privacy": {
     "eyebrow": "Información sobre datos",
-    "introduction": "Esta política describe el funcionamiento actual y las reglas aprobadas para las próximas funciones. La analítica opcional, el envío de contacto y las sesiones demo todavía no están habilitados.",
+    "introduction": "Esta política describe el funcionamiento actual y las reglas aprobadas para las próximas funciones. El formulario de contacto recibe consultas; la analítica opcional y las sesiones demo todavía no están habilitadas.",
     "contactLink": "Consultar la sección Contacto",
     "topics": {
       "responsible": {
@@ -444,7 +451,7 @@
       },
       "contact": {
         "title": "Contacto y mensajes",
-        "body": "El formulario solicita nombre, correo, empresa opcional, tipo de proyecto opcional, mensaje y aceptación de privacidad. En esta versión la validación ocurre en tu navegador: no se envía ni guarda ningún dato. Cuando se habilite el canal, se conservará el contacto antes de intentar notificarlo por correo, sin respuesta automática inicial."
+        "body": "El formulario solicita nombre, correo, empresa opcional, tipo de proyecto opcional, mensaje y aceptación de privacidad. La consulta se valida en el navegador y en el servidor, y se conserva antes de intentar notificarla por correo. Un fallo de la notificación no elimina la consulta recibida. No se envían respuestas automáticas. También se conserva el idioma y la evidencia mínima de consentimiento. Los campos técnicos antispam no se guardan como contenido del contacto."
       },
       "preferences": {
         "title": "Preferencias necesarias",
@@ -464,7 +471,7 @@
       },
       "recipients": {
         "title": "Destinatarios y servicios",
-        "body": "No se incorporan trackers de terceros, Google Analytics, Meta Pixel ni servicios equivalentes. La analítica futura será propia. Para las notificaciones de contacto de producción se prevé Resend; Mailpit se utilizará en el entorno local. Ese transporte todavía no está conectado al formulario público. Los destinatarios y sus condiciones deberán confirmarse en la revisión legal previa a producción."
+        "body": "No se incorporan trackers de terceros, Google Analytics, Meta Pixel ni servicios equivalentes. La analítica futura será propia. Las notificaciones de contacto locales usan Mailpit. Resend queda preparado para una futura configuración explícita de producción. Los destinatarios y sus condiciones deberán confirmarse en la revisión legal previa a producción."
       },
       "retention": {
         "title": "Retenciones aprobadas",
@@ -472,7 +479,7 @@
       },
       "rights": {
         "title": "Ejercicio de derechos",
-        "body": "Podés solicitar acceso, rectificación o supresión de tus datos al responsable a través del canal de contacto, una vez habilitado. Una solicitud válida de supresión tendrá prioridad sobre la retención prevista cuando corresponda. Actualmente el canal no recibe solicitudes; deberá publicarse una vía operativa antes de producción."
+        "body": "Podés solicitar acceso, rectificación o supresión de tus datos al responsable a través del formulario de contacto. Una solicitud válida de supresión tendrá prioridad sobre la retención prevista cuando corresponda. La vía operativa deberá confirmarse antes de producción."
       },
       "review": {
         "title": "Revisión antes de producción",

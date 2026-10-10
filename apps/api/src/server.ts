@@ -1,12 +1,15 @@
 import { buildApp } from './app.js';
 import { loadRuntimeConfig } from './config/env.js';
 import { createPostgresDependency } from './plugins/database.js';
+import { loadContactConfig } from './modules/contacts/config.js';
 
 const config = loadRuntimeConfig();
+const contacts = loadContactConfig(process.env);
 const app = await buildApp({
   nodeEnv: config.nodeEnv,
   database: createPostgresDependency(config.databaseUrl),
   logger: true,
+  contacts,
 });
 let isClosing = false;
 

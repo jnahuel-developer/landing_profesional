@@ -1,5 +1,4 @@
-// Espejo cliente del contrato de contacto, sin añadir dependencias entre workspaces.
-// Al conectar la API se reutilizará ContactInputSchema en el límite de transporte.
+// Validación de campos para mensajes localizados; el servidor valida el contrato compartido.
 export const contactLimits = { name: 100, email: 254, company: 160, message: 2000 } as const;
 export const projectTypes = ['web', 'product', 'automation', 'data', 'other'] as const;
 export const contactFields = [
@@ -18,7 +17,7 @@ export type ContactErrors = Partial<
 export function validateContact(data: FormData): ContactErrors {
   const errors: ContactErrors = {};
   for (const field of ['name', 'email', 'company', 'message'] as const) {
-    const value = String(data.get(field) ?? '');
+    const value = String(data.get(field) ?? '').trim();
     if (field !== 'company' && !value.trim()) errors[field] = 'required';
     else if (value.length > contactLimits[field]) errors[field] = 'length';
   }

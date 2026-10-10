@@ -51,6 +51,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     services:
+      mailpit:
+        image: axllent/mailpit:v1.27
+        ports:
+          - 1025:1025
+          - 8025:8025
       postgres:
         image: postgres:18
         env:
@@ -66,6 +71,11 @@ jobs:
           --health-retries 10
     env:
       DATABASE_URL: postgresql://portfolio:portfolio_ci_only@127.0.0.1:5432/portfolio_ci_integration
+      MAIL_TRANSPORT: smtp
+      SMTP_HOST: 127.0.0.1
+      SMTP_PORT: '1025'
+      MAIL_FROM: portfolio@localhost
+      MAIL_TO: integration@localhost
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -90,6 +100,11 @@ jobs:
     timeout-minutes: 20
     needs: [quality, integration]
     services:
+      mailpit:
+        image: axllent/mailpit:v1.27
+        ports:
+          - 1025:1025
+          - 8025:8025
       postgres:
         image: postgres:18
         env:
@@ -105,6 +120,11 @@ jobs:
           --health-retries 10
     env:
       DATABASE_URL: postgresql://portfolio:portfolio_ci_only@127.0.0.1:5432/portfolio_ci_e2e
+      MAIL_TRANSPORT: smtp
+      SMTP_HOST: 127.0.0.1
+      SMTP_PORT: '1025'
+      MAIL_FROM: portfolio@localhost
+      MAIL_TO: e2e@localhost
     steps:
       - name: Check out repository
         uses: actions/checkout@v4

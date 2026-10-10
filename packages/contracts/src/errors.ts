@@ -4,6 +4,9 @@ export const ERROR_CODES = {
   validation: 'VALIDATION_ERROR',
   serviceUnavailable: 'SERVICE_UNAVAILABLE',
   internal: 'INTERNAL_ERROR',
+  tooFast: 'CONTACT_TOO_FAST',
+  payloadTooLarge: 'PAYLOAD_TOO_LARGE',
+  rateLimit: 'RATE_LIMITED',
 } as const;
 
 export const ValidationDetailSchema = Type.Object(

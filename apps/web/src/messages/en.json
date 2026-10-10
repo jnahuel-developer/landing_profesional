@@ -402,7 +402,6 @@
   },
   "Contact": {
     "title": "Tell me about your project",
-    "preparation": "The contact channel is being prepared. You can check your details here, but this form does not send or store them.",
     "fields": {
       "name": "Name (required)",
       "email": "Email (required)",
@@ -421,7 +420,7 @@
     "choose": "Not decided",
     "messageHint": "Up to {limit} characters. Do not include sensitive information.",
     "readPrivacy": "Read the privacy policy",
-    "submit": "Check enquiry",
+    "submit": "Send enquiry",
     "errorSummary": "Please review these fields:",
     "errors": {
       "required": "Complete this field.",
@@ -430,12 +429,20 @@
       "category": "Choose an option from the list.",
       "privacy": "Accept the privacy policy to continue."
     },
-    "prepared": "Your enquiry is valid. The channel is still being prepared: no data was sent or stored.",
-    "withoutJs": "Checking details requires JavaScript. Sending enquiries is not available yet."
+    "withoutJs": "Sending requires JavaScript. Enable JavaScript to send your enquiry.",
+    "pending": "Sending enquiry…",
+    "success": "We received your enquiry. Thank you for writing.",
+    "deliveryErrors": {
+      "tooFast": "Wait a few seconds and send again. Your fields are preserved.",
+      "validation": "Review your enquiry details and send again.",
+      "payload": "Your enquiry exceeds the allowed size. Reduce the content.",
+      "rateLimit": "You reached the enquiry limit. Wait a minute and try again.",
+      "unavailable": "We could not confirm receipt. Your fields are preserved so you can try again."
+    }
   },
   "Privacy": {
     "eyebrow": "Information about data",
-    "introduction": "This policy describes current behaviour and the approved rules for upcoming features. Optional analytics, contact delivery and demo sessions are not enabled yet.",
+    "introduction": "This policy describes current behaviour and approved rules for upcoming features. The contact form receives enquiries; optional analytics and demo sessions are not enabled yet.",
     "contactLink": "Visit the Contact section",
     "topics": {
       "responsible": {
@@ -444,7 +451,7 @@
       },
       "contact": {
         "title": "Contact and messages",
-        "body": "The form asks for a name, email, optional company, optional project type, message and privacy acceptance. In this version validation happens in your browser: no data is sent or stored. Once enabled, the channel will save the enquiry before attempting an email notification, without an initial automatic reply."
+        "body": "The form requests your name, email, optional company, optional project type, message and privacy acceptance. Your enquiry is validated in the browser and on the server, and saved before an email notification is attempted. A notification failure does not remove a received enquiry. No automatic replies are sent. The language and minimum evidence of consent are also saved. Technical antispam fields are not saved as contact content."
       },
       "preferences": {
         "title": "Necessary preferences",
@@ -464,7 +471,7 @@
       },
       "recipients": {
         "title": "Recipients and services",
-        "body": "There are no third-party trackers, Google Analytics, Meta Pixel or equivalent services. Future analytics will be first-party. Resend is planned for production contact notifications; Mailpit will be used locally. This transport is not connected to the public form yet. Recipients and their terms must be confirmed in the legal review before production."
+        "body": "There are no third-party trackers, Google Analytics, Meta Pixel or equivalent services. Future analytics will be first-party. Local contact notifications use Mailpit. Resend is prepared for future explicit production configuration. Recipients and their terms must be confirmed in the legal review before production."
       },
       "retention": {
         "title": "Approved retention periods",
@@ -472,7 +479,7 @@
       },
       "rights": {
         "title": "Exercising your rights",
-        "body": "You can request access, correction or deletion of your data from the controller through the contact channel once enabled. A valid deletion request will take precedence over planned retention where applicable. The channel does not currently receive requests; an operational route must be published before production."
+        "body": "You can request access, correction or deletion of your data from the controller through the contact form. A valid deletion request will take precedence over planned retention where applicable. The operational route must be confirmed before production."
       },
       "review": {
         "title": "Review before production",
