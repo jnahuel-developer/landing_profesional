@@ -22,7 +22,7 @@ if (!scriptName) {
     }
   }
 
-  const child = spawn(process.execPath, ['--run', scriptName], {
+  const child = spawn(process.execPath, ['--run', scriptName, '--', ...process.argv.slice(3)], {
     cwd: repositoryRoot,
     env: process.env,
     stdio: 'inherit',

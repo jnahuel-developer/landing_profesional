@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import spanish from '../../apps/web/src/messages/es.json';
 import english from '../../apps/web/src/messages/en.json';
 

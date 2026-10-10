@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { footerRoutes, routes } from '../../config/routes';
 import { Link } from '../../i18n/navigation';
 import { RouteLink } from './route-link';
+import { PrivacyPreferences } from '../../analytics/privacy';
 
 export function PublicFooter() {
   const layouts = useTranslations('Layouts');
@@ -22,6 +23,7 @@ export function PublicFooter() {
             <RouteLink key={route.id} route={route} />
           ))}
         </nav>
+        <PrivacyPreferences />
       </Container>
     </footer>
   );

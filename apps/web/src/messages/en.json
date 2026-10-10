@@ -442,7 +442,7 @@
   },
   "Privacy": {
     "eyebrow": "Information about data",
-    "introduction": "This policy describes current behaviour and approved rules for upcoming features. The contact form receives enquiries; optional analytics and demo sessions are not enabled yet.",
+    "introduction": "This policy describes current behavior and approved rules for upcoming features. The form receives inquiries and first-party analytics is optional; demo sessions are not yet enabled.",
     "contactLink": "Visit the Contact section",
     "topics": {
       "responsible": {
@@ -459,7 +459,7 @@
       },
       "analytics": {
         "title": "Optional analytics",
-        "body": "First-party analytics will remain disabled until explicit consent. Once the mechanism is available, you will be able to accept, reject or change your choice; the preference will last 180 days unless the purpose changes materially. Rejection will not limit content or demos. This version does not collect or send analytics events."
+        "body": "Analytics is disabled until you explicitly accept. You can accept, choose necessary only, configure or withdraw using Privacy preferences in the footer. A signed first-party HttpOnly cookie retains the choice for 180 days. Only acceptance creates a revocable receipt and separate random visitor and session identifiers. Visitors rotate every 30 days; sessions renew after 30 minutes of inactivity. Withdrawal stops collection and clears the in-memory queue. If synchronization fails, a necessary local marker remembers withdrawal across reloads and allows retries. Events confirmed before withdrawal are not removed retroactively. Rejection does not limit content or contact."
       },
       "demos": {
         "title": "Demonstrations and disposable data",
@@ -467,11 +467,11 @@
       },
       "excluded": {
         "title": "Data excluded from analytics",
-        "body": "IP addresses, names, emails, messages, free text, signatures, photographs and internal demo content will not be stored as analytics. Planned dimensions are limited to categorical events, pages, language, theme, device, browser family, permitted referral information, aggregate duration and a pseudonymous session."
+        "body": "Analytics excludes IP addresses, names, emails, messages, free text, signatures, photographs and demo contents. Dimensions are categorical events, pages, language, theme, device class, browser family and pseudonymous sessions. References include only validated domains, never paths or queries. UTM values must belong to a closed catalog, initially empty."
       },
       "recipients": {
         "title": "Recipients and services",
-        "body": "There are no third-party trackers, Google Analytics, Meta Pixel or equivalent services. Future analytics will be first-party. Local contact notifications use Mailpit. Resend is prepared for future explicit production configuration. Recipients and their terms must be confirmed in the legal review before production."
+        "body": "There are no third-party trackers, Google Analytics, Meta Pixel or equivalent services. Analytics is first-party and stored in PostgreSQL without external analytics providers. Local contact notifications use Mailpit. Resend is prepared for future explicit production configuration. Recipients and their terms must be confirmed in the legal review before production."
       },
       "retention": {
         "title": "Approved retention periods",
@@ -498,5 +498,21 @@
     "availability": "This catalogue is informational. Demos and sessions cannot be started yet. Future experiences will use simulated, disposable data.",
     "contact": "Let’s talk about your project",
     "home": "Explore the portfolio"
+  },
+  "Consent": {
+    "title": "Privacy preferences",
+    "description": "We use optional first-party analytics to understand website usage. Your choice does not limit content or contact.",
+    "accept": "Accept analytics",
+    "reject": "Necessary only",
+    "configure": "Configure",
+    "privacy": "Privacy",
+    "preferences": "Privacy preferences",
+    "necessary": "Necessary, always active",
+    "necessaryDescription": "These retain language, theme and your privacy choice. Privacy choices last 180 days; language lasts one year; theme lasts until changed or site data is cleared. They do not create an analytics identity.",
+    "analytics": "Optional analytics",
+    "analyticsDescription": "Measures pages and categorical interactions, without form contents or personal data. Withdraw using the footer.",
+    "save": "Save preferences",
+    "close": "Close",
+    "failure": "Analytics is disabled. We could not synchronize your choice. If you withdrew consent, we remember the withdrawal and will retry without blocking the website."
   }
 }

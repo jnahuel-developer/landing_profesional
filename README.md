@@ -118,3 +118,12 @@ y E2E; las unitarias y build no requieren servicios ni credenciales.
 ## Documentación
 
 La puerta de entrada es [docs/README.md](docs/README.md). Las fuentes históricas permanecen intactas en `docs previos de ChatGPT/` y no forman parte de la documentación operativa del repositorio.
+
+## Analítica propia (MOD011)
+
+La analítica es opcional, requiere aceptación explícita y funciona mediante el proxy same-origin. Configurá `WEB_ORIGIN` y `ANALYTICS_COOKIE_SECRET` sólo en servidor según `.env.example` (clave ficticia local; reemplazar antes de producción). Aplicá `pnpm db:migrate`.
+
+- `pnpm analytics:aggregate [YYYY-MM-DD]`: agrega un día UTC pasado; default ayer, también configurable con `ANALYTICS_DAY`.
+- `pnpm analytics:retain`: elimina crudos >180 días, sesiones >24 meses calendario y recibos vencidos/revocados, conservando agregados y contactos.
+
+Ejecutar agregación antes de retención. No hay scheduler ni panel en esta mod. Cookies, matriz v1, comportamiento ante fallos y límites: [documentación de MOD011](docs/architecture/ANALITICA_Y_CONSENTIMIENTO_MOD011.md).

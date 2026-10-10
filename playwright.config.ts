@@ -52,6 +52,8 @@ export default defineConfig({
         MAIL_FROM: 'portfolio@localhost',
         MAIL_TO: 'e2e@localhost',
         CONTACT_RATE_LIMIT: '1000',
+        WEB_ORIGIN: webBaseUrl,
+        ANALYTICS_COOKIE_SECRET: 'fictitious-e2e-only-analytics-signing-key',
       },
     },
   ],

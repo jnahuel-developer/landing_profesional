@@ -6,6 +6,8 @@ import { useLocale, useTranslations } from 'next-intl';
 import { normalizeContact, type ContactInput } from '@portfolio/contracts';
 import { ContactQueryProvider, useContactMutation } from './contact-mutation';
 import { Link } from '../../i18n/navigation';
+import { trackContact } from '../../analytics/client';
+import { consent } from '../../analytics/consent';
 import {
   contactFields,
   contactLimits,
@@ -35,6 +37,11 @@ function ContactFormContent() {
   const startedAt = useRef<number | null>(null);
   const form = useRef<HTMLFormElement>(null);
   const ready = useSyncExternalStore(subscribe, client, server);
+  const analyticsEnabled = useSyncExternalStore(
+    consent.subscribe,
+    () => consent.getSnapshot().state === 'accepted',
+    server,
+  );
   useEffect(() => {
     if (ready && startedAt.current === null) startedAt.current = Date.now();
   }, [ready]);
@@ -85,6 +92,17 @@ function ContactFormContent() {
       className="contact-form"
       noValidate
       onSubmit={submit}
+      onChangeCapture={
+        analyticsEnabled
+          ? (event) => {
+              if (
+                event.target instanceof HTMLElement &&
+                event.target.matches('input:not([name="website"]), textarea, select')
+              )
+                trackContact('contact_started');
+            }
+          : undefined
+      }
       aria-labelledby="contact-form-title"
       data-track-event="contact_started"
     >

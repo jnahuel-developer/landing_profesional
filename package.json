@@ -40,7 +40,11 @@
     "build:workspace-dependencies": "pnpm --filter @portfolio/contracts build && pnpm --filter @portfolio/database build && pnpm run build:ui",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm i18n:check && pnpm lint && pnpm typecheck && pnpm test"
+    "check": "pnpm i18n:check && pnpm lint && pnpm typecheck && pnpm test",
+    "analytics:aggregate": "node ./scripts/run-with-env.mjs analytics:aggregate:workspace",
+    "analytics:aggregate:workspace": "pnpm --filter @portfolio/database analytics:aggregate",
+    "analytics:retain": "node ./scripts/run-with-env.mjs analytics:retain:workspace",
+    "analytics:retain:workspace": "pnpm --filter @portfolio/database analytics:retain"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
