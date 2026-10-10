@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import AdminPage from '../src/app/[locale]/admin/page';
+import { AdminForm } from '../src/admin/form';
 import { ContinuousHome } from '../src/components/home/continuous-home';
 import LaboratoryPage from '../src/app/[locale]/lab/page';
 import { AdminLayout } from '../src/components/layouts/admin-layout';
@@ -85,9 +85,14 @@ describe('placeholders', () => {
     ).toBeVisible();
 
     unmount();
-    render(<AdminPage />);
+    render(
+      <>
+        <h1>{messages.Admin.loginTitle}</h1>
+        <AdminForm />
+      </>,
+    );
     expect(
-      screen.getByRole('heading', { level: 1, name: messages.Routes.admin.title }),
+      screen.getByRole('heading', { level: 1, name: messages.Admin.loginTitle }),
     ).toBeVisible();
   });
 

@@ -7,6 +7,8 @@ import {
   type ContactRepository,
   createAnalyticsRepository,
   type AnalyticsRepository,
+  createAdminRepository,
+  type AdminRepository,
 } from '@portfolio/database';
 import type { FastifyPluginAsync } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
@@ -14,6 +16,7 @@ import fastifyPlugin from 'fastify-plugin';
 export interface DatabaseDependency {
   contacts?: ContactRepository;
   analytics?: AnalyticsRepository;
+  admin?: AdminRepository;
   check(): Promise<void>;
   close(): Promise<void>;
 }
@@ -48,6 +51,7 @@ export function createPostgresDependency(databaseUrl: string): DatabaseDependenc
   return {
     contacts: createContactRepository(createDatabaseClient(pool)),
     analytics: createAnalyticsRepository(createDatabaseClient(pool)),
+    admin: createAdminRepository(createDatabaseClient(pool)),
     check: async () => checkDatabase(pool),
     close: async () => closePool(pool),
   };

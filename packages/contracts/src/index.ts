@@ -20,3 +20,4 @@ export {
   type ContactInput,
 } from './contact.js';
 export * from './analytics.js';
+export * from './admin.js';

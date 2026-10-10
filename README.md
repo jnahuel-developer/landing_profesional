@@ -127,3 +127,7 @@ La analítica es opcional, requiere aceptación explícita y funciona mediante e
 - `pnpm analytics:retain`: elimina crudos >180 días, sesiones >24 meses calendario y recibos vencidos/revocados, conservando agregados y contactos.
 
 Ejecutar agregación antes de retención. No hay scheduler ni panel en esta mod. Cookies, matriz v1, comportamiento ante fallos y límites: [documentación de MOD011](docs/architecture/ANALITICA_Y_CONSENTIMIENTO_MOD011.md).
+
+## Administración local
+
+MOD012 incorpora autenticación local y sesiones de ocho horas. Ver [operación, configuración y pruebas de administración](docs/architecture/MOD012_AUTENTICACION_ADMINISTRATIVA.md). Los comandos `pnpm admin:create`, `pnpm admin:password`, `pnpm admin:revoke-sessions` y `pnpm admin:retain` cargan el `.env` raíz; nunca configurar contraseñas en ese archivo.

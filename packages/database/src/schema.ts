@@ -8,9 +8,57 @@ import {
   jsonb,
   date,
   uniqueIndex,
+  boolean,
+  check,
+  index,
 } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
 
 export const platformSchema = pgSchema('platform');
+export const adminUsers = platformSchema.table(
+  'admin_users',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    singleton: boolean('singleton').notNull().default(true).unique(),
+    identifier: varchar('identifier', { length: 100 }).notNull(),
+    passwordHash: text('password_hash').notNull(),
+    credentialVersion: integer('credential_version').notNull().default(1),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [check('admin_singleton_true', sql`${table.singleton} = true`)],
+);
+export const adminSessions = platformSchema.table(
+  'admin_sessions',
+  {
+    digest: varchar('digest', { length: 64 }).primaryKey(),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => adminUsers.id, { onDelete: 'cascade' }),
+    csrf: varchar('csrf', { length: 64 }).notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull(),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+  },
+  (table) => [index('admin_sessions_expiry').on(table.expiresAt)],
+);
+export const adminAuditCode = platformSchema.enum('admin_audit_code', [
+  'LOGIN_OK',
+  'LOGIN_FAILED',
+  'RATE_LIMIT',
+  'LOGOUT',
+  'ACCOUNT_CREATED',
+  'PASSWORD_CHANGED',
+  'SESSIONS_REVOKED',
+]);
+export const adminAudit = platformSchema.table(
+  'admin_audit',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    code: adminAuditCode('code').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index('admin_audit_retention').on(table.createdAt)],
+);
 export const demoCoreSchema = pgSchema('demo_core');
 export const acmeCafeSchema = pgSchema('acme_cafe');
 export const acmeLogisticaSchema = pgSchema('acme_logistica');
