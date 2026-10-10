@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 import { documents } from '../../apps/web/src/config/routes';
 import english from '../../apps/web/src/messages/en.json';

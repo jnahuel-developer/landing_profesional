@@ -202,6 +202,7 @@ export function ExperienceSection() {
               <DemoPreview demo={demo} />
               <Link
                 className="demo-link luminous-action"
+                data-track-company={demo}
                 data-track-event="cta_select"
                 data-track-target="laboratory"
                 href={routes.laboratory.path}

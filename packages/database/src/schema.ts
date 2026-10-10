@@ -1,4 +1,14 @@
-import { pgSchema, uuid, varchar, text, timestamp } from 'drizzle-orm/pg-core';
+import {
+  pgSchema,
+  uuid,
+  varchar,
+  text,
+  timestamp,
+  integer,
+  jsonb,
+  date,
+  uniqueIndex,
+} from 'drizzle-orm/pg-core';
 
 export const platformSchema = pgSchema('platform');
 export const demoCoreSchema = pgSchema('demo_core');
@@ -63,3 +73,43 @@ export const applicationSchemaNames = [
   'acme_cafe',
   'acme_logistica',
 ] as const;
+
+export const analyticsConsents = platformSchema.table('analytics_consents', {
+  id: uuid('id').primaryKey(),
+  version: integer('version').notNull(),
+  acceptedAt: timestamp('accepted_at', { withTimezone: true }).notNull(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+  revokedAt: timestamp('revoked_at', { withTimezone: true }),
+});
+export const analyticsSessions = platformSchema.table('analytics_sessions', {
+  id: uuid('id').primaryKey(),
+  consentId: uuid('consent_id').references(() => analyticsConsents.id, { onDelete: 'set null' }),
+  visitorId: uuid('visitor_id').notNull(),
+  entry: varchar('entry', { length: 20 }).notNull(),
+  firstAt: timestamp('first_at', { withTimezone: true }).notNull(),
+  lastAt: timestamp('last_at', { withTimezone: true }).notNull(),
+  durationSeconds: integer('duration_seconds').notNull().default(0),
+  counters: jsonb('counters').$type<Record<string, number>>().notNull().default({}),
+});
+export const analyticsEvents = platformSchema.table(
+  'analytics_events',
+  {
+    id: uuid('id').primaryKey(),
+    sessionId: uuid('session_id')
+      .notNull()
+      .references(() => analyticsSessions.id, { onDelete: 'cascade' }),
+    version: integer('version').notNull(),
+    name: varchar('name', { length: 40 }).notNull(),
+    receivedAt: timestamp('received_at', { withTimezone: true }).notNull(),
+    occurredAt: timestamp('occurred_at', { withTimezone: true }).notNull(),
+    dimensions: jsonb('dimensions').$type<Record<string, string>>().notNull(),
+    properties: jsonb('properties').$type<Record<string, string | number>>().notNull(),
+    onceKey: varchar('once_key', { length: 80 }),
+  },
+  (table) => [uniqueIndex('analytics_once_session').on(table.sessionId, table.onceKey)],
+);
+export const analyticsDaily = platformSchema.table('analytics_daily', {
+  day: date('day').primaryKey(),
+  metrics: jsonb('metrics').$type<unknown>().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull(),
+});

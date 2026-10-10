@@ -22,7 +22,9 @@
     "lint": "eslint .",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "test": "vitest run tests/unit",
-    "test:integration": "vitest run tests/integration --no-file-parallelism"
+    "test:integration": "vitest run tests/integration --no-file-parallelism",
+    "analytics:aggregate": "tsx src/cli/analytics.ts aggregate",
+    "analytics:retain": "tsx src/cli/analytics.ts retain"
   },
   "dependencies": {
     "drizzle-orm": "0.45.3",

@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { trackManualCarousel } from '../../analytics/instrumentation';
 
 const subscribeReady = () => () => {};
 const clientReady = () => true;
@@ -72,9 +73,10 @@ export function AcmeCarousel({
     return () => window.clearInterval(timer);
   }, [playing, scenes.length]);
 
-  function select(next: number) {
+  function select(next: number, method: 'dots' | 'keyboard' | 'swipe') {
     const value = (next + scenes.length) % scenes.length;
     setStopped(true);
+    if (value !== index) trackManualCarousel(demo, value + 1, method);
     setIndex(value);
     setAnnouncement(scenes[value]?.title ?? '');
   }
@@ -99,7 +101,7 @@ export function AcmeCarousel({
       onKeyDown={(event) => {
         if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
           event.preventDefault();
-          select(index + (event.key === 'ArrowRight' ? 1 : -1));
+          select(index + (event.key === 'ArrowRight' ? 1 : -1), 'keyboard');
         }
       }}
       onTouchStart={(event) => {
@@ -115,7 +117,7 @@ export function AcmeCarousel({
         const dx = touch.clientX - origin.x;
         const dy = touch.clientY - origin.y;
         if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5)
-          select(index + (dx < 0 ? 1 : -1));
+          select(index + (dx < 0 ? 1 : -1), 'swipe');
       }}
     >
       <div className="acme-carousel__viewport">
@@ -160,7 +162,7 @@ export function AcmeCarousel({
             type="button"
             aria-label={t('goTo', { title: scene.title })}
             aria-pressed={index === position}
-            onClick={() => select(position)}
+            onClick={() => select(position, 'dots')}
             data-track-event="carousel_select"
           >
             <span aria-hidden="true" />

@@ -7,10 +7,14 @@ import { AcmeCarousel } from '../src/components/home/acme-carousel';
 import { renderWithIntl } from './test-utils';
 import spanish from '../src/messages/es.json';
 import english from '../src/messages/en.json';
+import { trackManualCarousel } from '../src/analytics/instrumentation';
+
+vi.mock('../src/analytics/instrumentation', () => ({ trackManualCarousel: vi.fn() }));
 
 afterEach(() => {
   vi.useRealTimers();
   vi.restoreAllMocks();
+  vi.clearAllMocks();
 });
 
 describe('carrusel definitivo', () => {
@@ -74,6 +78,9 @@ describe('carrusel definitivo', () => {
     }
     expect(root.textContent).not.toMatch(/\d \/ 5|←|→|Pausar|Reanudar/);
     fireEvent.click(screen.getByRole('button', { name: 'Ver B' }));
+    expect(trackManualCarousel).toHaveBeenLastCalledWith('cafe', 2, 'dots');
+    fireEvent.click(screen.getByRole('button', { name: 'Ver B' }));
+    expect(trackManualCarousel).toHaveBeenCalledTimes(1);
     expect(screen.getByRole('group')).toHaveAccessibleName('B');
     expect(within(screen.getByRole('group')).getByText('Description B')).toBeVisible();
     expect(screen.getAllByRole('listitem').map((item) => item.textContent)).toEqual([
@@ -122,6 +129,7 @@ describe('carrusel definitivo', () => {
     visible(true);
     expect(vi.getTimerCount()).toBe(1);
     act(() => vi.runOnlyPendingTimers());
+    expect(trackManualCarousel).not.toHaveBeenCalled();
     expect(screen.getByRole('group')).toHaveAccessibleName('B');
     expect(screen.getAllByRole('listitem').map((item) => item.textContent)).toEqual([
       'B one',

@@ -15,6 +15,13 @@
       "when": 1791594658232,
       "tag": "0001_long_mister_fear",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791597095631,
+      "tag": "0002_early_magdalene",
+      "breakpoints": true
     }
   ]
 }

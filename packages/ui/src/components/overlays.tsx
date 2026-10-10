@@ -11,8 +11,16 @@ export interface DialogProps extends DialogPrimitive.DialogProps {
   description?: string;
   title: string;
   trigger: ReactNode;
+  closeLabel?: string;
 }
-export function Dialog({ children, description, title, trigger, ...props }: DialogProps) {
+export function Dialog({
+  children,
+  description,
+  title,
+  trigger,
+  closeLabel = 'Cerrar',
+  ...props
+}: DialogProps) {
   return (
     <DialogPrimitive.Root {...props}>
       <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
@@ -27,7 +35,7 @@ export function Dialog({ children, description, title, trigger, ...props }: Dial
           ) : null}
           {children}
           <DialogPrimitive.Close asChild>
-            <IconButton aria-label="Cerrar" className="ui-dialog__close" variant="ghost">
+            <IconButton aria-label={closeLabel} className="ui-dialog__close" variant="ghost">
               <CloseIcon />
             </IconButton>
           </DialogPrimitive.Close>

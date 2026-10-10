@@ -1,6 +1,6 @@
 # Eventos declarativos de la superficie pública
 
-MOD009 prepara puntos declarativos. No hay recolección, transporte, persistencia ni consentimiento operativo. La conexión corresponde a MOD011 y requerirá consentimiento explícito (ADR-009 y ADR-012).
+MOD009 preparó los puntos declarativos. MOD011 conecta recolección, transporte y persistencia únicamente con consentimiento explícito (ADR-009 y ADR-012). La matriz vigente, incluidos `section_viewed` y `carousel_changed`, está en [ANALITICA_Y_CONSENTIMIENTO_MOD011.md](./ANALITICA_Y_CONSENTIMIENTO_MOD011.md). La tabla siguiente conserva la correspondencia de los puntos de integración originales.
 
 | Punto | Evento previsto | Dimensiones permitidas |
 |---|---|---|
@@ -8,7 +8,7 @@ MOD009 prepara puntos declarativos. No hay recolección, transporte, persistenci
 | Punto, teclado o swipe | `carousel_changed` (`carousel_select` en controles) | demo `cafe` o `logistics`, escena 1–5, origen categórico |
 | Primera interacción con formulario | `contact_started` | documento, idioma; una vez por recorrido |
 | Revisión local del formulario | `contact_validated` (`contact_validation` en control) | resultado `invalid` o `prepared`; nunca `submitted` en MOD009 |
-| Entrada al catálogo público | `lab_opened` | documento, idioma, tema |
+| Entrada al catálogo público | `lab_viewed` (`lab_opened` declarativo original) | documento, idioma, tema |
 
 Los atributos `data-track-*` identifican puntos de integración; no son listeners ni afirman eventos emitidos. Teclado y gesto deberán conectarse al cambio de estado, evitando contar también el clic del control. El autoplay no se contará como intención del visitante. Hover, foco y visibilidad son pausas temporales; toda interacción manual detiene el autoplay definitivamente. No existe control ni evento de pausa/reanudación explícita. Las navegaciones del pie se resolverán por destino. No hay evento `demo_started` porque las cards públicas no inician experiencias. La futura taxonomía versionada normalizará los nombres de atributos con los eventos de la especificación.
 
@@ -16,7 +16,7 @@ Se excluyen nombres, correo, empresa, texto del mensaje, campos de formulario, I
 
 ## Contacto y fronteras
 
-`@portfolio/contracts` publica `ContactInputSchema` (TypeBox), su normalización y una respuesta mínima de recepción. MOD010 incorpora locale `es`/`en`, honeypot y tiempo inicial del formulario. Web importa el contrato por la frontera del workspace y conserva la validación de campos para mensajes localizados. La API vuelve a validar el contrato y persiste antes del correo. El formulario usa una mutation sin reintentos ni almacenamiento local. El éxito se anuncia sólo después de una respuesta de recepción confirmada. No se incorpora recolección analítica ni se emite un evento de éxito al pulsar el botón.
+`@portfolio/contracts` publica `ContactInputSchema` (TypeBox), su normalización y una respuesta mínima de recepción. MOD010 incorpora locale `es`/`en`, honeypot y tiempo inicial del formulario. Web importa el contrato por la frontera del workspace y conserva la validación de campos para mensajes localizados. La API vuelve a validar el contrato y persiste antes del correo. El formulario usa una mutation sin reintentos ni almacenamiento local. El éxito se anuncia sólo después de una respuesta de recepción confirmada. MOD011 conecta callbacks semánticos con `contact_started`, `contact_submitted` sólo tras recepción 201 confirmada sin honeypot y `contact_failed` categórico; no se emite éxito al pulsar el botón ni al validar localmente.
 
 Los documentos, el contenido de About, el cierre comercial y los títulos/descripciones de las escenas son contenido renderizado en servidor. Los carruseles reciben escenas localizadas con rutas de imágenes WebP locales y usan Next Image con dimensiones intrínsecas; controlan selección, visibilidad y detención del autoplay. El formulario y las suscripciones a preferencias del navegador quedan acotados a componentes cliente. Los límites globales de error tienen su propia traducción de respaldo, sin depender del proveedor del layout.
 

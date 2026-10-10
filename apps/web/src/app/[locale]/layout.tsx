@@ -7,6 +7,7 @@ import type { ReactNode } from 'react';
 
 import { routing } from '../../i18n/routing';
 import { PreferencesProvider } from '../../preferences/preferences-provider';
+import { PrivacyRuntime } from '../../analytics/privacy';
 
 import '../../styles/globals.css';
 
@@ -51,7 +52,10 @@ export default async function LocaleLayout({
     >
       <body>
         <NextIntlClientProvider>
-          <PreferencesProvider>{children}</PreferencesProvider>
+          <PreferencesProvider>
+            {children}
+            <PrivacyRuntime />
+          </PreferencesProvider>
         </NextIntlClientProvider>
       </body>
     </html>

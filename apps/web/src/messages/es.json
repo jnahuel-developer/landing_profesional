@@ -442,7 +442,7 @@
   },
   "Privacy": {
     "eyebrow": "Información sobre datos",
-    "introduction": "Esta política describe el funcionamiento actual y las reglas aprobadas para las próximas funciones. El formulario de contacto recibe consultas; la analítica opcional y las sesiones demo todavía no están habilitadas.",
+    "introduction": "Esta política describe el funcionamiento actual y las reglas aprobadas para las próximas funciones. El formulario recibe consultas y la analítica propia es opcional; las sesiones demo todavía no están habilitadas.",
     "contactLink": "Consultar la sección Contacto",
     "topics": {
       "responsible": {
@@ -459,7 +459,7 @@
       },
       "analytics": {
         "title": "Analítica opcional",
-        "body": "La analítica propia permanecerá desactivada hasta recibir consentimiento explícito. Cuando se implemente el mecanismo, podrás aceptar, rechazar o modificar la elección; la preferencia durará 180 días salvo un cambio material de finalidad. Rechazarla no limitará el contenido ni las demos. Esta versión no recoge ni envía eventos analíticos."
+        "body": "La analítica está desactivada hasta que aceptes expresamente. Podés aceptar, elegir solo necesarias o configurar y retirar desde Preferencias de privacidad en el pie. La elección se conserva en una cookie propia firmada y HttpOnly durante 180 días. Solo al aceptar se generan un recibo revocable e identificadores aleatorios distintos de visitante y sesión. El visitante rota cada 30 días; la sesión se renueva tras 30 minutos de inactividad. Al retirar se detiene la recolección y se vacía la cola en memoria. Si falla la sincronización, una marca necesaria local recuerda el retiro incluso al recargar y permite reintentarlo. Los eventos confirmados antes del retiro no se eliminan retroactivamente. Rechazar no limita contenido ni contacto."
       },
       "demos": {
         "title": "Demostraciones y datos descartables",
@@ -467,11 +467,11 @@
       },
       "excluded": {
         "title": "Datos excluidos de analítica",
-        "body": "No se almacenarán IP, nombres, correos, mensajes, texto libre, firmas, fotografías ni contenido interno de las demos como datos analíticos. Las dimensiones previstas se limitan a eventos categóricos, páginas, idioma, tema, dispositivo, familia de navegador, referencia permitida, duración agregada y una sesión pseudónima."
+        "body": "No se almacenan IP, nombres, correos, mensajes, texto libre, firmas, fotografías ni contenido interno de las demos como datos analíticos. Las dimensiones admitidas se limitan a eventos categóricos, páginas, idioma, tema, dispositivo, familia de navegador, referencia permitida, duración agregada y una sesión pseudónima. La referencia se limita al dominio validado; nunca conserva ruta o query. Solo se admiten valores UTM de un catálogo cerrado, inicialmente vacío."
       },
       "recipients": {
         "title": "Destinatarios y servicios",
-        "body": "No se incorporan trackers de terceros, Google Analytics, Meta Pixel ni servicios equivalentes. La analítica futura será propia. Las notificaciones de contacto locales usan Mailpit. Resend queda preparado para una futura configuración explícita de producción. Los destinatarios y sus condiciones deberán confirmarse en la revisión legal previa a producción."
+        "body": "No se incorporan trackers de terceros, Google Analytics, Meta Pixel ni servicios equivalentes. La analítica es propia y se almacena en PostgreSQL, sin proveedores analíticos externos. Las notificaciones de contacto locales usan Mailpit. Resend queda preparado para una futura configuración explícita de producción. Los destinatarios y sus condiciones deberán confirmarse en la revisión legal previa a producción."
       },
       "retention": {
         "title": "Retenciones aprobadas",
@@ -498,5 +498,21 @@
     "availability": "El catálogo es informativo. Todavía no se pueden iniciar demos ni crear sesiones. Las futuras experiencias utilizarán datos simulados y descartables.",
     "contact": "Hablemos de tu proyecto",
     "home": "Explorar el portfolio"
+  },
+  "Consent": {
+    "title": "Preferencias de privacidad",
+    "description": "Usamos analítica propia opcional para conocer el uso de la web. Podés elegir sin limitar el contenido ni el contacto.",
+    "accept": "Aceptar analítica",
+    "reject": "Solo necesarias",
+    "configure": "Configurar",
+    "privacy": "Privacidad",
+    "preferences": "Preferencias de privacidad",
+    "necessary": "Necesarias, siempre activas",
+    "necessaryDescription": "Conservan idioma, tema y tu elección de privacidad. La elección de privacidad dura 180 días; el idioma, un año; el tema, hasta que lo cambies o borres los datos del sitio. No crean una identidad analítica.",
+    "analytics": "Analítica opcional",
+    "analyticsDescription": "Mide páginas e interacciones categóricas, sin campos del formulario ni datos personales. Podés retirarla desde el pie.",
+    "save": "Guardar preferencias",
+    "close": "Cerrar",
+    "failure": "La analítica está desactivada. No pudimos sincronizar la elección. Si retiraste el consentimiento, recordamos el retiro y volveremos a intentarlo sin bloquear la web."
   }
 }

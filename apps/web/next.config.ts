@@ -8,7 +8,10 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   async rewrites() {
     const origin = process.env.API_INTERNAL_ORIGIN ?? 'http://127.0.0.1:4000';
-    return [{ source: '/api/v1/contacts', destination: `${origin}/api/v1/contacts` }];
+    return ['contacts', 'privacy/consent', 'analytics/events'].map((path) => ({
+      source: `/api/v1/${path}`,
+      destination: `${origin}/api/v1/${path}`,
+    }));
   },
 };
 

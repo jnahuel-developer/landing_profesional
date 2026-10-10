@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 
 import { usePreferences } from '../../preferences/preferences-provider';
+import { analytics } from '../../analytics/client';
 
 function SunIcon() {
   return (
@@ -32,7 +33,13 @@ export function ThemeToggle() {
       aria-pressed={resolvedTheme === 'dark'}
       className="theme-toggle"
       data-theme-control
-      onClick={() => setTheme(nextTheme)}
+      onClick={() => {
+        analytics.track({
+          name: 'theme_changed',
+          properties: { previous: resolvedTheme, next: nextTheme },
+        });
+        setTheme(nextTheme);
+      }}
       type="button"
     >
       <span className="theme-icon theme-icon--sun">

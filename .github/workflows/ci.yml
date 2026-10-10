@@ -119,6 +119,8 @@ jobs:
           --health-timeout 5s
           --health-retries 10
     env:
+      WEB_ORIGIN: http://localhost:3000
+      ANALYTICS_COOKIE_SECRET: fictitious-ci-only-analytics-signing-key
       DATABASE_URL: postgresql://portfolio:portfolio_ci_only@127.0.0.1:5432/portfolio_ci_e2e
       MAIL_TRANSPORT: smtp
       SMTP_HOST: 127.0.0.1

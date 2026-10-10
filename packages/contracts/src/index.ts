@@ -19,3 +19,4 @@ export {
   normalizeContact,
   type ContactInput,
 } from './contact.js';
+export * from './analytics.js';

@@ -1471,3 +1471,31 @@ nav.desktop-navigation {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.privacy-notice {
+  position: fixed;
+  inset-inline: 1rem;
+  bottom: 1rem;
+  z-index: 45;
+  padding: 1rem;
+  background: var(--ui-color-surface);
+  color: var(--ui-color-text);
+  border: 1px solid currentColor;
+  border-radius: 1rem;
+  max-height: 40dvh;
+  overflow: auto;
+}
+.privacy-notice__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+.privacy-sync-status {
+  position: fixed;
+  bottom: 0;
+  z-index: 46;
+  padding: 0.5rem;
+  background: var(--ui-color-surface);
+  color: var(--ui-color-text);
+}

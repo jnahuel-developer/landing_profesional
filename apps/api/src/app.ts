@@ -9,6 +9,7 @@ import { contactRoutes, type ContactOptions } from './modules/contacts/routes.js
 import type { NodeEnvironment } from './config/env.js';
 import { healthRoutes } from './modules/health/routes.js';
 import { databasePlugin, type DatabaseDependency } from './plugins/database.js';
+import { analyticsRoutes, type AnalyticsOptions } from './modules/analytics/routes.js';
 
 const serviceStatus = {
   service: 'portfolio-api',
@@ -37,6 +38,7 @@ export interface BuildAppOptions {
   database?: DatabaseDependency;
   logger?: boolean;
   contacts?: ContactOptions;
+  analytics?: AnalyticsOptions;
 }
 
 function validationDetails(error: FastifyError) {
@@ -116,6 +118,10 @@ export async function buildApp(options: BuildAppOptions = {}) {
   await app.register(contactRoutes, {
     repository: options.database?.contacts,
     ...options.contacts,
+  });
+  await app.register(analyticsRoutes, {
+    repository: options.database?.analytics,
+    ...options.analytics,
   });
 
   return app;
